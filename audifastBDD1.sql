@@ -16,7 +16,9 @@ create table organizacion(
     nombre nvarchar(50) not null,
     giro nvarchar(50) not null,
     direccion_operacion nvarchar(50) not null,
-    direccion_fiscal nvarchar(50) not null
+    direccion_fiscal nvarchar(50) not null,
+    correo_auditor nvarchar(50) not null,
+    foreign key(correo_auditor) references auditor(correo)
 );
 
 create table norma(
@@ -33,6 +35,7 @@ create table rol_auditor(
 create table auditoria(
 	id int(10) auto_increment primary key,
     rfc_organizacion nvarchar(13),
+    fecha_registro timestamp default current_timestamp,
     foreign key(rfc_organizacion) references organizacion(rfc) on delete cascade on update cascade
 );
 
@@ -85,6 +88,7 @@ create table mensajes_retroalimentacion(
 	id int(10) auto_increment primary key,
     idAuditoria int(10),
     mensaje nvarchar(100),
+    correo_remitente nvarchar(50),
     fecha timestamp default current_timestamp,
     foreign key(idAuditoria) references espacio_retroalimentacion(idAuditoria)
 );
