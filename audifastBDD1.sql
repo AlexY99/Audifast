@@ -103,12 +103,15 @@ create table clave_acceso(
 create table plantilla_auditor(
 	correo_auditor nvarchar(50) not null,
     id int(10) auto_increment primary key,
+    nombre nvarchar(50) not null,
     foreign key(correo_auditor) references auditor(correo)
 );
 
 create table proceso(
 	id int(10) auto_increment primary key,
-    descripcion nvarchar(100)
+    idPlantilla int(10), 
+    descripcion nvarchar(100),
+    foreign key(idPlantilla) references plantilla_auditor(id)
 );
 
 create table requisito(
