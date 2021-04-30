@@ -101,21 +101,21 @@ create table clave_acceso(
 );
 
 create table plantilla_auditor(
-	correo_auditor nvarchar(50) not null,
+    correo_auditor nvarchar(50) not null,
     id int(10) auto_increment primary key,
     nombre nvarchar(50) not null,
     foreign key(correo_auditor) references auditor(correo)
 );
 
 create table proceso(
-	id int(10) auto_increment primary key,
+    id int(10) auto_increment primary key,
     idPlantilla int(10), 
     descripcion nvarchar(100),
     foreign key(idPlantilla) references plantilla_auditor(id)
 );
 
 create table requisito(
-	id int(10) auto_increment primary key,
+    id int(10) auto_increment primary key,
     clave_norma nvarchar(10) not null,
     descripcion nvarchar(100) not null,
     idProceso int(10) not null,
@@ -123,29 +123,21 @@ create table requisito(
     foreign key(idProceso) references proceso(id)
 );
 
-create table lista_requisitos(
-	idRequisito int(10),
-    idPlantilla int(10),
-    valor_cumplimiento int(1),
-    primary key(idRequisito,idPlantilla),
-    foreign key(idRequisito) references requisito(id),
-    foreign key(idPlantilla) references plantilla_auditor(id)
-);
-
-create table acta_auditoria(
-    idAuditoria int(10) primary key,
-    idPlantilla int(10) not null,
-    evaluacion float,
-    foreign key(idAuditoria) references auditoria(id),
-    foreign key(idPlantilla) references plantilla_auditor(id)
-);
-
-create table ponderaciones(
-	id int(10) not null primary key,
-	idProceso int(10) not null,
+create table proceso_acta(
+    id int(10) primary key,
+    idAuditoria int(10),
+    idProceso int(10) not null,
     ponderacion float not null,
-    resultado float,
-    idAuditoria int(10) not null,
-    foreign key(idProceso) references proceso(id),
-    foreign key(idAuditoria) references auditoria(id)
+    resultado float not null,
+    foreign key(idAuditoria) references auditoria(id),
+    foreign key(idProceso) references proceso(id)
+);
+
+create table requisito_acta(
+    id int(10) auto_increment primary key,
+    idRequisito int(10) not null,
+    idProcesoActa int(10) not null,
+    cumplimiento int(1),
+    foreign key(idProcesoActa) references proceso_acta(id),
+    foreign key(idRequisito) references requisito(id) 
 );
