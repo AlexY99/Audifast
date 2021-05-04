@@ -129,6 +129,7 @@ create table proceso_acta(
     idProceso int(10) not null,
     ponderacion float not null,
     resultado float not null,
+    observaciones nvarchar(100),
     foreign key(idAuditoria) references auditoria(id),
     foreign key(idProceso) references proceso(id)
 );
