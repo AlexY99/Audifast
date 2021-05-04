@@ -93,8 +93,8 @@ public class AuditorDAO {
         try{
             transaction.begin();
             ProcedureCall call = session.createStoredProcedureCall( "sp_login" );
-            call.registerParameter("nombreUsr",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getUsuario());
-            call.registerParameter("claveUsr",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getPswd());
+            call.registerParameter("user",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getUsuario());
+            call.registerParameter("pswd",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getPswd());
             ResultSetOutput rs = (ResultSetOutput)call.getOutputs().getCurrent();            
             msj = (String) rs.getSingleResult();
             transaction.commit();
@@ -111,8 +111,8 @@ public class AuditorDAO {
         String msj = "";
         try{
             transaction.begin();
-            ProcedureCall call = session.createStoredProcedureCall( "sp_validateUsuario" );
-            call.registerParameter("nombreUsr",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getUsuario());
+            ProcedureCall call = session.createStoredProcedureCall( "sp_validateAuditor" );
+            call.registerParameter("user",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getUsuario());
             ResultSetOutput rs = (ResultSetOutput)call.getOutputs().getCurrent();            
             msj = (String) rs.getSingleResult();
             transaction.commit();
@@ -130,8 +130,8 @@ public class AuditorDAO {
         String msj = "";
         try{
             transaction.begin();
-            ProcedureCall call = session.createStoredProcedureCall( "sp_correoUsuario" );
-            call.registerParameter("nombreUsr",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getUsuario());
+            ProcedureCall call = session.createStoredProcedureCall( "sp_correoAuditor" );
+            call.registerParameter("user",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getUsuario());
             ResultSetOutput rs = (ResultSetOutput)call.getOutputs().getCurrent();            
             msj = (String) rs.getSingleResult();
             transaction.commit();
