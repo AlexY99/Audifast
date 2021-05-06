@@ -107,10 +107,11 @@ public class AuditorServlet extends HttpServlet {
                 dto.getEntidad().setPswd(request.getParameter("txtPswd"));
                 dto.getEntidad().setTelefono(request.getParameter("txtTelefono"));
                 dao.create(dto);
+                System.out.println("Creado->"+dto.toString());
                 request.setAttribute("mensaje", "Auditor creado exitosamente");
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
-        } catch (IOException | ServletException  ex) {
+        } catch (IOException | ServletException ex) {
             Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
