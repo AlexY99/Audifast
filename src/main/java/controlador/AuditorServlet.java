@@ -32,6 +32,8 @@ public class AuditorServlet extends HttpServlet {
             eliminarAuditor(request,response);
         else if(accion.equals("InfoAuditor"))
             infoAuditor(request,response);
+        else if(accion.equals("Inicio"))
+            paginaInicio(request,response);
         
     }
 
@@ -74,7 +76,7 @@ public class AuditorServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void listaAuditorias(HttpServletRequest request, HttpServletResponse response) {
+    private void paginaInicio(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Se inicio sesion :3");
         //AuditoriaDAO dao = new AuditoriaDAO();
         //try {
@@ -127,13 +129,13 @@ public class AuditorServlet extends HttpServlet {
         if(dto.getEntidad().getCorreo().equals(session.getAttribute("txtCorreo"))){
             logout(request,response);
         }else{
-            listaAuditorias(request,response);
+            paginaInicio(request,response);
         }
     }
     
     private void login(HttpServletRequest request, HttpServletResponse response) {
         String correo = request.getParameter("txtCorreo");
-        String password = request.getParameter("txtPassword");
+        String password = request.getParameter("txtPswd");
         try {
             AuditorDTO dto = new AuditorDTO();
             AuditorDAO dao = new AuditorDAO();
@@ -144,7 +146,7 @@ public class AuditorServlet extends HttpServlet {
             if (correo.equalsIgnoreCase(msj)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("CorreoAuditor", msj);       
-                response.sendRedirect("AuditorServlet?accion=listaAuditorias");
+                response.sendRedirect("AuditorServlet?accion=Inicio");
             } else {
                 request.setAttribute("mensaje",msj);
                 RequestDispatcher vista = request.getRequestDispatcher("index.jsp");
