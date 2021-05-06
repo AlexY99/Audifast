@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,28 +18,25 @@
         <div class="container">
             <div class="col-md-auto">
                 <div class="card">
-                    <form onsubmit="event.preventDefault()" class="box">
+                    <form action="AuditorServlet?accion=Almacenar&new=True" method="POST" class="box">
                         <h2 class="text-white">Registro de Usuario</h2>
                         <p class="text-muted">Introduzca sus datos de registro</p> 
                         <label for="Nombre">Nombre Completo</label>
-                        <input type="text" class="form-control" id="Nombre" placeholder="Nombre">
-
-                        <label for="Usuario">Nombre de Usuario</label>
-                        <input type="text" class="form-control" id="Usuario" placeholder="Usuario">
+                        <input type="text" class="form-control" id="txtNombre" name="txtNombre" placeholder="Nombre">
 
                         <label for="Correo">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="Correo" placeholder="correo@electronico.com">
+                        <input type="email" class="form-control" id="txtCorreo" name="txtCorreo" placeholder="correo@electronico.com">
 
                         <label for="Contraseña">Contraseña</label>
-                        <input type="password" class="form-control" id="Contraseña" placeholder="Contraseña">
+                        <input type="password" class="form-control" id="txtPswd" name="txtPswd" placeholder="Contraseña">
 
                         <label for="ConfContraseña">Confirme su Contraseña</label>
-                        <input type="password" class="form-control" id="ConfContraseña" placeholder="Confirmación Contraseña">
+                        <input type="password" class="form-control" id="txtConfPswd" name="txtConfPswd" placeholder="Confirmación Contraseña">
 
                         <label for="Telefono">Teléfono</label>
-                        <input type="tel" class="form-control" id="Telefono" pattern="[0-9]{10}" placeholder="10 dígitos">
+                        <input type="tel" class="form-control" id="txtTelefono" name="txtTelefono" pattern="[0-9]{10}" placeholder="10 dígitos">
 
-                        <input type="submit" name="" value="Registrarse" href="#">
+                        <input type="submit" name="" value="Registrarse">
                     </form>
                 </div>
             </div>

@@ -9,22 +9,13 @@ import javax.persistence.Table;
 @Table (name = "Auditor", schema = "public")
 public class Auditor {
     @Id
-    private String usuario;
-    private String nombre;
     private String correo;
+    private String nombre;
     private String pswd;
     private String telefono;
 
     public Auditor() {}
     
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
     public String getNombre() {
         return nombre;
     }

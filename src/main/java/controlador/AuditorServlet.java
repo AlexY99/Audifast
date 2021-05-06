@@ -1,11 +1,7 @@
 package controlador;
 import modelo.dao.AuditorDAO;
 import modelo.dto.AuditorDTO;
-import utilidades.Utilerias;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -15,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
 @WebServlet(name = "AuditorServlet", urlPatterns = {"/AuditorServlet"})
 public class AuditorServlet extends HttpServlet {
@@ -26,14 +21,17 @@ public class AuditorServlet extends HttpServlet {
         
         String accion = request.getParameter("accion");
 
-        if(accion.equals("listaAuditores"))
-            listaAuditores(request,response);
-        else if(accion.equals("Eliminar"))
-            eliminarAuditor(request,response);
+        if(accion.equals("Login"))
+            login(request,response);
+        else if(accion.equals("Logout"))
+            logout(request,response);    
         else if(accion.equals("Almacenar"))
             almacenarAuditor(request,response);
-        else if(accion.equals("Actualizar"))
-            actualizarAuditor(request,response);
+        else if(accion.equals("Eliminar"))
+            eliminarAuditor(request,response);
+        else if(accion.equals("InfoAuditor"))
+            infoAuditor(request,response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -75,16 +73,17 @@ public class AuditorServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void listaAuditores(HttpServletRequest request, HttpServletResponse response) {
-        AuditorDAO dao = new AuditorDAO();
-        try {
-            Collection lista = dao.readAll();
-            request.setAttribute("listaAuditores",lista);
-            RequestDispatcher vista = request.getRequestDispatcher("listaAuditores.jsp");
-            vista.forward(request, response);
-        } catch (ServletException | IOException  ex) {
-            Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+    private void listaAuditorias(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Se inicio sesion :3");
+        //AuditoriaDAO dao = new AuditoriaDAO();
+        //try {
+            //Collection lista = dao.readAllAuditor(request.getParameter(auditor));
+            //request.setAttribute("listaAuditorias",lista);
+            //RequestDispatcher vista = request.getRequestDispatcher("listaAuditorias.jsp");
+            //vista.forward(request, response);
+        //} catch (ServletException | IOException  ex) {
+           //Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);
+        //}   
     }
     
     private void almacenarAuditor(HttpServletRequest request, HttpServletResponse response) {
@@ -92,42 +91,22 @@ public class AuditorServlet extends HttpServlet {
             request.setCharacterEncoding("utf-8");
             AuditorDAO dao = new AuditorDAO();
             AuditorDTO dto = new AuditorDTO();
-            if(request.getParameter("id")!=null&&!request.getParameter("id").isEmpty()){
-                dto.getEntidad().setIdAuditor(Integer.parseInt(request.getParameter("id")));
+            //Si existe el parámetro new se crea, sino se actualiza
+            if(request.getParameter("new")!=null&&!request.getParameter("new").isEmpty()){
+                dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
                 dto.getEntidad().setNombre(request.getParameter("txtNombre"));
-                dto.getEntidad().setPaterno(request.getParameter("txtPaterno"));
-                dto.getEntidad().setMaterno(request.getParameter("txtMaterno"));
-                dto.getEntidad().setEmail(request.getParameter("txtEmail"));
-                Part archivo = request.getPart("txtImagen");
-                if (archivo != null && !archivo.getSubmittedFileName().isEmpty()){
-                    dto.getEntidad().setImagen(archivo.getInputStream().readAllBytes());
-                }else{
-                    dto.getEntidad().setImagen(dao.read(dto).getEntidad().getImagen());
-                }
-                dto.getEntidad().setNombre(request.getParameter("txtNombreAuditor"));
-                dto.getEntidad().setClaveAuditor(request.getParameter("txtClaveAuditor"));
+                dto.getEntidad().setPswd(request.getParameter("txtPswd"));
+                dto.getEntidad().setTelefono(request.getParameter("txtTelefono"));
                 dao.update(dto);
                 request.setAttribute("mensaje", "Auditor actualizado exitosamente");
-                getServletContext().getRequestDispatcher("/AuditorServlet?accion=listaAuditores").forward(request, response);
+                getServletContext().getRequestDispatcher("/AuditorServlet?Inicio").forward(request, response);
             }else{
+                dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
                 dto.getEntidad().setNombre(request.getParameter("txtNombre"));
-                dto.getEntidad().setPaterno(request.getParameter("txtPaterno"));
-                dto.getEntidad().setMaterno(request.getParameter("txtMaterno"));
-                dto.getEntidad().setEmail(request.getParameter("txtEmail"));
-                dto.getEntidad().setNombreAuditor(request.getParameter("txtNombreAuditor"));
-                dto.getEntidad().setClaveAuditor(request.getParameter("txtClaveAuditor"));
-
-                Part archivo = request.getPart("txtImagen");
-                if (archivo != null && !archivo.getSubmittedFileName().isEmpty()){
-                    dto.getEntidad().setImagen(archivo.getInputStream().readAllBytes());
-                }else{
-                    File img = new File(getServletContext().getRealPath("/img/marc.jpg"));
-                    FileInputStream fis = new FileInputStream(img);
-                    dto.getEntidad().setImagen(fis.readAllBytes());
-                }
+                dto.getEntidad().setPswd(request.getParameter("txtPswd"));
+                dto.getEntidad().setTelefono(request.getParameter("txtTelefono"));
                 dao.create(dto);
                 request.setAttribute("mensaje", "Auditor creado exitosamente");
-                Utilerias.enviarEmail(request.getParameter("txtEmail"),"Bienvenido a Escuela Web","Bienvenido a la Escuela Web, tu nombre de usuario es "+request.getParameter("txtNombreAuditor"));
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
         } catch (IOException | ServletException  ex) {
@@ -135,38 +114,75 @@ public class AuditorServlet extends HttpServlet {
         } 
     }
 
-
     private void eliminarAuditor(HttpServletRequest request, HttpServletResponse response) {
         AuditorDAO dao = new AuditorDAO();
         AuditorDTO dto = new AuditorDTO();
         HttpSession session = request.getSession();
-        dto.getEntidad().setIdAuditor(Integer.parseInt(request.getParameter("id")));
-        try{
-            dto = dao.read(dto);
-            dao.delete(dto);
-            request.setAttribute("mensaje","Auditor eliminado satisfactoriamente");
-            if(dto.getEntidad().getNombreAuditor().equals(session.getAttribute("nombreAuditor"))){
-                session.invalidate();
-                response.sendRedirect("index.jsp");
-            }else{
-                listaAuditores(request,response);
+        dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
+        dto = dao.read(dto);
+        dao.delete(dto);
+        request.setAttribute("mensaje","Auditor eliminado satisfactoriamente");
+        if(dto.getEntidad().getCorreo().equals(session.getAttribute("txtCorreo"))){
+            logout(request,response);
+        }else{
+            listaAuditorias(request,response);
+        }
+    }
+    
+    private void login(HttpServletRequest request, HttpServletResponse response) {
+        String correo = request.getParameter("txtCorreo");
+        String password = request.getParameter("txtPassword");
+        try {
+            AuditorDTO dto = new AuditorDTO();
+            AuditorDAO dao = new AuditorDAO();
+            dto.getEntidad().setCorreo(correo);
+            dto.getEntidad().setPswd(password);
+            String msj = dao.login(dto);
+            //Si el correo contraseña son validos
+            if (correo.equalsIgnoreCase(msj)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("CorreoAuditor", msj);       
+                response.sendRedirect("AuditorServlet?accion=listaAuditorias");
+            } else {
+                request.setAttribute("mensaje",msj);
+                RequestDispatcher vista = request.getRequestDispatcher("index.jsp");
+                vista.forward(request, response);
             }
-            
-        }catch(IOException ex){
+        } catch (IOException | ServletException ex) {
             Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private void actualizarAuditor(HttpServletRequest request, HttpServletResponse response) {
-        AuditorDAO dao = new AuditorDAO();
-        AuditorDTO dto = new AuditorDTO();
-        dto.getEntidad().setIdAuditor(Integer.parseInt(request.getParameter("id")));
+    private void logout(HttpServletRequest request, HttpServletResponse response) {
         try {
+            HttpSession session = request.getSession(true);
+            session.removeAttribute("CorreoAuditor");
+            if (session.getAttribute("CorreoAuditor") == null) {
+                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                session.invalidate();
+                response.setHeader("Pragma", "no-cache");
+                response.setHeader("Cache-Control", "no-store");
+                response.setHeader("Expires", "0");
+                response.setDateHeader("Expires", -1);   
+                response.sendRedirect("index.jsp");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void infoAuditor(HttpServletRequest request, HttpServletResponse response) {
+        String correo = request.getParameter("txtCorreo");
+        String password = request.getParameter("txtPassword");
+        try {
+            AuditorDTO dto = new AuditorDTO();
+            AuditorDAO dao = new AuditorDAO();
+            dto.getEntidad().setCorreo(correo);
             dto = dao.read(dto);
-            request.setAttribute("usuario", dto);
-            RequestDispatcher vista = request.getRequestDispatcher("usuarioForm.jsp");
-            vista.forward(request,response);
-        } catch (ServletException | IOException ex) {
+            request.setAttribute("Auditor",dto);
+            RequestDispatcher vista = request.getRequestDispatcher("infoAuditor.jsp");
+            vista.forward(request, response);
+        } catch (IOException | ServletException ex) {
             Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

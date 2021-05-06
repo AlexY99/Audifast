@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,10 +15,10 @@
     <div class="">
         <div class="col-md-2">
             <div class="card">
-                <form onsubmit="event.preventDefault()" class="box">
+                <form action="AuditorServlet?accion=Login" method="POST" class="box">
                     <h2 class="text-white">Inicio de Sesión</h2>
-                    <p class="text-muted"> Introduzca su nombre de usuario y contraseña</p> <input type="text" name="nombre" placeholder="Usuario"> <input type="password" name="password" placeholder="Contraseña"> <input type="submit" name="" value="Iniciar" href="#">
-                    <a href="registro.html">Registrarse</a>
+                    <p class="text-muted"> Introduzca su correo electrónico y contraseña</p> <input type="text" name="txtCorreo" placeholder="Correo Electrónico"> <input type="password" name="txtPswd" placeholder="Contraseña"> <input type="submit" name="" value="Iniciar Sesión">
+                    <a href="registro.jsp">Registrarse</a>
                 </form>
             </div>
         </div>
@@ -29,8 +30,8 @@
         <div class="col-md-16">
             <div class="card">
                 <form onsubmit="event.preventDefault()" class="box">
-                    <h2 class="text-white">Acceda a un Documento</h2>
-                    <p class="text-muted"> Introduzca su clave de acceso</p> <input type="text" name="correo" placeholder="Correo"> <input type="password" name="clave" placeholder="Clave de acceso"> <input type="submit" name="" value="Iniciar" href="#">
+                    <h2 class="text-white">Acceda a una Auditoría</h2>
+                    <p class="text-muted"> Introduzca su correo y clave de acceso</p> <input type="text" name="correo" placeholder="Correo"> <input type="password" name="clave" placeholder="Clave de acceso"> <input type="submit" name="" value="Acceder" href="#">
                 </form>
             </div>
         </div>

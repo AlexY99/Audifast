@@ -24,7 +24,6 @@ public class AuditorDTO {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("usuario").append(getEntidad().getUsuario()).append("\n");
         sb.append("nombre").append(getEntidad().getNombre()).append("\n");
         sb.append("correo").append(getEntidad().getCorreo()).append("\n");
         sb.append("pswd").append(getEntidad().getPswd()).append("\n");

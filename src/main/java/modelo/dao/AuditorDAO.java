@@ -59,7 +59,7 @@ public class AuditorDAO {
         Transaction transaction = session.getTransaction();
         try{
             transaction.begin();
-            dto.setEntidad(session.get(dto.getEntidad().getClass(),dto.getEntidad().getUsuario()));
+            dto.setEntidad(session.get(dto.getEntidad().getClass(),dto.getEntidad().getCorreo()));
             transaction.commit();
         }catch(HibernateException he){
             if(transaction!=null && transaction.isActive()){
@@ -75,7 +75,7 @@ public class AuditorDAO {
         List<AuditorDTO> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("from Auditor a order by a.Usuario");
+            Query q = session.createQuery("from Auditor a order by a.Correo");
             lista = q.list();
             transaction.commit();
         }catch(HibernateException he){
@@ -93,8 +93,8 @@ public class AuditorDAO {
         try{
             transaction.begin();
             ProcedureCall call = session.createStoredProcedureCall( "sp_login" );
-            call.registerParameter("user",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getUsuario());
-            call.registerParameter("pswd",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getPswd());
+            call.registerParameter("correoLogin",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getCorreo());
+            call.registerParameter("pswdLogin",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getPswd());
             ResultSetOutput rs = (ResultSetOutput)call.getOutputs().getCurrent();            
             msj = (String) rs.getSingleResult();
             transaction.commit();
@@ -104,26 +104,7 @@ public class AuditorDAO {
         }
         return msj;
     } 
-    
-    public String validate(AuditorDTO dto){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.getTransaction();
-        String msj = "";
-        try{
-            transaction.begin();
-            ProcedureCall call = session.createStoredProcedureCall( "sp_validateAuditor" );
-            call.registerParameter("user",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getUsuario());
-            ResultSetOutput rs = (ResultSetOutput)call.getOutputs().getCurrent();            
-            msj = (String) rs.getSingleResult();
-            transaction.commit();
-        }catch(HibernateException he){
-            if(transaction!=null && transaction.isActive())
-                transaction.rollback();
-        }
-        return msj;
-    } 
-    
-    
+          
     public String getCorreoAuditor(AuditorDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
@@ -131,7 +112,7 @@ public class AuditorDAO {
         try{
             transaction.begin();
             ProcedureCall call = session.createStoredProcedureCall( "sp_correoAuditor" );
-            call.registerParameter("user",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getUsuario());
+            call.registerParameter("user",String.class,ParameterMode.IN).bindValue(dto.getEntidad().getCorreo());
             ResultSetOutput rs = (ResultSetOutput)call.getOutputs().getCurrent();            
             msj = (String) rs.getSingleResult();
             transaction.commit();
