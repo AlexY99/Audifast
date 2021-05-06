@@ -1,7 +1,6 @@
 package modelo.dto;
 
 import modelo.entidades.Auditor;
-import java.io.Serializable;
 
 public class AuditorDTO {
     private Auditor entidad;
