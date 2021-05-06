@@ -4,6 +4,14 @@
         <error-code>404</error-code>
         <location>/notFound.jsp</location>
     </error-page>
+    <servlet>
+        <servlet-name>AuditorServlet</servlet-name>
+        <servlet-class>controlador.AuditorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuditorServlet</servlet-name>
+        <url-pattern>/AuditorServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
