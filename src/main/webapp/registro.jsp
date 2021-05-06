@@ -18,7 +18,7 @@
         <div class="container">
             <div class="col-md-auto">
                 <div class="card">
-                    <form action="AuditorServlet?accion=Almacenar&new=True" method="POST" class="box">
+                    <form action="AuditorServlet?accion=Almacenar" method="POST" class="box">
                         <h2 class="text-white">Registro de Usuario</h2>
                         <p class="text-muted">Introduzca sus datos de registro</p> 
                         <label for="Nombre">Nombre Completo</label>

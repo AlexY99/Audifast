@@ -93,7 +93,7 @@ public class AuditorServlet extends HttpServlet {
             AuditorDAO dao = new AuditorDAO();
             AuditorDTO dto = new AuditorDTO();
             //Si existe el parámetro new se crea, sino se actualiza
-            if(request.getParameter("new")!=null&&!request.getParameter("new").isEmpty()){
+            if(request.getParameter("update")!=null&&!request.getParameter("update").isEmpty()){
                 dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
                 dto.getEntidad().setNombre(request.getParameter("txtNombre"));
                 dto.getEntidad().setPswd(request.getParameter("txtPswd"));
