@@ -17,8 +17,9 @@ public class AuditorServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
         
+        request.setCharacterEncoding("utf-8");
+      
         String accion = request.getParameter("accion");
 
         if(accion.equals("Login"))

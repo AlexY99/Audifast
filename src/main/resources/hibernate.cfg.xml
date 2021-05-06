@@ -25,6 +25,6 @@
         <property name="hibernate.dbcp.minIdle">5</property>
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
         
-        <mapping class="modelo.entidades.AudiFast" />
+        <mapping class="modelo.entidades.Auditor" />
     </session-factory>
 </hibernate-configuration>
