@@ -3,12 +3,10 @@ create database AudiFast;
 use AudiFast;
 
 create table auditor(
-    usuario nvarchar(30) not null,
-    nombre nvarchar(50) not null,
     correo nvarchar(50) not null primary key,
+    nombre nvarchar(50) not null,
     pswd nvarchar(30) not null,
-	telefono nvarchar(10)
-
+    telefono nvarchar(10)
 );
 
 create table organizacion(
@@ -142,3 +140,16 @@ create table requisito_acta(
     foreign key(idProcesoActa) references proceso_acta(id),
     foreign key(idRequisito) references requisito(id) 
 );
+
+delimiter **
+create procedure sp_login(correoLogin varchar(50),pswdLogin varchar(20))
+begin
+	declare msj varchar(30);
+    if (select count(*) from Auditor where correo = correoLogin  and pswd = pswdLogin)>0 then
+		set msj = correoLogin;
+    else
+		set msj = "Correo/Contraseña Incorrecto";
+	end if;
+    select msj;
+end ** 
+delimiter ;
