@@ -123,7 +123,7 @@ public class AuditorDAO {
         }
         return msj;
     } 
-    
+/*    
     public static void main (String args[]){
         Auditor auditor1 = new Auditor();
         Auditor auditor2 = new Auditor();
@@ -146,5 +146,5 @@ public class AuditorDAO {
         dao.create(dto2);
         
     }
-    
+ */   
 }

@@ -96,7 +96,7 @@ public class EmpresaDAO {
         }
         return lista;
     }
-  
+/*  
     public static void main (String args[]){
         Organizacion Empresa1 = new Organizacion();
         Organizacion Empresa2 = new Organizacion();
@@ -140,7 +140,7 @@ public class EmpresaDAO {
         System.out.println(dao.readAll());
         dao.delete(EmpresaDTO2);
     }
-        
+*/        
     
 }
 
