@@ -10,13 +10,14 @@ create table auditor(
 );
 
 create table organizacion(
-	rfc nvarchar(13) primary key,
+    rfc nvarchar(13) not null,
     nombre nvarchar(50) not null,
     giro nvarchar(50) not null,
     direccion_operacion nvarchar(50) not null,
     direccion_fiscal nvarchar(50) not null,
     correo_auditor nvarchar(50) not null,
-    foreign key(correo_auditor) references auditor(correo)
+    foreign key(correo_auditor) references auditor(correo),
+    primary key(rfc,correo_auditor)
 );
 
 create table norma(
