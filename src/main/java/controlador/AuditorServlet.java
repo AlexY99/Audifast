@@ -2,17 +2,17 @@ package controlador;
 import modelo.dao.AuditorDAO;
 import modelo.dto.AuditorDTO;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.dao.AuditoriaDAO;
 
-@WebServlet(name = "AuditorServlet", urlPatterns = {"/AuditorServlet"})
 public class AuditorServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -77,16 +77,19 @@ public class AuditorServlet extends HttpServlet {
     }// </editor-fold>
 
     private void paginaInicio(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Se inicio sesion :3");
-        //AuditoriaDAO dao = new AuditoriaDAO();
-        //try {
-            //Collection lista = dao.readAllAuditor(request.getParameter(auditor));
-            //request.setAttribute("listaAuditorias",lista);
-            //RequestDispatcher vista = request.getRequestDispatcher("listaAuditorias.jsp");
-            //vista.forward(request, response);
-        //} catch (ServletException | IOException  ex) {
-           //Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);
-        //}   
+        HttpSession session = request.getSession();
+        AuditorDTO dto = new AuditorDTO();
+        dto.getEntidad().setCorreo(session.getAttribute("CorreoAuditor").toString());
+        
+        AuditoriaDAO dao = new AuditoriaDAO();
+        try {
+            Collection lista = dao.readAllByAuditor(dto);
+            request.setAttribute("listaAuditorias",lista);
+            RequestDispatcher vista = request.getRequestDispatcher("inicio.jsp");
+            vista.forward(request, response);
+        } catch (ServletException | IOException  ex) {
+           Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }   
     }
     
     private void almacenarAuditor(HttpServletRequest request, HttpServletResponse response) {

@@ -8,9 +8,17 @@
         <servlet-name>AuditorServlet</servlet-name>
         <servlet-class>controlador.AuditorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AuditoriaServlet</servlet-name>
+        <servlet-class>controlador.AuditoriaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuditorServlet</servlet-name>
         <url-pattern>/AuditorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AuditoriaServlet</servlet-name>
+        <url-pattern>/AuditoriaServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
