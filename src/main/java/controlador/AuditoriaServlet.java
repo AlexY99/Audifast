@@ -1,28 +1,32 @@
 package controlador;
-
+import modelo.dto.AuditoriaDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modelo.dao.AuditoriaDAO;
 
 public class AuditoriaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AuditoriaServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AuditoriaServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
+        request.setCharacterEncoding("utf-8");
+      
+        String accion = request.getParameter("accion");
+
+        if(accion.equals("Almacenar"))
+            almacenarAuditoria(request,response);
+        else if(accion.equals("Cancelar"))
+            cancelarAuditoria(request,response);
+        else if(accion.equals("InfoAuditoria"))
+            infoAuditoria(request,response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,5 +67,54 @@ public class AuditoriaServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    private void almacenarAuditoria(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.setCharacterEncoding("utf-8");
+            AuditoriaDAO dao = new AuditoriaDAO();
+            AuditoriaDTO dto = new AuditoriaDTO();
+            //Si existe el parámetro new se crea, sino se actualiza
+            HttpSession session = request.getSession();
+            String correo = session.getAttribute("CorreoAuditor").toString();
+            dto.getEntidad().setCorreo_auditor_lider(correo);
+            dto.getEntidad().setRfc_organizacion(request.getParameter("txtRFC"));            
+            dao.create(dto);
+            System.out.println("Creado->"+dto.toString());
+            request.setAttribute("mensaje", "Auditoría creada exitosamente");
+            getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);
+        } catch (IOException | ServletException ex) {
+            Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
 
+    private void cancelarAuditoria(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            AuditoriaDAO dao = new AuditoriaDAO();
+            AuditoriaDTO dto = new AuditoriaDTO();
+            HttpSession session = request.getSession();
+            dto.getEntidad().setId(Integer.parseInt(request.getParameter("IDAuditoria")));
+            dto = dao.read(dto);
+            dao.delete(dto);
+            request.setAttribute("mensaje","Auditoría eliminada satisfactoriamente");
+            getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
+
+    private void infoAuditoria(HttpServletRequest request, HttpServletResponse response) {
+        String id = request.getParameter("AuditoriaID");
+        try{
+            AuditoriaDTO dto = new AuditoriaDTO();
+            AuditoriaDAO dao = new AuditoriaDAO();
+            dto.getEntidad().setId(Integer.parseInt("ID"));
+            dto = dao.read(dto);
+            request.setAttribute("Auditoria",dto);
+            RequestDispatcher vista = request.getRequestDispatcher("Auditoria.jsp");
+            vista.forward(request, response);
+        } catch (IOException | ServletException ex) {
+            Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
