@@ -38,7 +38,7 @@ create table auditor_auxiliar(
     correo_auditor nvarchar(50) not null,
     idAuditoria int(10) not null,
     primary key(correo_auditor,idAuditoria),
-    foreign key(correo_auditor) references auditor(correo),
+    foreign key(correo_auditor) references auditor(correo)
 );
 
 create table contactos_auditoria(
