@@ -25,25 +25,20 @@ create table norma(
     descripcion nvarchar(100)
 );
 
-create table rol_auditor(
-	id int(1) not null primary key,
-    descripcion nvarchar(10) not null
-);
-
 create table auditoria(
-	id int(10) auto_increment primary key,
+    id int(10) auto_increment primary key,
     rfc_organizacion nvarchar(13),
     fecha_registro timestamp default current_timestamp,
-    foreign key(rfc_organizacion) references organizacion(rfc) on delete cascade on update cascade
+    correo_auditor_lider nvarchar(50),    
+    foreign key(rfc_organizacion) references organizacion(rfc) on delete cascade on update cascade,
+    foreign key(correo_auditor_lider) references auditor(correo) on delete cascade on update cascade
 );
 
-create table equipo_auditoria(
-	correo_auditor nvarchar(50) not null,
-    idRol int(1),
+create table auditor_auxiliar(
+    correo_auditor nvarchar(50) not null,
     idAuditoria int(10) not null,
     primary key(correo_auditor,idAuditoria),
     foreign key(correo_auditor) references auditor(correo),
-    foreign key(idRol) references rol_auditor(id)
 );
 
 create table contactos_auditoria(
