@@ -4,6 +4,7 @@ import modelo.dto.AuditorDTO;
 import utilidades.HibernateUtil;
 import java.util.List;
 import javax.persistence.ParameterMode;
+import modelo.entidades.Auditor;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -122,4 +123,28 @@ public class AuditorDAO {
         }
         return msj;
     } 
+    
+    public static void main (String args[]){
+        Auditor auditor1 = new Auditor();
+        Auditor auditor2 = new Auditor();
+        
+        auditor1.setCorreo("pepito@gmail.com");
+        auditor1.setNombre("Pepito");
+        auditor1.setPswd("pinga");
+        auditor1.setTelefono("55555555");
+        
+        auditor2.setCorreo("juanito@gmail.com");
+        auditor2.setNombre("Juanito");
+        auditor2.setPswd("pingon");
+        auditor2.setTelefono("55555556");
+        AuditorDTO dto1 = new AuditorDTO(auditor1);
+        AuditorDTO dto2 = new AuditorDTO(auditor2);
+        
+        AuditorDAO dao = new AuditorDAO();
+        
+        dao.create(dto1);
+        dao.create(dto2);
+        
+    }
+    
 }

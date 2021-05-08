@@ -27,5 +27,7 @@
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
         
         <mapping class="modelo.entidades.Auditor" />
+        <mapping class="modelo.entidades.Organizacion" />
+        <mapping class="modelo.entidades.Auditoria" />
     </session-factory>
 </hibernate-configuration>

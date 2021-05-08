@@ -11,7 +11,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
-@Table (name = "Auditor", schema = "public")
+@Table (name = "Auditoria", schema = "public")
 public class Auditoria implements Serializable {
 
     @Id

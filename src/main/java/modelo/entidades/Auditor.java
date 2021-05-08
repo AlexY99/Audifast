@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table (name = "Auditor", schema = "public")
-public class Auditor {
+public class Auditor{
     @Id
     private String correo;
     private String nombre;
