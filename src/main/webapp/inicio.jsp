@@ -49,12 +49,16 @@
             <br/>
             
             <div id="listasAuditorias-tab-holder">
+                
                 <ul class="nav nav-tabs" id="auditoriasTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="lideradas-tab" data-bs-toggle="tab" data-bs-target="#lideradas" type="button" role="tab" aria-controls="home" aria-selected="true">Auditorías Lideradas</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="auxiliadas-tab" data-bs-toggle="tab" data-bs-target="#auxiliadas" type="button" role="tab" aria-controls="profile" aria-selected="false">Auditorías Auxiliadas</button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" id="btnAdd">Registrar Auditoría</button>               
                     </li>
                 </ul>
 

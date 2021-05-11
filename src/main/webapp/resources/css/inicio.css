@@ -8,6 +8,15 @@
     color: whitesmoke
 }
 
+#btnAdd{
+    background-color: menu   
+}
+
+#btnAdd:hover{
+    background-color: #cbccce;
+    border-color: navy
+}
+
 body {
     margin: 0;
     padding: 0;
