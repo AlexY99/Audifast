@@ -45,7 +45,7 @@
         
         <div class="container">
             <br/>
-            <h2>Encabezado</h2>
+            <h2 id="encabezado">Listado de Auditorías</h2>
             <br/>
             
             <div id="listasAuditorias-tab-holder">

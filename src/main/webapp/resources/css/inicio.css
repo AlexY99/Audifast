@@ -1,5 +1,11 @@
-listasAuditorias-tab-holder {
-    background: white
+#listasAuditorias-tab-holder {
+    background: white;
+    padding: 20px
+}
+
+#encabezado{
+    text-align: center;
+    color: whitesmoke
 }
 
 body {
