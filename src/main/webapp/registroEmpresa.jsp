@@ -1,9 +1,3 @@
-<%-- 
-    Document   : registroEmpresa
-    Created on : 8 may. 2021, 13:27:40
-    Author     : azul-
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,7 +9,7 @@
         <link rel="stylesheet" href="resources\css\bootstrap.css">
         <link rel="stylesheet" href="resources\css\registro.css">
         <script src="resources\js\jquery-3.6.0.js"></script>     
-        <script src="bootstrap5.min.js"></script>
+        <script src="resources\js\bootstrap.min.js"></script>
         <title>AF-Registro-Empresa</title>
     </head>
 
