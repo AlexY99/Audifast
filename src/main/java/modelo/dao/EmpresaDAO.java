@@ -1,5 +1,6 @@
 package modelo.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import modelo.dto.EmpresaDTO;
 import modelo.entidades.IdOrganizacion;
@@ -51,7 +52,7 @@ public class EmpresaDAO {
         }
     }
     
-    public void delete(EmpresaDTO dto){
+    public boolean delete(EmpresaDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{
@@ -62,7 +63,9 @@ public class EmpresaDAO {
             if(transaction!=null && transaction.isActive()){
                 transaction.rollback();
             }
+            return false;
         }
+        return true;
     }
     
     public EmpresaDTO read(EmpresaDTO dto){
@@ -77,16 +80,18 @@ public class EmpresaDAO {
                 transaction.rollback();
             }
         }
+        System.out.println(dto);
         return dto;
     }
     
-    public List<EmpresaDTO> readAll(){
+    public ArrayList<EmpresaDTO> readAll(String correo){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
-        List<EmpresaDTO> lista = null;
+        List<Organizacion> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("from Organizacion a order by a.Id.rfc");
+            Query q = session.createQuery("from Organizacion a where correo_auditor= :correoLider order by a.Id.rfc");
+            q.setParameter("correoLider", correo);
             lista = q.list();
             transaction.commit();
         }catch(HibernateException he){
@@ -94,12 +99,23 @@ public class EmpresaDAO {
                 transaction.rollback();
             }
         }
-        return lista;
+        ArrayList<EmpresaDTO> dtos = new ArrayList<>();
+        for (Organizacion o : lista) {
+            dtos.add(new EmpresaDTO(o));
+        }
+        return dtos;
     }
-/*  
-    public static void main (String args[]){
+
+    /*public static void main (String args[]){
         Organizacion Empresa1 = new Organizacion();
-        Organizacion Empresa2 = new Organizacion();
+        IdOrganizacion id1 = new IdOrganizacion();
+        id1.setCorreo("alex@hotmail.com");
+        id1.setRfc("CUPU800825569");
+        Empresa1.setId(id1);
+        EmpresaDTO EmpresaDTO1 = new EmpresaDTO(Empresa1);
+        EmpresaDAO dao = new EmpresaDAO();
+        System.out.println(dao.read(EmpresaDTO1));
+    /*  Organizacion Empresa2 = new Organizacion();
         
         
         IdOrganizacion id1 = new IdOrganizacion();
@@ -139,8 +155,7 @@ public class EmpresaDAO {
         dao.delete(EmpresaDTO1);
         System.out.println(dao.readAll());
         dao.delete(EmpresaDTO2);
-    }
-*/        
+    }      */
     
 }
 

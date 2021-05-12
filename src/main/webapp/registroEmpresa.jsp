@@ -44,7 +44,7 @@
         <div class="container">
             <div class="col-md-auto">
                 <div class="card">
-                    <form action="AuditorServlet?accion=Almacenar" method="POST" class="box">
+                    <form action="EmpresaServlet?accion=almacenar" method="POST" class="box">
                         <h2 class="text-white">Registro de Empresa</h2>
                         <p class="text-muted">Introduzca los datos a registrar</p> 
                         <label for="Nombre">Nombre</label>

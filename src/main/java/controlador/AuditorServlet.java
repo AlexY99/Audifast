@@ -84,6 +84,7 @@ public class AuditorServlet extends HttpServlet {
         AuditoriaDAO dao = new AuditoriaDAO();
         try {
             Collection lista = dao.readAllByAuditor(dto);
+            
             request.setAttribute("listaAuditorias",lista);
             RequestDispatcher vista = request.getRequestDispatcher("inicio.jsp");
             vista.forward(request, response);

@@ -26,7 +26,10 @@
                             <a class="nav-link active" aria-current="page" href="#">P&aacute;gina Principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Registro Empresa</a>
+                            <a class="nav-link" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="registroEmpresa.jsp">Registro Empresa</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Mis plantillas</a>

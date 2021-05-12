@@ -28,6 +28,7 @@
         
         <mapping class="modelo.entidades.Auditor" />
         <mapping class="modelo.entidades.Organizacion" />
+        <mapping class="modelo.entidades.IdOrganizacion" />
         <mapping class="modelo.entidades.Auditoria" />
     </session-factory>
 </hibernate-configuration>

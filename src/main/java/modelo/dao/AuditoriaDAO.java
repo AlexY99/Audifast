@@ -74,7 +74,8 @@ public class AuditoriaDAO {
         List<AuditoriaDTO> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("from Auditoria a where correo_auditor_lider="+correo+" order by fecha_registro");
+            Query q = session.createQuery("from Auditoria a where correo_auditor_lider = :correoLider order by fecha_registro");
+            q.setParameter("correoLider", correo);
             lista = q.list();
             transaction.commit();
         }catch(HibernateException he){
