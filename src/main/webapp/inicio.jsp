@@ -77,19 +77,18 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col" class="text-center">Organización</th>
-                                    <th scope="col" class="text-center">Fecha de Registro</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Organización</th>
+                                    <th scope="col">Fecha de Registro</th>
                                     <th scope="col" class="text-center">Cancelar Auditoría</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach items ="${listaAuditoriasLideradas}" var = "auditoriaLid">
                                     <tr>
-                                        
-                                        <td class="text-center"><a href='AuditoriaServlet?accion=Info&id=${auditoriaLid.entidad.id}'><c:out value="${auditoriaLid.entidad.id}"/></a></td>
-                                        <td class="text-center"><c:out value="${auditoriaLid.entidad.rfc_organizacion}"/></td>
-                                        <td class="text-center"><c:out value="${auditoriaLid.entidad.fecha()}"/></td>
+                                        <td><a href='AuditoriaServlet?accion=Info&id=${auditoriaLid.entidad.id}'><c:out value="${auditoriaLid.entidad.id}"/></a></td>
+                                        <td><c:out value="${auditoriaLid.entidad.organizacion.nombre}"/></td>
+                                        <td><c:out value="${auditoriaLid.entidad.fecha()}"/></td>
                                         <td class="text-center"><a href ='AuditoriaServlet?accion=Cancelar&id=${auditoriaLid.entidad.id}'><i class="bi bi-x-octagon-fill" style="font-size: 1.2rem; color: red;"/></a></td>
                                     </tr>
                                 </c:forEach>
@@ -102,19 +101,19 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col" class="text-center">Organización</th>
-                                    <th scope="col" class="text-center">Correo Auditor Lider</th>
-                                    <th scope="col" class="text-center">Fecha de Registro</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Organización</th>
+                                    <th scope="col">Correo Auditor Lider</th>
+                                    <th scope="col">Fecha de Registro</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach items ="${listaAuditoriasAuxiliadas}" var = "auditoriaAux">
                                     <tr>
-                                        <td><p class="text-center"><c:out value="${auditoriaAux.entidad.id}"/></p></td>
-                                        <td><p class="text-center"><c:out value="${auditoriaAux.entidad.rfc_organizacion}"/></p></td>
-                                        <td><p class="text-center"><c:out value="${auditoriaAux.entidad.correo_auditor_lider}"/></p></td>
-                                        <td><p class="text-center"><c:out value="${auditoriaAux.entidad.fecha_registro}"/></p></td>
+                                        <td><a href='AuditoriaServlet?accion=Info&id=${auditoriaAux.entidad.id}'><c:out value="${auditoriaAux.entidad.id}"/></a></td>
+                                        <td><c:out value="${auditoriaAux.entidad.organizacion.nombre}"/></td>
+                                        <td><c:out value="${auditoriaAux.entidad.correo_auditor_lider}"/></td>
+                                        <td><c:out value="${auditoriaAux.entidad.fecha_registro}"/></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
