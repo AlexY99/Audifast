@@ -42,33 +42,23 @@ create table auditor_auxiliar(
     foreign key(correo_auditor) references auditor(correo)
 );
 
-create table contactos_auditoria(
-	correo nvarchar(50) primary key,
+create table contacto_auditoria(
+	correo nvarchar(50),
+    idAuditoria int(10),
     puesto nvarchar(50) not null,
     nombre nvarchar(50) not null,
-	telefono nvarchar(10)
-);
-
-create table conjunto_contactos(
-	correo_contacto nvarchar(50),
-    idAuditoria int(10),
-    primary key(correo_contacto,idAuditoria),
-    foreign key(correo_contacto) references contactos_auditoria(correo),
-    foreign key(idAuditoria) references auditoria(id)
+	telefono nvarchar(10),
+    primary key(correo,idAuditoria),
+    foreign key(idAuditoria) references Auditoria(id)
 );
 
 create table producto(
-	clave nvarchar(30) primary key,
-    nombre nvarchar(50) not null,
-    descripcion nvarchar(100)
-);
-
-create table conjunto_productos(
-	clave_producto nvarchar(30),
+	clave nvarchar(30),
     idAuditoria int(10),
-    primary key(clave_producto,idAuditoria),
-    foreign key(clave_producto) references producto(clave),
-    foreign key(idAuditoria) references auditoria(id)
+    nombre nvarchar(50) not null,
+    descripcion nvarchar(100),
+    primary key(clave,idAuditoria),
+    foreign key(idAuditoria) references Auditoria(id)
 );
 
 create table espacio_retroalimentacion(
