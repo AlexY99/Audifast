@@ -1,4 +1,4 @@
-#contenido {
+.apartado {
     background: white;
     padding: 20px
 }
@@ -6,15 +6,6 @@
 #encabezado{
     text-align: center;
     color: whitesmoke
-}
-
-.btn{
-    background-color: menu   
-}
-
-.btn:hover{
-    background-color: #cbccce;
-    border-color: navy
 }
 
 body {
