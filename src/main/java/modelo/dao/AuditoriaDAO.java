@@ -1,7 +1,6 @@
 package modelo.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import modelo.dto.AuditoriaDTO;
 import utilidades.HibernateUtil;
 import java.util.List;
@@ -115,13 +114,4 @@ public class AuditoriaDAO {
         return dtos;
     }
     
-    public static void main(String[] args) {
-        AuditoriaDTO dto = new AuditoriaDTO();
-        AuditoriaDAO dao = new AuditoriaDAO();
-        dto.getEntidad().setId(4);
-        dto = dao.read(dto);
-        System.out.println(dto.getEntidad().getOrganizacion().getId().getRfc());
-    }
-    
-
 }

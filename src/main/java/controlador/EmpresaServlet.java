@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.EmpresaDAO;
 import modelo.dto.EmpresaDTO;
-import modelo.entidades.Auditoria;
 import modelo.entidades.IdOrganizacion;
 
 @WebServlet(name = "EmpresaServlet", urlPatterns = {"/EmpresaServlet"})
@@ -90,7 +89,6 @@ public class EmpresaServlet extends HttpServlet {
             EmpresaDAO dao = new EmpresaDAO();
             EmpresaDTO dto = new EmpresaDTO();
             IdOrganizacion id = new IdOrganizacion();
-            //Si existe el parámetro new se crea, sino se actualiza
             HttpSession session = request.getSession();
             String correo = session.getAttribute("CorreoAuditor").toString();
             id.setCorreo(correo);
