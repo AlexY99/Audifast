@@ -3,7 +3,6 @@ package modelo.dao;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.dto.EmpresaDTO;
-import modelo.entidades.IdOrganizacion;
 import modelo.entidades.Organizacion;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -12,16 +11,6 @@ import org.hibernate.query.Query;
 import utilidades.HibernateUtil;
 
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author azul-
- */
 public class EmpresaDAO {
     
     public void create(EmpresaDTO dto){

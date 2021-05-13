@@ -85,5 +85,24 @@ public class AuditoriaDAO {
         }
         return lista;
     }
+    
+    public List<AuditoriaDTO> readAllWithAuditor(AuditorDTO auditor){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        String correo = auditor.getEntidad().getCorreo();
+        List<AuditoriaDTO> lista = null;
+        try{
+            transaction.begin();
+            Query q = session.createQuery("select a.id as id, a.rfc_organizacion as rfc, a.fecha_registro as fecha_registro from Auditoria a inner join auditor_auxiliar b where b.correo_auditor = :correoAuditor order by a.fecha_registro");
+            q.setParameter("correoAuditor", correo);
+            lista = q.list();
+            transaction.commit();
+        }catch(HibernateException he){
+            if(transaction!=null && transaction.isActive()){
+                transaction.rollback();
+            }
+        }
+        return lista;
+    }
 
 }

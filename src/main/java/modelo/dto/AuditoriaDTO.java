@@ -3,6 +3,7 @@ package modelo.dto;
 import modelo.entidades.Auditoria;
 
 public class AuditoriaDTO {
+    
     private Auditoria entidad;
     
     public AuditoriaDTO(){
@@ -27,7 +28,7 @@ public class AuditoriaDTO {
         sb.append("\n").append("ID: ").append(getEntidad().getId()).append("\n");
         sb.append("RFC de la organizacion: ").append(getEntidad().getRfc_organizacion()).append("\n");
         sb.append("Correo del auditor lider: ").append(getEntidad().getCorreo_auditor_lider()).append("\n");
-        sb.append("Fecha Registro: ").append(getEntidad().getFecha_Registro()).append("\n");
+        sb.append("Fecha Registro: ").append(getEntidad().getFecha_registro()).append("\n");
         return sb.toString();
     }
 }

@@ -1,6 +1,7 @@
 package controlador;
 import modelo.dto.AuditoriaDTO;
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -73,11 +74,11 @@ public class AuditoriaServlet extends HttpServlet {
             request.setCharacterEncoding("utf-8");
             AuditoriaDAO dao = new AuditoriaDAO();
             AuditoriaDTO dto = new AuditoriaDTO();
-            //Si existe el parámetro new se crea, sino se actualiza
             HttpSession session = request.getSession();
             String correo = session.getAttribute("CorreoAuditor").toString();
             dto.getEntidad().setCorreo_auditor_lider(correo);
-            dto.getEntidad().setRfc_organizacion(request.getParameter("txtRFC"));            
+            dto.getEntidad().setRfc_organizacion(request.getParameter("txtRFC")); 
+            dto.getEntidad().setFecha_registro(new Date());
             dao.create(dto);
             System.out.println("Creado->"+dto.toString());
             request.setAttribute("mensaje", "Auditoría creada exitosamente");
@@ -92,10 +93,10 @@ public class AuditoriaServlet extends HttpServlet {
             AuditoriaDAO dao = new AuditoriaDAO();
             AuditoriaDTO dto = new AuditoriaDTO();
             HttpSession session = request.getSession();
-            dto.getEntidad().setId(Integer.parseInt(request.getParameter("IDAuditoria")));
+            dto.getEntidad().setId(Integer.parseInt(request.getParameter("id")));
             dto = dao.read(dto);
             dao.delete(dto);
-            request.setAttribute("mensaje","Auditoría eliminada satisfactoriamente");
+            request.setAttribute("mensaje","Auditoría cancelada satisfactoriamente");
             getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);
         } catch (ServletException | IOException ex) {
             Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);

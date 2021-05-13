@@ -83,9 +83,10 @@ public class AuditorServlet extends HttpServlet {
         
         AuditoriaDAO dao = new AuditoriaDAO();
         try {
-            Collection lista = dao.readAllByAuditor(dto);
-            
-            request.setAttribute("listaAuditorias",lista);
+            Collection listaByAuditor = dao.readAllByAuditor(dto);
+            //Collection listaWithAuditor = dao.readAllWithAuditor(dto);
+            request.setAttribute("listaAuditoriasLideradas",listaByAuditor);
+            //request.setAttribute("listaAuditoriasAuxiliadas",listaWithAuditor);
             RequestDispatcher vista = request.getRequestDispatcher("inicio.jsp");
             vista.forward(request, response);
         } catch (ServletException | IOException  ex) {

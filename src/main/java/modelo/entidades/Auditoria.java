@@ -1,6 +1,7 @@
 package modelo.entidades;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class Auditoria implements Serializable {
     private String rfc_organizacion;
     private String correo_auditor_lider;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha_Registro ;
+    private Date fecha_registro;
 
     public int getId() {
         return id;
@@ -46,12 +47,17 @@ public class Auditoria implements Serializable {
         this.correo_auditor_lider = correo_auditor_lider;
     }
     
-    public Date getFecha_Registro() {
-        return fecha_Registro;
+    public Date getFecha_registro() {
+        return fecha_registro;
     }
 
-    public void setFecha_Registro(Date fecha_Registro) {
-        this.fecha_Registro = fecha_Registro;
+    public void setFecha_registro(Date fecha_registro) {
+        this.fecha_registro = fecha_registro;
+    }
+    
+    public String fecha(){
+        SimpleDateFormat datetimeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return datetimeformat.format(this.fecha_registro);
     }
         
 }

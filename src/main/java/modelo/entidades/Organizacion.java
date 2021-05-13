@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package modelo.entidades;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
-/**
- *
- * @author azul-
- */
+
 @Entity
 @Table (name = "organizacion", schema = "public")
 public class Organizacion implements Serializable{
