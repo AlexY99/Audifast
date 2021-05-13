@@ -1,0 +1,26 @@
+#contenido {
+    background: white;
+    padding: 20px
+}
+
+#encabezado{
+    text-align: center;
+    color: whitesmoke
+}
+
+.btn{
+    background-color: menu   
+}
+
+.btn:hover{
+    background-color: #cbccce;
+    border-color: navy
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #b92b27, #1565c0)
+}
+

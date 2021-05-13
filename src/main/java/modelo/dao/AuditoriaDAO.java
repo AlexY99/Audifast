@@ -1,9 +1,12 @@
 package modelo.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
 import modelo.dto.AuditoriaDTO;
 import utilidades.HibernateUtil;
 import java.util.List;
 import modelo.dto.AuditorDTO;
+import modelo.entidades.Auditoria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -67,14 +70,14 @@ public class AuditoriaDAO {
         return dto;
     }
     
-    public List<AuditoriaDTO> readAllByAuditor(AuditorDTO auditor){
+    public ArrayList<AuditoriaDTO> readAllByAuditor(AuditorDTO auditor){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         String correo = auditor.getEntidad().getCorreo();
-        List<AuditoriaDTO> lista = null;
+        List<Auditoria> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("from Auditoria a where correo_auditor_lider = :correoLider order by fecha_registro");
+            Query q = session.createQuery("from Auditoria a where a.correo_auditor_lider = :correoLider order by a.fecha_registro");
             q.setParameter("correoLider", correo);
             lista = q.list();
             transaction.commit();
@@ -83,18 +86,21 @@ public class AuditoriaDAO {
                 transaction.rollback();
             }
         }
-        return lista;
+        ArrayList<AuditoriaDTO> dtos = new ArrayList<>();
+        for (Auditoria a : lista) {
+            dtos.add(new AuditoriaDTO(a));
+        }
+        return dtos;
     }
     
-    public List<AuditoriaDTO> readAllWithAuditor(AuditorDTO auditor){
+    public ArrayList<AuditoriaDTO> readAllWithAuditor(AuditorDTO auditor){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         String correo = auditor.getEntidad().getCorreo();
-        List<AuditoriaDTO> lista = null;
+        List<Auditoria> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("select a.id as id, a.rfc_organizacion as rfc, a.fecha_registro as fecha_registro from Auditoria a inner join auditor_auxiliar b where b.correo_auditor = :correoAuditor order by a.fecha_registro");
-            q.setParameter("correoAuditor", correo);
+            Query q = session.createQuery("select a from Auditoria a join a.auditoresAuxiliares aux where aux.id.correo_auditor = :correoAuditor order by a.fecha_registro");            q.setParameter("correoAuditor", correo);
             lista = q.list();
             transaction.commit();
         }catch(HibernateException he){
@@ -102,7 +108,20 @@ public class AuditoriaDAO {
                 transaction.rollback();
             }
         }
-        return lista;
+        ArrayList<AuditoriaDTO> dtos = new ArrayList<>();
+        for (Auditoria a : lista) {
+            dtos.add(new AuditoriaDTO(a));
+        }
+        return dtos;
     }
+    
+    public static void main(String[] args) {
+        AuditoriaDTO dto = new AuditoriaDTO();
+        AuditoriaDAO dao = new AuditoriaDAO();
+        dto.getEntidad().setId(4);
+        dto = dao.read(dto);
+        System.out.println(dto.getEntidad().getOrganizacion().getId().getRfc());
+    }
+    
 
 }

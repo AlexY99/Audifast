@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.EmpresaDAO;
 import modelo.dto.EmpresaDTO;
+import modelo.entidades.Auditoria;
 import modelo.entidades.IdOrganizacion;
 
 @WebServlet(name = "EmpresaServlet", urlPatterns = {"/EmpresaServlet"})
@@ -100,6 +101,7 @@ public class EmpresaServlet extends HttpServlet {
             dto.getEntidad().setDireccionF(request.getParameter("txtDireccionF"));
             dto.getEntidad().setDireccionO(request.getParameter("txtDireccionOp"));
             dao.create(dto);
+            
             System.out.println("Creado->" + dto.toString());
             request.setAttribute("mensaje", "Empresa registrada exitosamente");
             getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);

@@ -18,7 +18,7 @@
     <body>        
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Audifast</a>
+                <a class="navbar-brand" href="#">AudiFast</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -74,7 +74,7 @@
                     <div id="lideradas" class="tab-pane fade show active" role="tabpanel" aria-labelledby="lideradas-tab">
                         <br/>
                         <h3>Auditorías Lideradas</h3>
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">#</th>
@@ -86,10 +86,11 @@
                             <tbody>
                                 <c:forEach items ="${listaAuditoriasLideradas}" var = "auditoriaLid">
                                     <tr>
-                                        <td class="text-center"><c:out value="${auditoriaLid.getId()}"/></td>
-                                        <td class="text-center"><c:out value="${auditoriaLid.getRfc_organizacion()}"/></td>
-                                        <td class="text-center"><c:out value="${auditoriaLid.fecha()}"/></td>
-                                        <td class="text-center"><a href ='AuditoriaServlet?accion=Cancelar&id=${auditoriaLid.getId()}'><i class="bi bi-x-octagon-fill" style="font-size: 1.2rem; color: red;"/></a></td>
+                                        
+                                        <td class="text-center"><a href='AuditoriaServlet?accion=Info&id=${auditoriaLid.entidad.id}'><c:out value="${auditoriaLid.entidad.id}"/></a></td>
+                                        <td class="text-center"><c:out value="${auditoriaLid.entidad.rfc_organizacion}"/></td>
+                                        <td class="text-center"><c:out value="${auditoriaLid.entidad.fecha()}"/></td>
+                                        <td class="text-center"><a href ='AuditoriaServlet?accion=Cancelar&id=${auditoriaLid.entidad.id}'><i class="bi bi-x-octagon-fill" style="font-size: 1.2rem; color: red;"/></a></td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
@@ -98,22 +99,24 @@
                     <div id="auxiliadas" class="tab-pane fade" role="tabpanel" aria-labelledby="auxiliadas-tab">
                         <br/>
                         <h3>Auditorías Auxiliadas</h3>
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Organización</th>
-                                    <th scope="col">Fecha de Registro</th>
+                                    <th scope="col" class="text-center">#</th>
+                                    <th scope="col" class="text-center">Organización</th>
+                                    <th scope="col" class="text-center">Correo Auditor Lider</th>
+                                    <th scope="col" class="text-center">Fecha de Registro</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <%--<c:forEach items ="${listaAuditoriasAuxiliadas}" var = "auditoriaAux">
+                                <c:forEach items ="${listaAuditoriasAuxiliadas}" var = "auditoriaAux">
                                     <tr>
                                         <td><p class="text-center"><c:out value="${auditoriaAux.entidad.id}"/></p></td>
                                         <td><p class="text-center"><c:out value="${auditoriaAux.entidad.rfc_organizacion}"/></p></td>
-                                        <td><p class="text-center"><c:out value="${auditoriaAux.entidad.fecha_Registro}"/></p></td>
+                                        <td><p class="text-center"><c:out value="${auditoriaAux.entidad.correo_auditor_lider}"/></p></td>
+                                        <td><p class="text-center"><c:out value="${auditoriaAux.entidad.fecha_registro}"/></p></td>
                                     </tr>
-                                </c:forEach>--%>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>

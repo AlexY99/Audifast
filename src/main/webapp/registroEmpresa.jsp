@@ -16,7 +16,7 @@
     <body>        
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Audifast</a>
+                <a class="navbar-brand" href="#">AudiFast</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -47,19 +47,19 @@
                     <form action="EmpresaServlet?accion=almacenar" method="POST" class="box">
                         <h2 class="text-white">Registro de Empresa</h2>
                         <p class="text-muted">Introduzca los datos a registrar</p> 
-                        <label for="Nombre">Nombre</label>
+                        <label for="txtNombre">Nombre</label>
                         <input type="text" class="form-control" id="txtNombre" name="txtNombre" placeholder="Nombre">
 
-                        <label for="RFC">RFC</label>
-                        <input type="text" class="form-control" id="RFC" name="txtRFC" placeholder="RFC de la empresa">
+                        <label for="txtRFC">RFC</label>
+                        <input type="text" class="form-control" id="txtRFC" name="txtRFC" placeholder="RFC de la empresa">
 
-                        <label for="Giro">Giro</label>
+                        <label for="txtGiro">Giro</label>
                         <input type="text" class="form-control" id="txtGiro" name="txtGiro" placeholder="Giro de la empresa">
 
-                        <label for="direccionOp">Dirección de operaci&oacute;n</label>
+                        <label for="txtDireccionOp">Dirección de operaci&oacute;n</label>
                         <input type="text" class="form-control" id="txtDireccionOp" name="txtDireccionOp" placeholder="Dirección de operación">
 
-                        <label for="direcciónF">Direcci&oacute;n F&iacute;sica</label>
+                        <label for="txtDirecciónF">Direcci&oacute;n F&iacute;sica</label>
                         <input type="text" class="form-control" id="txtDireccionF" name="txtDireccionF" placeholder="Dirección Física">
 
                         <input type="submit" name="" value="Registrar">

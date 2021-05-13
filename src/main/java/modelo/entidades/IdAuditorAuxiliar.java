@@ -5,17 +5,9 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class IdOrganizacion implements Serializable {
-    private String rfc;
+public class IdAuditorAuxiliar implements Serializable {
     private String correo_auditor;
-    
-    public String getRfc() {
-        return rfc;
-    }
-
-    public void setRfc(String rfc) {
-        this.rfc = rfc;
-    }
+    private String idAuditoria;
 
     public String getCorreo() {
         return correo_auditor;
@@ -24,15 +16,23 @@ public class IdOrganizacion implements Serializable {
     public void setCorreo(String correo) {
         this.correo_auditor = correo;
     }
+
+    public String getIdAuditoria() {
+        return idAuditoria;
+    }
+
+    public void setIdAuditoria(String idAuditoria) {
+        this.idAuditoria = idAuditoria;
+    }
     
-    public IdOrganizacion() {
+    public IdAuditorAuxiliar() {
     }
     
      @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.rfc);
         hash = 59 * hash + Objects.hashCode(this.correo_auditor);
+        hash = 59 * hash + Objects.hashCode(this.idAuditoria);
         return hash;
     }
 
@@ -47,11 +47,11 @@ public class IdOrganizacion implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final IdOrganizacion other = (IdOrganizacion) obj;
-        if (!Objects.equals(this.rfc, other.rfc)) {
+        final IdAuditorAuxiliar other = (IdAuditorAuxiliar) obj;
+        if (!Objects.equals(this.correo_auditor, other.correo_auditor)) {
             return false;
         }
-        if (!Objects.equals(this.correo_auditor, other.correo_auditor)) {
+        if (!Objects.equals(this.idAuditoria, other.idAuditoria)) {
             return false;
         }
         return true;

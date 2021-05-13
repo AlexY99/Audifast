@@ -2,6 +2,7 @@ package controlador;
 import modelo.dao.AuditorDAO;
 import modelo.dto.AuditorDTO;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.AuditoriaDAO;
+import modelo.dto.AuditoriaDTO;
 
 public class AuditorServlet extends HttpServlet {
 
@@ -83,10 +85,10 @@ public class AuditorServlet extends HttpServlet {
         
         AuditoriaDAO dao = new AuditoriaDAO();
         try {
-            Collection listaByAuditor = dao.readAllByAuditor(dto);
-            //Collection listaWithAuditor = dao.readAllWithAuditor(dto);
+            ArrayList<AuditoriaDTO> listaByAuditor = dao.readAllByAuditor(dto);
+            ArrayList<AuditoriaDTO> listaWithAuditor = dao.readAllWithAuditor(dto);
             request.setAttribute("listaAuditoriasLideradas",listaByAuditor);
-            //request.setAttribute("listaAuditoriasAuxiliadas",listaWithAuditor);
+            request.setAttribute("listaAuditoriasAuxiliadas",listaWithAuditor);
             RequestDispatcher vista = request.getRequestDispatcher("inicio.jsp");
             vista.forward(request, response);
         } catch (ServletException | IOException  ex) {
@@ -182,7 +184,6 @@ public class AuditorServlet extends HttpServlet {
 
     private void infoAuditor(HttpServletRequest request, HttpServletResponse response) {
         String correo = request.getParameter("txtCorreo");
-        String password = request.getParameter("txtPassword");
         try {
             AuditorDTO dto = new AuditorDTO();
             AuditorDAO dao = new AuditorDAO();
