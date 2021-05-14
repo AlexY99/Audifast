@@ -3,7 +3,6 @@ import modelo.dao.AuditorDAO;
 import modelo.dto.AuditorDTO;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -109,7 +108,7 @@ public class AuditorServlet extends HttpServlet {
                 dto.getEntidad().setTelefono(request.getParameter("txtTelefono"));
                 dao.update(dto);
                 request.setAttribute("mensaje", "Auditor actualizado exitosamente");
-                getServletContext().getRequestDispatcher("/AuditorServlet?Inicio").forward(request, response);
+                getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);
             }else{
                 dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
                 dto.getEntidad().setNombre(request.getParameter("txtNombre"));

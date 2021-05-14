@@ -38,9 +38,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Datos Personales</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Cerrar Sesión</a>
-                        </li>
+                    </ul>        
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <c:out value="${CorreoAuditor}"/>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="AuditorServlet?accion=Logout">Cerrar Sesión</a></li>
+                            </ul>
+                        </li>      
                     </ul>
                 </div>
             </div>
