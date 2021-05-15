@@ -79,7 +79,7 @@ public class EmpresaDAO {
         List<Organizacion> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("from Organizacion a where correo_auditor= :correoLider order by a.Id.rfc");
+            Query q = session.createQuery("from Organizacion a where correo_auditor= :correoLider order by a.id.rfc");
             q.setParameter("correoLider", correo);
             lista = q.list();
             transaction.commit();

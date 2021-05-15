@@ -81,7 +81,7 @@
                     <div id="lideradas" class="tab-pane fade show active" role="tabpanel" aria-labelledby="lideradas-tab">
                         <br/>
                         <h3>Auditorías Lideradas</h3>
-                        <table class="table table-hover">
+                        <table class="table table-hover align-middle">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -96,7 +96,15 @@
                                         <td><a href='AuditoriaServlet?accion=Info&id=${auditoriaLid.entidad.id}'><c:out value="${auditoriaLid.entidad.id}"/></a></td>
                                         <td><c:out value="${auditoriaLid.entidad.organizacion.nombre}"/></td>
                                         <td><c:out value="${auditoriaLid.entidad.fecha()}"/></td>
-                                        <td class="text-center"><a href ='AuditoriaServlet?accion=Cancelar&id=${auditoriaLid.entidad.id}'><i class="bi bi-x-octagon-fill" style="font-size: 1.2rem; color: red;"/></a></td>
+                                        <form method="POST" action="AuditoriaServlet" id="form-${auditoriaLid.entidad.id}">
+                                            <input type="hidden" name="accion" value="Cancelar"/>
+                                            <input type="hidden" name="id" value='${auditoriaLid.entidad.id}' />
+                                            <td class="text-center">
+                                                <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${auditoriaLid.entidad.id}'>
+                                                    X
+                                                </button>
+                                            </td>
+                                        </form>
                                     </tr>
                                 </c:forEach>
                             </tbody>
