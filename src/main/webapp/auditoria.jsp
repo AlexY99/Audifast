@@ -25,7 +25,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">P&aacute;gina Principal</a>
+                            <a class="nav-link active" aria-current="page" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
@@ -58,7 +58,7 @@
         <div class="container">
             <br/>
             <h2 id="encabezado">Auditoría <c:out value="${auditoria.entidad.id}"/></h2>
-            
+
             <div id="datosOrganizacion" class="apartado">
                 <h3 id="encabezadoDatos" class="encabezadoApartado">Datos de la Organización Auditada</h3>
                 RFC:  <c:out value="${auditoria.entidad.organizacion.getId().rfc}"/><br/>
@@ -66,9 +66,9 @@
                 Giro de la Empresa: <c:out value="${auditoria.entidad.organizacion.giro}"/><br/>
                 Direccion de operacion:  <p><c:out value="${auditoria.entidad.organizacion.direccionO}"/></p>
             </div>
-            
+
             <br/>
-                
+
             <div id="equipoAuditor" class="apartado">
                 <h3 id="encabezadoEquipo" class="encabezadoApartado">Equipo Auditor</h3>
                 <div class="table-responsive">
@@ -88,26 +88,26 @@
                                 <td>Auditor Líder</td>
                                 <td><c:out value="${auditor.entidad.telefono}"/></td>
                             </tr>
-
-                            <%--<c:forEach items ="${listaAuditoresAuxiliares}" var = "auditorAux">
+                            <c:forEach items ="${auditoresAuxiliares}" var = "auditorAux">
                                 <tr>
-                                    <td><c:out value="${auditorAux.getCorreo()}"/></td>
-                                    <td><c:out value="${auditorAux.getNombre()}"/></td>
+                                    <td><c:out value="${auditorAux.entidad.correo}"/></td>
+                                    <td><c:out value="${auditorAux.entidad.nombre}"/></td>
                                     <td>Auditor Auxiliar</td>
-                                    <td><c:out value="${auditorAux.getTelefono()}"/></p></td>
+                                    <td><c:out value="${auditorAux.entidad.telefono}"/></td>
                                 </tr>
-                            </c:forEach>--%>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
                 <button type="button" class="btnAdd btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormAuditorAuxiliar">
                     Agregar Auditor Auxiliar
-                </button>
+                </button>  
+
                 <br/>
             </div>    
-            
+
             <br/>
-                
+
             <div id="contactos" class="apartado">
                 <h3 id="encabezadoContactos" class="encabezadoApartado">Contactos de Auditoría</h3>
                 <div class="table-responsive">
@@ -121,14 +121,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%--<c:forEach items ="${listaContactos}" var = "contacto">
+                            <c:forEach items ="${listaContactos}" var = "contacto">
                                 <tr>
-                                    <td><c:out value="${contacto.getCorreo()}"/></td>
-                                    <td><c:out value="${contacto.getNombre()}"/></td>
-                                    <td><c:out value="${contacto.getPuesto()}"/></td>
-                                    <td><c:out value="${contacto.getTelefono()}"/></td>
+                                    <td><c:out value="${contacto.entidad.getId().correo}"/></td>
+                                    <td><c:out value="${contacto.entidad.nombre}"/></td>
+                                    <td><c:out value="${contacto.entidad.puesto}"/></td>
+                                    <td><c:out value="${contacto.entidad.telefono}"/></td>
                                 </tr>
-                            </c:forEach>--%>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -137,9 +137,9 @@
                 </button>
                 <br/>
             </div>
-                        
+
             <br/>
-                
+
             <div id="productos" class="apartado">
                 <h3 id="encabezadoProductos" class="encabezadoApartado">Productos de Auditados</h3>
                 <div class="table-responsive">
@@ -151,12 +151,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%--<c:forEach items ="${listaProductos}" var = "producto">
+                            <c:forEach items ="${listaProductos}" var = "producto">
                                 <tr>
-                                    <td><c:out value="${producto.getClave()}"/></td>
-                                    <td><c:out value="${producto.getDescripcion()}"/></td>
+                                    <td><c:out value="${producto.entidad.getId().clave}"/></td>
+                                    <td><c:out value="${producto.entidad.descripcion}"/></td>
                                 </tr>
-                            </c:forEach>--%>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -164,10 +164,10 @@
                     Agregar Producto
                 </button>
             </div>
-                        
+
             <br/>          
         </div>
-                            
+
         <!--modalFormAuditorAuxiliar  -->
         <div class="modal fade" id="modalFormAuditorAuxiliar" tabindex="-1" aria-labelledby="modalFormAuditorAuxiliarTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -181,7 +181,8 @@
                             <div class="modal-body">
                                 <p>Ingrese el correo del auditor, debe haberse registrado previamente.</p>
                                 <label for="txtEmailAuditor">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="txtEmailAuditor" name="txtEmailAuditor" placeholder="correo@electronico.com">  
+                                <input type="email" class="form-control" id="txtEmailAuditorAux" name="txtEmailAuditorAux" placeholder="correo@electronico.com">  
+                                <input type="hidden" value="${auditoria.entidad.id}" name="txtIdAuditoria" />
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -192,7 +193,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!--modalFormContacto  -->
         <div class="modal fade" id="modalFormContacto" tabindex="-1" aria-labelledby="modalFormContactoTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -207,14 +208,15 @@
                                 <label for="txtNombreContacto">Nombre Completo</label>
                                 <input type="text" class="form-control" id="txtNombreContacto" name="txtNombreContacto" placeholder="Nombre">
                                 <br/>
-                                <label for="txtEmailAuditor">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="txtEmailAuditor" name="txtEmailAuditor" placeholder="correo@electronico.com">  
+                                <label for="txtEmail">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="correo@electronico.com">  
                                 <br/>
-                                <label for="txtEmailAuditor">Puesto</label>
-                                <input type="email" class="form-control" id="txtEmailAuditor" name="txtEmailAuditor" placeholder="correo@electronico.com">  
+                                <label for="txtPuesto">Puesto</label>
+                                <input type="text" class="form-control" id="txtPuesto" name="txtPuesto" placeholder="Puesto que ocupa">  
                                 <br/>
                                 <label for="txtTelefono">Teléfono</label>
                                 <input type="tel" class="form-control" id="txtTelefono" name="txtTelefono" pattern="[0-9]{10}" placeholder="10 dígitos"> 
+                                <input type="hidden" value="${auditoria.entidad.id}" name="txtIdAuditoria" />
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -225,7 +227,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!--modalFormProducto  -->
         <div class="modal fade" id="modalFormProducto" tabindex="-1" aria-labelledby="modalFormProductoTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -242,6 +244,7 @@
                                 <br/>
                                 <label for="txtDescripcionProducto">Nombre / Descripción</label>
                                 <input type="text" class="form-control" id="txtDescripcionProducto" name="txtDescripcion" placeholder="Descripcion"> 
+                                <input type="hidden" value="${auditoria.entidad.id}" name="txtIdAuditoria" />
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -252,7 +255,7 @@
                 </div>
             </div>
         </div>
-        
+
     </body>
 </html>
 

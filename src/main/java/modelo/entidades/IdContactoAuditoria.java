@@ -1,20 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package modelo.entidades;
 
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Embeddable;
 
+/**
+ *
+ * @author azul-
+ */
+
 @Embeddable
-public class IdAuditorAuxiliar implements Serializable {
-    private String correo_auditor;
+public class IdContactoAuditoria implements Serializable {
+    
+    private String correo;
     private int idAuditoria;
 
+    public IdContactoAuditoria() {
+        
+    }
+
     public String getCorreo() {
-        return correo_auditor;
+        return correo;
     }
 
     public void setCorreo(String correo) {
-        this.correo_auditor = correo;
+        this.correo = correo;
     }
 
     public int getIdAuditoria() {
@@ -25,13 +40,10 @@ public class IdAuditorAuxiliar implements Serializable {
         this.idAuditoria = idAuditoria;
     }
     
-    public IdAuditorAuxiliar() {
-    }
-    
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.correo_auditor);
+        hash = 59 * hash + Objects.hashCode(this.correo);
         hash = 59 * hash + Objects.hashCode(this.idAuditoria);
         return hash;
     }
@@ -47,8 +59,8 @@ public class IdAuditorAuxiliar implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final IdAuditorAuxiliar other = (IdAuditorAuxiliar) obj;
-        if (!Objects.equals(this.correo_auditor, other.correo_auditor)) {
+        final IdContactoAuditoria other = (IdContactoAuditoria) obj;
+        if (!Objects.equals(this.correo, other.correo)) {
             return false;
         }
         if (!Objects.equals(this.idAuditoria, other.idAuditoria)) {
@@ -56,5 +68,6 @@ public class IdAuditorAuxiliar implements Serializable {
         }
         return true;
     }
+    
     
 }

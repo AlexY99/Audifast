@@ -20,6 +20,10 @@ public class AuditorAuxiliar implements Serializable {
     @MapsId("idAuditoria")
     private Auditoria auditoria;
     
+    public AuditorAuxiliar() {
+        id = new IdAuditorAuxiliar();
+    }
+    
     public IdAuditorAuxiliar getId() {
         return id;
     }

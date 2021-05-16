@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">P&aacute;gina Principal</a>
+                            <a class="nav-link active" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Registro Empresa</a>

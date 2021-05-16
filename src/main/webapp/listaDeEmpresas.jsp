@@ -9,6 +9,7 @@
 
         <link rel="stylesheet" href="resources\css\bootstrap.css">
         <link rel="stylesheet" href="resources\css\inicio.css">
+        <link rel="stylesheet" href="resources\css\auditoria.css">
         <script src="resources\js\jquery-3.6.0.js"></script>     
         <script src="resources\js\bootstrap.min.js"></script>
         <title>AF-Empresas</title>
@@ -24,7 +25,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">P&aacute;gina Principal</a>
+                            <a class="nav-link active" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link  disabled" aria-current="page" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
@@ -59,10 +60,9 @@
             <h2 id="encabezado">Mis Empresas Registradas</h2>
             <br/>
 
-            <div class="tab-content" id="listaEmpresas">
-                <div id="lideradas" class="tab-pane fade show active" role="tabpanel" aria-labelledby="lideradas-tab">
-                    <br/>
-                    <h3>Empresas</h3>
+            <div id="Empresas" class="apartado">
+                <h3 id="encabezadoEmpresas" class="encabezadoApartado">Empresas</h3>
+                <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
@@ -75,16 +75,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items ="${listaDeEmpresas}" var = "empresa">
-                            <tr>
-                                <td><p class="text-center"><c:out value="${empresa.entidad.getId().rfc}"/></p></td>
-                                <td><p class="text-center"><c:out value="${empresa.entidad.nombre}"/></p></td>
-                                <td><p class="text-center"><c:out value="${empresa.entidad.giro}"/></p></td>
-                                <td><p class="text-center"><c:out value="${empresa.entidad.direccionO}"/></p></td>
-                                <td><p class="text-center"><c:out value="${empresa.entidad.direccionF}"/></p></td>
-                                <td><a class='badge badge-danger' href ='EmpresaServlet?accion=eliminar&rfc=${empresa.entidad.getId().rfc}'>Eliminar</a></td>
-                            </tr>
-                        </c:forEach>
+                            <c:forEach items ="${listaDeEmpresas}" var = "empresa">
+                                <tr>
+                                    <td><p><c:out value="${empresa.entidad.getId().rfc}"/></p></td>
+                                    <td><p><c:out value="${empresa.entidad.nombre}"/></p></td>
+                                    <td><p><c:out value="${empresa.entidad.giro}"/></p></td>
+                                    <td><p><c:out value="${empresa.entidad.direccionO}"/></p></td>
+                                    <td><p><c:out value="${empresa.entidad.direccionF}"/></p></td>
+                                    <td><a class='btn btn-danger' href ='EmpresaServlet?accion=eliminar&rfc=${empresa.entidad.getId().rfc}'>Eliminar</a></td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>

@@ -32,6 +32,10 @@
         <mapping class="modelo.entidades.Auditoria" />
         <mapping class="modelo.entidades.AuditorAuxiliar" />
         <mapping class="modelo.entidades.IdAuditorAuxiliar" />
+        <mapping class="modelo.entidades.ContactoAuditoria" />
+        <mapping class="modelo.entidades.IdContactoAuditoria" />
+        <mapping class="modelo.entidades.Producto"/>
+        <mapping class="modelo.entidades.IdProducto"/>
         
     </session-factory>
 </hibernate-configuration>
