@@ -79,6 +79,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Rol</th>
                                 <th scope="col">Teléfono</th>
+                                <th scope="col">Acci&oacute;n</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,6 +95,15 @@
                                     <td><c:out value="${auditorAux.entidad.nombre}"/></td>
                                     <td>Auditor Auxiliar</td>
                                     <td><c:out value="${auditorAux.entidad.telefono}"/></td>
+                                <form method="POST" action="AuditoriaServlet?accion=EliminarAuditorAuxiliar" id="form-${auditorAux.entidad.correo}">
+                                    <input type="hidden" name="txtCorreo" value='${auditorAux.entidad.correo}' />
+                                    <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+                                    <td>
+                                        <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${auditorAux.entidad.correo}'>
+                                            X
+                                        </button>
+                                    </td>
+                                </form>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -118,6 +128,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Puesto</th>
                                 <th scope="col">Teléfono</th>
+                                <th scope="col">Acci&oacute;n</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -127,6 +138,15 @@
                                     <td><c:out value="${contacto.entidad.nombre}"/></td>
                                     <td><c:out value="${contacto.entidad.puesto}"/></td>
                                     <td><c:out value="${contacto.entidad.telefono}"/></td>
+                                <form method="POST" action="AuditoriaServlet?accion=EliminarContacto" id="form-${contacto.entidad.getId().correo}">
+                                    <input type="hidden" name="txtCorreo" value='${contacto.entidad.getId().correo}' />
+                                    <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+                                    <td>
+                                        <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${contacto.entidad.getId().correo}'>
+                                            X
+                                        </button>
+                                    </td>
+                                </form>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -148,6 +168,7 @@
                             <tr>
                                 <th scope="col">Clave</th>
                                 <th scope="col">Descripción</th>
+                                <th scope="col">Acci&oacute;n</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -155,6 +176,16 @@
                                 <tr>
                                     <td><c:out value="${producto.entidad.getId().clave}"/></td>
                                     <td><c:out value="${producto.entidad.descripcion}"/></td>
+                                <form method="POST" action="AuditoriaServlet?accion=EliminarProducto" id="form-${producto.entidad.getId().clave}">
+                                    <input type="hidden" name="txtClave" value='${producto.entidad.getId().clave}' />
+                                    <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+                                    <td>
+                                        <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${producto.entidad.getId().clave}'>
+                                            X
+                                        </button>
+                                    </td>
+                                </form>
+                                    
                                 </tr>
                             </c:forEach>
                         </tbody>

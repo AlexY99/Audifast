@@ -4,6 +4,7 @@ package modelo.entidades;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ public class Organizacion implements Serializable{
     @Column(name = "direccion_fiscal", nullable = false, length = 50)
     private String direccionF; //Direccion Fiscal
     
-    @OneToMany(mappedBy="organizacion")
+    @OneToMany(mappedBy="organizacion" , cascade = CascadeType.ALL)
     List<Auditoria> auditorias = new ArrayList<Auditoria>();
 
     public IdOrganizacion getId() {

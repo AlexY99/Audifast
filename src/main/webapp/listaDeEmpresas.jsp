@@ -82,9 +82,16 @@
                                     <td><p><c:out value="${empresa.entidad.giro}"/></p></td>
                                     <td><p><c:out value="${empresa.entidad.direccionO}"/></p></td>
                                     <td><p><c:out value="${empresa.entidad.direccionF}"/></p></td>
-                                    <td><a class='btn btn-danger' href ='EmpresaServlet?accion=eliminar&rfc=${empresa.entidad.getId().rfc}'>Eliminar</a></td>
+                                <form method="POST" action="EmpresaServlet?accion=eliminar" id="form-${empresa.entidad.getId().rfc}">
+                                    <input type="hidden" name="rfc" value='${empresa.entidad.getId().rfc}' />
+                                    <td class="text-center">
+                                        <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${empresa.entidad.getId().rfc}'>
+                                            X
+                                        </button>
+                                    </td>
+                                </form>
                                 </tr>
-                            </c:forEach>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

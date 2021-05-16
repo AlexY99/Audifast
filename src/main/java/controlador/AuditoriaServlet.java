@@ -45,6 +45,12 @@ public class AuditoriaServlet extends HttpServlet {
             AlmacenarContacto(request, response);
         } else if (accion.equals("AlmacenarProducto")) {
             AlmacenarProducto(request, response);
+        } else if (accion.equals("EliminarAuditorAuxiliar")) {
+            EliminarAuditorAuxiliar(request, response);       
+        } else if (accion.equals("EliminarContacto")) {
+            EliminarContacto(request, response);
+        } else if (accion.equals("EliminarProducto")) {
+            EliminarProducto(request, response);
         }
 
     }
@@ -240,6 +246,47 @@ public class AuditoriaServlet extends HttpServlet {
         dao.create(dto);
         System.out.println("Creado->" + dto.toString());
         request.setAttribute("mensaje", "Producto de auditoria creado con exito");
+        request.setAttribute("id", String.valueOf(idAuditoria));
+        infoAuditoria(request, response);
+    }
+
+    private void EliminarAuditorAuxiliar(HttpServletRequest request, HttpServletResponse response) {
+        String correo = request.getParameter("txtCorreo");
+        String id = request.getParameter("txtIdAuditoria");
+        AuditorAuxiliarDAO dao = new AuditorAuxiliarDAO();
+        AuditorAuxiliarDTO dto = new AuditorAuxiliarDTO();
+        dto.getEntidad().getId().setCorreo(correo);
+        dto.getEntidad().getId().setIdAuditoria(Integer.parseInt(id));
+        dao.delete(dto);
+        request.setAttribute("mensaje", "Auditor Auxiliar Eliminado");
+        request.setAttribute("id", String.valueOf(id));
+        infoAuditoria(request, response);
+    }
+
+    private void EliminarContacto(HttpServletRequest request, HttpServletResponse response) {
+        String correo = request.getParameter("txtCorreo");
+        String id = request.getParameter("txtIdAuditoria");
+        ContactoAuditoriaDAO dao = new ContactoAuditoriaDAO();
+        ContactoAuditoriaDTO dto = new ContactoAuditoriaDTO();
+        dto.getEntidad().getId().setCorreo(correo);
+        dto.getEntidad().getId().setIdAuditoria(Integer.parseInt(id));
+        dao.delete(dto);
+        request.setAttribute("mensaje", "Contacto Eliminado");
+        request.setAttribute("id", String.valueOf(id));
+        infoAuditoria(request, response);
+    }
+
+    private void EliminarProducto(HttpServletRequest request, HttpServletResponse response) {
+        String clave = request.getParameter("txtClave");
+        String id = request.getParameter("txtIdAuditoria");
+        ProductoDAO dao = new ProductoDAO();
+        ProductoDTO dto = new ProductoDTO();
+        dto.getEntidad().getId().setClave(clave);
+        dto.getEntidad().getId().setIdAuditoria(Integer.parseInt(id));
+        dao.delete(dto);
+        request.setAttribute("mensaje", "Producto Eliminado");
+        request.setAttribute("id", String.valueOf(id));
+        infoAuditoria(request, response);
     }
 
 }
