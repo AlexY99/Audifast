@@ -40,6 +40,7 @@ create table auditor_auxiliar(
     idAuditoria int(10) not null,
     primary key(correo_auditor,idAuditoria),
     foreign key(correo_auditor) references auditor(correo)
+		on delete cascade on update cascade
 );
 
 create table contacto_auditoria(
@@ -50,15 +51,16 @@ create table contacto_auditoria(
 	telefono nvarchar(10),
     primary key(correo,idAuditoria),
     foreign key(idAuditoria) references Auditoria(id)
+		on delete cascade on update cascade
 );
 
 create table producto(
 	clave nvarchar(30),
     idAuditoria int(10),
-    nombre nvarchar(50) not null,
     descripcion nvarchar(100),
     primary key(clave,idAuditoria),
     foreign key(idAuditoria) references Auditoria(id)
+		on delete cascade on update cascade
 );
 
 create table espacio_retroalimentacion(
