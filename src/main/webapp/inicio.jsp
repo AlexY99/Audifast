@@ -34,7 +34,7 @@
                             <a class="nav-link" href="registroEmpresa.jsp">Registro Empresa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Mis plantillas</a>
+                            <a class="nav-link" href="misPlantillas.jsp">Mis plantillas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Datos Personales</a>
