@@ -21,9 +21,11 @@ create table organizacion(
 );
 
 create table norma(
-	clave nvarchar(10) primary key,
+	clave nvarchar(10) not null,
+	correo_auditor nvarchar(50) not null,
     nombre nvarchar(50) not null,
-    descripcion nvarchar(100)
+    foreign key(correo_auditor) references auditor(correo),
+    primary key(clave,correo_auditor)
 );
 
 create table auditoria(
@@ -68,6 +70,7 @@ create table espacio_retroalimentacion(
     url_informe nvarchar(50),
     url_plan nvarchar(50),
     foreign key(idAuditoria) references auditoria(id)
+		on delete cascade on update cascade
 );
 
 create table mensajes_retroalimentacion(
@@ -77,6 +80,7 @@ create table mensajes_retroalimentacion(
     correo_remitente nvarchar(50),
     fecha timestamp default current_timestamp,
     foreign key(idAuditoria) references espacio_retroalimentacion(idAuditoria)
+		on delete cascade on update cascade
 );
 
 create table clave_acceso(
@@ -84,6 +88,7 @@ create table clave_acceso(
     clave nvarchar(100) primary key,
     idAuditoria int(10) not null,
 	foreign key(idAuditoria) references espacio_retroalimentacion(idAuditoria)
+		on delete cascade on update cascade
 );
 
 create table plantilla_auditor(
@@ -91,6 +96,7 @@ create table plantilla_auditor(
     id int(10) auto_increment primary key,
     nombre nvarchar(50) not null,
     foreign key(correo_auditor) references auditor(correo)
+		on delete cascade on update cascade
 );
 
 create table proceso(
@@ -98,6 +104,7 @@ create table proceso(
     idPlantilla int(10), 
     descripcion nvarchar(100),
     foreign key(idPlantilla) references plantilla_auditor(id)
+		on delete cascade on update cascade
 );
 
 create table requisito(
@@ -107,17 +114,21 @@ create table requisito(
     idProceso int(10) not null,
     foreign key(clave_norma) references norma(clave),
     foreign key(idProceso) references proceso(id)
+		on delete cascade on update cascade
 );
 
 create table proceso_acta(
     id int(10) primary key,
     idAuditoria int(10),
+    correo_encargado nvarchar(50) not null,
     idProceso int(10) not null,
     ponderacion float not null,
     resultado float not null,
     observaciones nvarchar(100),
-    foreign key(idAuditoria) references auditoria(id),
-    foreign key(idProceso) references proceso(id)
+    foreign key(idAuditoria) references auditoria(id)
+		on delete cascade on update cascade,
+    foreign key(idProceso) references proceso(id),
+    foreign key(correo_encargado) references auditor(correo)
 );
 
 create table requisito_acta(
@@ -125,7 +136,8 @@ create table requisito_acta(
     idRequisito int(10) not null,
     idProcesoActa int(10) not null,
     cumplimiento int(1),
-    foreign key(idProcesoActa) references proceso_acta(id),
+    foreign key(idProcesoActa) references proceso_acta(id)
+		on delete cascade on update cascade,
     foreign key(idRequisito) references requisito(id) 
 );
 
@@ -141,3 +153,33 @@ begin
     select msj;
 end ** 
 delimiter ;
+
+insert into Auditor values('xtarevolution@yahoo.com.mx','Ricardo Cruz','abc123','5561997887');
+insert into Norma(clave,correo_auditor,nombre) values ('NOM-Q016','xtarevolution@yahoo.com.mx','Norma Mexicana Q016');
+insert into Norma(clave,correo_auditor,nombre) values ('ISO:9000','xtarevolution@yahoo.com.mx','Norma ISO 9000');
+insert into Norma(clave,correo_auditor,nombre) values ('ISO:25010','xtarevolution@yahoo.com.mx','Norma ISO modelo SQUARE');
+insert into plantilla_auditor values('xtarevolution@yahoo.com.mx',1,'Plantilla 1');
+insert into plantilla_auditor values('xtarevolution@yahoo.com.mx',2,'Plantilla 2');
+
+insert into proceso(idPlantilla,descripcion)values(1,"Control de plagas");
+insert into requisito(clave_norma,descripcion,idproceso)values('NOM-Q016','Se tienen protocolos para el control de fauna nociva',1);
+insert into requisito(clave_norma,descripcion,idproceso)values('NOM-Q016','Se hacen inspecciones periodicas para el control de fauna nociva',1);
+
+insert into proceso(idPlantilla,descripcion)values(1,"Higiene de instalaciones");
+insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','Se realiza limpieza periodica de las instalaciones',2);
+
+
+insert into proceso(idPlantilla,descripcion)values(2,"Control de plagas");
+insert into requisito(clave_norma,descripcion,idproceso)values('NOM-Q016','Se tienen protocolos para el control de fauna nociva',3);
+insert into requisito(clave_norma,descripcion,idproceso)values('NOM-Q016','Se hacen inspecciones periodicas para el control de fauna nociva',3);
+
+insert into proceso(idPlantilla,descripcion)values(2,"Protección del personal");
+insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','El personal usa equipo de protección en las instalaciones',4);
+
+insert into proceso(idPlantilla,descripcion)values(2,"Higiene de instalaciones");
+insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','El personal usa equipo de protección en las instalaciones',5);
+
+select * from auditor;
+select * from plantilla_auditor;
+select * from proceso;
+select * from requisito;
