@@ -25,7 +25,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
+                            <a class="nav-link" aria-current="page" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
@@ -34,7 +34,7 @@
                             <a class="nav-link" href="registroEmpresa.jsp">Registro Empresa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Mis plantillas</a>
+                            <a class="nav-link" aria-current="page" href="AuditorServlet?accion=Plantillas">Mis plantillas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Datos Personales</a>

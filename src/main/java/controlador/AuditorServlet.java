@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.dao.AuditoriaDAO;
+import modelo.dao.PlantillaAuditorDAO;
 import modelo.dto.AuditoriaDTO;
+import modelo.dto.PlantillaAuditorDTO;
 
 public class AuditorServlet extends HttpServlet {
 
@@ -35,6 +37,8 @@ public class AuditorServlet extends HttpServlet {
             infoAuditor(request,response);
         else if(accion.equals("Inicio"))
             paginaInicio(request,response);
+        else if(accion.equals("Plantillas"))
+            paginaPlantillas(request,response);
         
     }
 
@@ -89,6 +93,22 @@ public class AuditorServlet extends HttpServlet {
             request.setAttribute("listaAuditoriasLideradas",listaByAuditor);
             request.setAttribute("listaAuditoriasAuxiliadas",listaWithAuditor);
             RequestDispatcher vista = request.getRequestDispatcher("inicio.jsp");
+            vista.forward(request, response);
+        } catch (ServletException | IOException  ex) {
+           Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }
+    
+    private void paginaPlantillas(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+
+        String correoAuditor = session.getAttribute("CorreoAuditor").toString();        
+        PlantillaAuditorDAO dao = new PlantillaAuditorDAO();
+        try {
+            ArrayList<PlantillaAuditorDTO> listaByAuditor = dao.readAllByAuditor(correoAuditor);
+            //Hacer otro método para desplegar aquellas prediseñadas
+            request.setAttribute("listaMisPlantillas",listaByAuditor);
+            RequestDispatcher vista = request.getRequestDispatcher("misPlantillas.jsp");
             vista.forward(request, response);
         } catch (ServletException | IOException  ex) {
            Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);

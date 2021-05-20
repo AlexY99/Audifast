@@ -1,18 +1,20 @@
 package modelo.dao;
 
 import java.util.ArrayList;
-import modelo.dto.AuditoriaDTO;
-import utilidades.HibernateUtil;
 import java.util.List;
-import modelo.dto.AuditorDTO;
-import modelo.entidades.Auditoria;
+import modelo.dto.ProcesoDTO;
+import modelo.dto.RequisitoDTO;
+import modelo.entidades.Requisito;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import utilidades.HibernateUtil;
 
-public class AuditoriaDAO {
-   public void create(AuditoriaDTO dto){
+
+public class RequisitoDAO {
+    
+    public void create(RequisitoDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{
@@ -26,7 +28,7 @@ public class AuditoriaDAO {
         }
     }
     
-    public void update(AuditoriaDTO dto){
+    public void update(RequisitoDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{
@@ -40,7 +42,7 @@ public class AuditoriaDAO {
         }
     }
     
-    public void delete(AuditoriaDTO dto){
+    public boolean delete(RequisitoDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{
@@ -51,10 +53,12 @@ public class AuditoriaDAO {
             if(transaction!=null && transaction.isActive()){
                 transaction.rollback();
             }
+            return false;
         }
+        return true;
     }
     
-    public AuditoriaDTO read(AuditoriaDTO dto){
+    public RequisitoDTO read(RequisitoDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{
@@ -66,18 +70,18 @@ public class AuditoriaDAO {
                 transaction.rollback();
             }
         }
+        System.out.println(dto);
         return dto;
     }
     
-    public ArrayList<AuditoriaDTO> readAllByAuditor(AuditorDTO auditor){
+    public ArrayList<RequisitoDTO> readAllProceso(ProcesoDTO proceso){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
-        String correo = auditor.getEntidad().getCorreo();
-        List<Auditoria> lista = null;
+        List<Requisito> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("from Auditoria a where a.correo_auditor_lider = :correoLider order by a.fecha_registro");
-            q.setParameter("correoLider", correo);
+            Query q = session.createQuery("select distinct r from Requisito r inner join fetch p.proceso where p.proceso = :proc");
+            q.setParameter("proc",proceso.getEntidad());
             lista = q.list();
             transaction.commit();
         }catch(HibernateException he){
@@ -85,34 +89,11 @@ public class AuditoriaDAO {
                 transaction.rollback();
             }
         }
-        ArrayList<AuditoriaDTO> dtos = new ArrayList<>();
-        for (Auditoria a : lista) {
-            dtos.add(new AuditoriaDTO(a));
+        ArrayList<RequisitoDTO> dtos = new ArrayList<>();
+        for (Requisito o : lista) {
+            dtos.add(new RequisitoDTO(o));
         }
         return dtos;
     }
-    
-    public ArrayList<AuditoriaDTO> readAllWithAuditor(AuditorDTO auditor){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.getTransaction();
-        String correo = auditor.getEntidad().getCorreo();
-        List<Auditoria> lista = null;
-        try{
-            transaction.begin();
-            Query q = session.createQuery("select distinct a from Auditoria a join a.auditoresAuxiliares aux where aux.id.correo_auditor = :correoAuditor order by a.fecha_registro");            q.setParameter("correoAuditor", correo);
-            q.setParameter("correoAuditor",correo);
-            lista = q.list();
-            transaction.commit();
-        }catch(HibernateException he){
-            if(transaction!=null && transaction.isActive()){
-                transaction.rollback();
-            }
-        }
-        ArrayList<AuditoriaDTO> dtos = new ArrayList<>();
-        for (Auditoria a : lista) {
-            dtos.add(new AuditoriaDTO(a));
-        }
-        return dtos;
-    }
-    
 }
+

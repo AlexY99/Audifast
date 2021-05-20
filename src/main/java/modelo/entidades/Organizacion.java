@@ -24,7 +24,7 @@ public class Organizacion implements Serializable{
     @Column(name = "direccion_fiscal", nullable = false, length = 50)
     private String direccionF; //Direccion Fiscal
     
-    @OneToMany(mappedBy="organizacion" , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="organizacion", cascade = CascadeType.ALL)
     List<Auditoria> auditorias = new ArrayList<Auditoria>();
 
     public IdOrganizacion getId() {

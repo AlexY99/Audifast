@@ -1,8 +1,11 @@
 package modelo.entidades;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -13,6 +16,12 @@ public class Auditor{
     private String nombre;
     private String pswd;
     private String telefono;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auditor")
+    private List<PlantillaAuditor> plantillasAuditor;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "auditor")
+    private List<Norma> normas;
 
     public Auditor() {}
     
@@ -46,6 +55,14 @@ public class Auditor{
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public List<PlantillaAuditor> getPlantillasAuditor() {
+        return plantillasAuditor;
+    }
+
+    public void setPlantillasAuditor(List<PlantillaAuditor> plantillasAuditor) {
+        this.plantillasAuditor = plantillasAuditor;
     }
     
 }

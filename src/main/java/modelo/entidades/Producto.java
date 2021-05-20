@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo.entidades;
 
 import java.io.Serializable;
@@ -13,10 +8,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-/**
- *
- * @author azul-
- */
 @Entity
 @Table (name = "producto", schema = "public")
 public class Producto implements Serializable {
@@ -31,9 +22,7 @@ public class Producto implements Serializable {
     private Auditoria auditoria;
 
     public Producto() {
-       
-        this.id = new IdProducto();
-    
+        this.id = new IdProducto(); 
     }
     
     public IdProducto getId() {

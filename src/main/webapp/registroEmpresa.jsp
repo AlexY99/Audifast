@@ -29,7 +29,7 @@
                             <a class="nav-link active" aria-current="page" href="#">Registro Empresa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Mis plantillas</a>
+                            <a class="nav-link" aria-current="page" href="AuditorServlet?accion=Plantillas">Mis plantillas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Datos Personales</a>

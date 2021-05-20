@@ -36,6 +36,9 @@
         <mapping class="modelo.entidades.IdContactoAuditoria" />
         <mapping class="modelo.entidades.Producto"/>
         <mapping class="modelo.entidades.IdProducto"/>
-        
+        <mapping class="modelo.entidades.Norma" />
+        <mapping class="modelo.entidades.PlantillaAuditor" />
+        <mapping class="modelo.entidades.Proceso" />
+        <mapping class="modelo.entidades.Requisito" />
     </session-factory>
 </hibernate-configuration>
