@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "norma")
@@ -55,7 +54,6 @@ public class Norma implements Serializable {
         this.nombre = nombre;
     }
 
-    @XmlTransient
     public List<Requisito> getRequisitoList() {
         return requisitoList;
     }

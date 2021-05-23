@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "plantilla_auditor")
@@ -66,7 +65,6 @@ public class PlantillaAuditor implements Serializable {
         this.auditor = auditor;
     }
 
-    @XmlTransient
     public List<Proceso> getProcesos() {
         return procesos;
     }

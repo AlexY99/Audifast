@@ -17,11 +17,11 @@ public class IdOrganizacion implements Serializable {
         this.rfc = rfc;
     }
 
-    public String getCorreo() {
+    public String getCorreo_auditor() {
         return correo_auditor;
     }
 
-    public void setCorreo(String correo) {
+    public void setCorreo_auditor(String correo) {
         this.correo_auditor = correo;
     }
     

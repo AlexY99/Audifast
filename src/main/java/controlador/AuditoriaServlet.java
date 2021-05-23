@@ -186,7 +186,7 @@ public class AuditoriaServlet extends HttpServlet {
         String correoAuditorAux = request.getParameter("txtEmailAuditorAux");
         AuditorAuxiliarDTO dto = new AuditorAuxiliarDTO();
         AuditorAuxiliarDAO dao = new AuditorAuxiliarDAO();
-        dto.getEntidad().getId().setCorreo(correoAuditorAux);
+        dto.getEntidad().getId().setCorreo_auditor(correoAuditorAux);
         dto.getEntidad().getId().setIdAuditoria(idAuditoria);
         AuditoriaDTO auditoriaDTO = new AuditoriaDTO();
         AuditoriaDAO auDAO = new AuditoriaDAO();
@@ -255,7 +255,7 @@ public class AuditoriaServlet extends HttpServlet {
         String id = request.getParameter("txtIdAuditoria");
         AuditorAuxiliarDAO dao = new AuditorAuxiliarDAO();
         AuditorAuxiliarDTO dto = new AuditorAuxiliarDTO();
-        dto.getEntidad().getId().setCorreo(correo);
+        dto.getEntidad().getId().setCorreo_auditor(correo);
         dto.getEntidad().getId().setIdAuditoria(Integer.parseInt(id));
         dao.delete(dto);
         request.setAttribute("mensaje", "Auditor Auxiliar Eliminado");

@@ -27,7 +27,7 @@ public class EmpresaDTO {
         StringBuilder sb = new StringBuilder();
         sb.append("\n").append("Nombre: ").append(getEntidad().getNombre()).append("\n");
         sb.append("RFC de la organizacion: ").append(getEntidad().getId().getRfc()).append("\n");
-        sb.append("Correo Auditor: ").append(getEntidad().getId().getCorreo()).append("\n");
+        sb.append("Correo Auditor: ").append(getEntidad().getId().getCorreo_auditor()).append("\n");
         sb.append("Giro: ").append(getEntidad().getGiro()).append("\n");
         sb.append("Dirección Fiscal: ").append(getEntidad().getDireccionF()).append("\n");
         sb.append("Dirección Operacional: ").append(getEntidad().getDireccionO()).append("\n");

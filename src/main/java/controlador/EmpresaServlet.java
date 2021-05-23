@@ -91,7 +91,7 @@ public class EmpresaServlet extends HttpServlet {
             IdOrganizacion id = new IdOrganizacion();
             HttpSession session = request.getSession();
             String correo = session.getAttribute("CorreoAuditor").toString();
-            id.setCorreo(correo);
+            id.setCorreo_auditor(correo);
             id.setRfc(request.getParameter("txtRFC"));
             dto.getEntidad().setId(id);
             dto.getEntidad().setNombre(request.getParameter("txtNombre"));
@@ -117,7 +117,7 @@ public class EmpresaServlet extends HttpServlet {
             //Si existe el parámetro new se crea, sino se actualiza
             HttpSession session = request.getSession();
             String correo = session.getAttribute("CorreoAuditor").toString();
-            id.setCorreo(correo);
+            id.setCorreo_auditor(correo);
             id.setRfc(request.getParameter("rfc"));
             dto.getEntidad().setId(id);
             dto = dao.read(dto);

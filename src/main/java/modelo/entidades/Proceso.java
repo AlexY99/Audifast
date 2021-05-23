@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
@@ -61,7 +62,6 @@ public class Proceso implements Serializable {
         this.plantilla = plantilla;
     }
 
-    @XmlTransient
     public List<Requisito> getRequisitos() {
         return requisitos;
     }

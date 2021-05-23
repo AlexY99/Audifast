@@ -13,7 +13,7 @@ public class IdAuditorAuxiliar implements Serializable {
         return correo_auditor;
     }
 
-    public void setCorreo(String correo) {
+    public void setCorreo_auditor(String correo) {
         this.correo_auditor = correo;
     }
 
