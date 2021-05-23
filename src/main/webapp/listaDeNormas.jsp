@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources\css\inicio.css">
         <link rel="stylesheet" href="resources\css\auditoria.css">
         <script src="resources\js\jquery-3.6.0.js"></script>     
-        <script src="resources\js\bootstrap.min.js"></script>
+        <script src="resources\js\bootstrap.bundle.min.js" async="async"></script>
         <title>AF-Empresas</title>
     </head>
 
@@ -86,7 +86,7 @@
                                     <td><p><c:out value="${norma.entidad.clave}"/></p></td>
                                     <td><p><c:out value="${norma.entidad.nombre}"/></p></td>
                                 <form method="POST" action="NormaServlet?accion=eliminar" id="form-${norma.entidad.id}">
-                                    <input type="hidden" name="rfc" value='${norma.entidad.id}' />
+                                    <input type="hidden" name="id" value='${norma.entidad.id}' />
                                     <td class="text-center">
                                         <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${norma.entidad.id}'>
                                             X
@@ -119,7 +119,7 @@
                                 
                                 <label for="txtClave">Clave</label>
                                 <input type="text" class="form-control" id="txtClave" name="txtClave" placeholder="Clave de la norma">
-                                
+                                <br/>
                                 <label for="txtNombre">Nombre</label>
                                 <input type="text" class="form-control" id="txtNombre" name="txtNombre" placeholder="Nombre">
                             </div>
