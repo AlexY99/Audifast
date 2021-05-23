@@ -99,8 +99,8 @@ public class AuditoriaDAO {
         List<Auditoria> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("select distinct a from Auditoria a join a.auditoresAuxiliares aux where aux.id.correo_auditor = :correoAuditor order by a.fecha_registro");            q.setParameter("correoAuditor", correo);
-            q.setParameter("correoAuditor",correo);
+            Query q = session.createQuery("select distinct a from Auditoria a join a.auditoresAuxiliares aux where aux.id.correo_auditor = :correoAuditor order by a.fecha_registro");            
+            q.setParameter("correoAuditor", correo);
             lista = q.list();
             transaction.commit();
         }catch(HibernateException he){

@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources\css\inicio.css">
         <link rel="stylesheet" href="resources\css\auditoria.css">
         <script src="resources\js\jquery-3.6.0.js"></script>     
-        <script src="resources\js\bootstrap.bundle.min.js" async="async"></script>
+        <script src="resources\js\bootstrap.min.js"></script>
         <title>AF-Empresas</title>
     </head>
 
@@ -28,10 +28,10 @@
                             <a class="nav-link" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  disabled" aria-current="page" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
+                            <a class="nav-link" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="NormaServlet?accion=listaNormas">Normas Registradas</a>
+                            <a class="nav-link disabled" aria-current="page" href="NormaServlet?accion=listaNormas">Normas Registradas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="AuditorServlet?accion=Plantillas">Mis plantillas</a>
@@ -57,17 +57,17 @@
 
         <div class="container">
             <br/>
-            <h2 id="encabezado">Mis Empresas Registradas</h2>
+            <h2 id="encabezado">Mis Normas Registradas</h2>
             <br/>
 
             <div id="Empresas" class="apartado">
                 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <button class="nav-link active">Empresas</button>
+                        <button class="nav-link active">Normas</button>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="nav-link" id="btnAdd" data-bs-toggle="modal" data-bs-target="#modalRegistroEmpresa">Registrar Empresa</button>
+                        <button type="button" class="nav-link" id="btnAdd" data-bs-toggle="modal" data-bs-target="#modalRegistroNorma">Registrar Norma</button>
                     </li>
                 </ul>
                 
@@ -75,26 +75,20 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">RFC</th>
+                                <th scope="col">Clave</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Giro</th>
-                                <th scope="col">Direcci&oacute;n Operaci&oacute;n</th>
-                                <th scope="col">Direcci&oacute;n Fiscal</th>
-                                <th scope="col" class="text-center">Acci&oacute;n</th>
+                                <th scope="col" class="text-center">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items ="${listaDeEmpresas}" var = "empresa">
+                            <c:forEach items ="${listaDeNormas}" var = "norma">
                                 <tr>
-                                    <td><p><c:out value="${empresa.entidad.getId().rfc}"/></p></td>
-                                    <td><p><c:out value="${empresa.entidad.nombre}"/></p></td>
-                                    <td><p><c:out value="${empresa.entidad.giro}"/></p></td>
-                                    <td><p><c:out value="${empresa.entidad.direccionO}"/></p></td>
-                                    <td><p><c:out value="${empresa.entidad.direccionF}"/></p></td>
-                                <form method="POST" action="EmpresaServlet?accion=eliminar" id="form-${empresa.entidad.getId().rfc}">
-                                    <input type="hidden" name="rfc" value='${empresa.entidad.getId().rfc}' />
+                                    <td><p><c:out value="${norma.entidad.clave}"/></p></td>
+                                    <td><p><c:out value="${norma.entidad.nombre}"/></p></td>
+                                <form method="POST" action="NormaServlet?accion=eliminar" id="form-${norma.entidad.id}">
+                                    <input type="hidden" name="rfc" value='${norma.entidad.id}' />
                                     <td class="text-center">
-                                        <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${empresa.entidad.getId().rfc}'>
+                                        <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${norma.entidad.id}'>
                                             X
                                         </button>
                                     </td>
@@ -111,31 +105,23 @@
                             
                             
         <!--El modal  -->
-        <div class="modal fade" id="modalRegistroEmpresa" tabindex="-1" aria-labelledby="modalTitulo" aria-hidden="true">
+        <div class="modal fade" id="modalRegistroNorma" tabindex="-1" aria-labelledby="modalTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalTitulo">Registrar Empresa</h5>
+                            <h5 class="modal-title" id="modalTitulo">Registrar Norma</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="EmpresaServlet?accion=almacenar" method="POST">
+                        <form action="NormaServlet?accion=almacenar" method="POST">
                             <div class="modal-body">
-                                <p class="text-muted">Introduzca los datos de la empresa a registrar</p> 
+                                <p class="text-muted">Introduzca los datos de la norma a registrar</p> 
+                                
+                                <label for="txtClave">Clave</label>
+                                <input type="text" class="form-control" id="txtClave" name="txtClave" placeholder="Clave de la norma">
+                                
                                 <label for="txtNombre">Nombre</label>
                                 <input type="text" class="form-control" id="txtNombre" name="txtNombre" placeholder="Nombre">
-                                <br/>
-                                <label for="txtRFC">RFC</label>
-                                <input type="text" class="form-control" id="txtRFC" name="txtRFC" placeholder="RFC de la empresa">
-                                <br/>
-                                <label for="txtGiro">Giro</label>
-                                <input type="text" class="form-control" id="txtGiro" name="txtGiro" placeholder="Giro de la empresa">
-                                <br/>
-                                <label for="txtDireccionOp">Dirección de operaci&oacute;n</label>
-                                <input type="text" class="form-control" id="txtDireccionOp" name="txtDireccionOp" placeholder="Dirección de operación">
-                                <br/>
-                                <label for="txtDirecciónF">Direcci&oacute;n F&iacute;sica</label>
-                                <input type="text" class="form-control" id="txtDireccionF" name="txtDireccionF" placeholder="Dirección Física">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

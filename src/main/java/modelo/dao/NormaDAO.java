@@ -63,7 +63,7 @@ public class NormaDAO {
         Transaction transaction = session.getTransaction();
         try{
             transaction.begin();
-            dto.setEntidad(session.get(dto.getEntidad().getClass(),dto.getEntidad().getClave()));
+            dto.setEntidad(session.get(dto.getEntidad().getClass(),dto.getEntidad().getId()));
             transaction.commit();
         }catch(HibernateException he){
             if(transaction!=null && transaction.isActive()){
@@ -74,7 +74,7 @@ public class NormaDAO {
         return dto;
     }
     
-    public ArrayList<NormaDTO> readAll(AuditorDTO auditor){
+    public ArrayList<NormaDTO> readAllAuditor(AuditorDTO auditor){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         List<Norma> lista = null;

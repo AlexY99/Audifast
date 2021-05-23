@@ -147,7 +147,7 @@ public class PlantillaServlet extends HttpServlet {
             AuditorDTO adto = new AuditorDTO();
             adto.getEntidad().setCorreo(session.getAttribute("CorreoAuditor").toString());
             
-            ArrayList<NormaDTO> normas = ndao.readAll(adto);
+            ArrayList<NormaDTO> normas = ndao.readAllAuditor(adto);
             
             request.setAttribute("plantilla",dto);
             request.setAttribute("listaProcesos", procesos);
@@ -196,7 +196,7 @@ public class PlantillaServlet extends HttpServlet {
     
     private void almacenarRequisito(HttpServletRequest request, HttpServletResponse response) {
         String idPlantilla = request.getParameter("idPlantilla");
-        String claveNorma = request.getParameter("txtClaveNorma");
+        String idNorma = request.getParameter("txtIdNorma");
         String descripcion = request.getParameter("txtDescripcion");
         String idProceso = request.getParameter("idProceso");
         RequisitoDTO dto = new RequisitoDTO();
@@ -206,7 +206,7 @@ public class PlantillaServlet extends HttpServlet {
         auxpDTO.getEntidad().setId(Integer.parseInt(idProceso));
         
         NormaDTO auxnDTO = new NormaDTO();
-        auxnDTO.getEntidad().setClave(claveNorma);
+        auxnDTO.getEntidad().setId(Integer.parseInt(idNorma));
         
         dto.getEntidad().setNorma(auxnDTO.getEntidad());
         dto.getEntidad().setProceso(auxpDTO.getEntidad());

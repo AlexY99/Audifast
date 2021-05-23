@@ -26,13 +26,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
+                            <a class="nav-link disabled" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="registroEmpresa.jsp">Registro Empresa</a>
+                            <a class="nav-link" href="NormaServlet?accion=listaNormas">Normas Registradas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="AuditorServlet?accion=Plantillas">Mis plantillas</a>
@@ -133,10 +133,10 @@
                                             <form action="PlantillaServlet" method="POST">
                                                 <input type="hidden" name="accion" value="AlmacenarRequisito"/>
                                                 <div class="modal-body">
-                                                    <label for="txtClaveNorma">Clave de norma Asociada</label>
-                                                    <select name="txtClaveNorma">
+                                                    <label for="txtIdNorma">Clave de norma Asociada</label>
+                                                    <select name="txtIdNorma">
                                                         <c:forEach items="${listaNormas}" var="norma">
-                                                            <option value="${norma.entidad.clave}"><c:out value="${norma.entidad.clave}"/></option>
+                                                            <option value="${norma.entidad.id}"><c:out value="${norma.entidad.clave}"/></option>
                                                         </c:forEach>
                                                     </select>
                                                     <br/>

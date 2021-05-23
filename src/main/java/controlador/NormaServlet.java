@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modelo.dao.EmpresaDAO;
-import modelo.dto.EmpresaDTO;
-import modelo.entidades.IdOrganizacion;
+import modelo.dao.NormaDAO;
+import modelo.dto.AuditorDTO;
+import modelo.dto.NormaDTO;
 
-@WebServlet(name = "EmpresaServlet", urlPatterns = {"/EmpresaServlet"})
-public class EmpresaServlet extends HttpServlet {
+@WebServlet(name = "NormaServlet", urlPatterns = {"/NormaServlet"})
+public class NormaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,11 +35,11 @@ public class EmpresaServlet extends HttpServlet {
         String accion = request.getParameter("accion");
 
         if (accion.equals("almacenar")) {
-            almacenarEmpresa(request, response);
+            almacenarNorma(request, response);
         } else if (accion.equals("eliminar")) {
-            eliminarEmpresa(request, response);
-        }else if (accion.equals("listaEmpresas")) {
-            listaEmpresas(request, response);
+            eliminarNorma(request, response);
+        }else if (accion.equals("listaNormas")) {
+            listaNormas(request, response);
         }
 
     }
@@ -83,55 +83,49 @@ public class EmpresaServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void almacenarEmpresa(HttpServletRequest request, HttpServletResponse response) {
+    private void almacenarNorma(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.setCharacterEncoding("utf-8");
-            EmpresaDAO dao = new EmpresaDAO();
-            EmpresaDTO dto = new EmpresaDTO();
-            IdOrganizacion id = new IdOrganizacion();
+            NormaDAO dao = new NormaDAO();
+            NormaDTO dto = new NormaDTO();
+            
             HttpSession session = request.getSession();
             String correo = session.getAttribute("CorreoAuditor").toString();
-            id.setCorreo_auditor(correo);
-            id.setRfc(request.getParameter("txtRFC"));
-            dto.getEntidad().setId(id);
+
+            AuditorDTO adto = new AuditorDTO();
+            adto.getEntidad().setCorreo(correo);
+            dto.getEntidad().setClave(request.getParameter("txtClave"));
             dto.getEntidad().setNombre(request.getParameter("txtNombre"));
-            dto.getEntidad().setGiro(request.getParameter("txtGiro"));
-            dto.getEntidad().setDireccionF(request.getParameter("txtDireccionF"));
-            dto.getEntidad().setDireccionO(request.getParameter("txtDireccionOp"));
+            dto.getEntidad().setAuditor(adto.getEntidad());
             dao.create(dto);
             
             System.out.println("Creado->" + dto.toString());
-            request.setAttribute("mensaje", "Empresa registrada exitosamente");
-            getServletContext().getRequestDispatcher("/EmpresaServlet?accion=listaEmpresas").forward(request, response);
+            request.setAttribute("mensaje", "Norma registrada exitosamente");
+            getServletContext().getRequestDispatcher("/NormaServlet?accion=listaNormas").forward(request, response);
         } catch (IOException | ServletException ex) {
             Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void eliminarEmpresa(HttpServletRequest request, HttpServletResponse response) {
+    private void eliminarNorma(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.setCharacterEncoding("utf-8");
-            EmpresaDAO dao = new EmpresaDAO();
-            EmpresaDTO dto = new EmpresaDTO();
-            IdOrganizacion id = new IdOrganizacion();
-            //Si existe el parámetro new se crea, sino se actualiza
-            HttpSession session = request.getSession();
-            String correo = session.getAttribute("CorreoAuditor").toString();
-            id.setCorreo_auditor(correo);
-            id.setRfc(request.getParameter("rfc"));
-            dto.getEntidad().setId(id);
+            NormaDAO dao = new NormaDAO();
+            NormaDTO dto = new NormaDTO();
+
+            String idNorma = request.getParameter("id");
+            dto.getEntidad().setId(Integer.parseInt(idNorma));
             dto = dao.read(dto);
-            System.out.println(dto);
             if( dto != null ){
-                System.out.println("Empresa a Eliminar" + dto.toString());
+                System.out.println("Norma a Eliminar" + dto.toString());
                 if( dao.delete(dto) ){
-                    request.setAttribute("mensaje", "Empresa eliminada exitosamente");
-                    getServletContext().getRequestDispatcher("/EmpresaServlet?accion=listaEmpresas").forward(request, response);
+                    request.setAttribute("mensaje", "Norma eliminada exitosamente");
+                    getServletContext().getRequestDispatcher("/NormaServlet?accion=listaNormas").forward(request, response);
                 }else{
                     request.setAttribute("mensaje", "Fallo al eliminar");
-                    getServletContext().getRequestDispatcher("/EmpresaServlet?accion=listaEmpresas").forward(request, response);                }
+                    getServletContext().getRequestDispatcher("/NormaServlet?accion=listaNormas").forward(request, response);                }
             }else{
-                System.out.println("Empresa no encontrada");
+                System.out.println("Norma no encontrada");
                 request.setAttribute("mensaje", "Fallo al eliminar");
                 getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);
             }     
@@ -141,19 +135,21 @@ public class EmpresaServlet extends HttpServlet {
         }
     }
 
-    private void listaEmpresas(HttpServletRequest request, HttpServletResponse response) {
+    private void listaNormas(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        EmpresaDAO dao = new EmpresaDAO();
+        NormaDAO dao = new NormaDAO();
+        AuditorDTO adto = new AuditorDTO();
+        adto.getEntidad().setCorreo(session.getAttribute("CorreoAuditor").toString());
         try {
-            ArrayList<EmpresaDTO> lista = dao.readAll(session.getAttribute("CorreoAuditor").toString());
-            for (EmpresaDTO empresaDTO : lista) {
+            ArrayList<NormaDTO> lista = dao.readAllAuditor(adto);
+            for (NormaDTO empresaDTO : lista) {
                 System.out.println(empresaDTO);
             }
-            request.setAttribute("listaDeEmpresas", lista);
-            RequestDispatcher vista = request.getRequestDispatcher("listaDeEmpresas.jsp");
+            request.setAttribute("listaDeNormas", lista);
+            RequestDispatcher vista = request.getRequestDispatcher("listaDeNormas.jsp");
             vista.forward(request, response);
         } catch (ServletException | IOException ex) {
-            Logger.getLogger(EmpresaServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NormaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

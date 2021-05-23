@@ -6,6 +6,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class IdAuditorAuxiliar implements Serializable {
+    
     private String correo_auditor;
     private int idAuditoria;
 

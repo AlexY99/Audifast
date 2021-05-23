@@ -25,13 +25,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">P&aacute;gina Principal</a>
+                            <a class="nav-link disabled" aria-current="page" href="#">P&aacute;gina Principal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="registroEmpresa.jsp">Registro Empresa</a>
+                            <a class="nav-link" href="NormaServlet?accion=listaNormas">Normas Registradas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="AuditorServlet?accion=Plantillas">Mis plantillas</a>
@@ -156,7 +156,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <input type="submit" class="btn btn-primary" value="Registrarse">
+                                <input type="submit" class="btn btn-primary" value="Registrar">
                             </div>
                         </form>
                     </div>

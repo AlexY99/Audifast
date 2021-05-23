@@ -19,7 +19,7 @@ public class Requisito implements Serializable {
     private String descripcion;
     
     @ManyToOne
-    @JoinColumn(name = "clave_norma", referencedColumnName = "clave")
+    @JoinColumn(name = "id_norma", referencedColumnName = "id")
     private Norma norma;
     
     @ManyToOne

@@ -31,7 +31,7 @@
                             <a class="nav-link" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="registroEmpresa.jsp">Registro Empresa</a>
+                            <a class="nav-link" href="NormaServlet?accion=listaNormas">Normas Registradas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="AuditorServlet?accion=Plantillas">Mis plantillas</a>
