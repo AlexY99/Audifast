@@ -18,9 +18,7 @@ public class Requisito implements Serializable {
     private Integer id;
     private String descripcion;
     
-    @ManyToOne
-    @JoinColumn(name = "id_norma", referencedColumnName = "id")
-    private Norma norma;
+    private String clave_norma;
     
     @ManyToOne
     @JoinColumn(name = "idProceso", referencedColumnName = "id")
@@ -54,12 +52,12 @@ public class Requisito implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Norma getNorma() {
-        return norma;
+    public String getClave_norma() {
+        return clave_norma;
     }
 
-    public void setNorma(Norma norma) {
-        this.norma = norma;
+    public void setClave_norma(String clave_norma) {
+        this.clave_norma = clave_norma;
     }
 
     public Proceso getProceso() {

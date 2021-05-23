@@ -3,14 +3,12 @@ package modelo.entidades;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,9 +26,6 @@ public class Norma implements Serializable {
     private Auditor auditor;
     
     private String nombre;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "norma")
-    private List<Requisito> requisitoList;
     
     public Norma() {}
 
@@ -58,14 +53,6 @@ public class Norma implements Serializable {
         this.nombre = nombre;
     }
 
-    public List<Requisito> getRequisitoList() {
-        return requisitoList;
-    }
-
-    public void setRequisitoList(List<Requisito> requisitoList) {
-        this.requisitoList = requisitoList;
-    }
-
     public Auditor getAuditor() {
         return auditor;
     }
@@ -81,7 +68,6 @@ public class Norma implements Serializable {
         hash = 71 * hash + Objects.hashCode(this.clave);
         hash = 71 * hash + Objects.hashCode(this.auditor);
         hash = 71 * hash + Objects.hashCode(this.nombre);
-        hash = 71 * hash + Objects.hashCode(this.requisitoList);
         return hash;
     }
 

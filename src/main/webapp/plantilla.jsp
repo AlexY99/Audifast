@@ -81,7 +81,7 @@
                                     <c:set var="cuentaReq" value="${cuentaReq+1}"/>
                                     <tr>
                                         <td><c:out value="${cuenta}"/>.<c:out value="${cuentaReq}"/></td>
-                                        <td><c:out value="${requisito.norma.clave}"/></td>
+                                        <td><c:out value="${requisito.clave_norma}"/></td>
                                         <td><c:out value="${requisito.descripcion}"/></td>
                                         <form method="POST" action="PlantillaServlet" id="formEliminarRequisito-${requisito.id}">
                                             <input type="hidden" name="accion" value="EliminarRequisito"/>
@@ -133,10 +133,10 @@
                                             <form action="PlantillaServlet" method="POST">
                                                 <input type="hidden" name="accion" value="AlmacenarRequisito"/>
                                                 <div class="modal-body">
-                                                    <label for="txtIdNorma">Clave de norma Asociada</label>
-                                                    <select name="txtIdNorma">
+                                                    <label for="txtClaveNorma">Clave de norma Asociada</label>
+                                                    <select name="txtClaveNorma">
                                                         <c:forEach items="${listaNormas}" var="norma">
-                                                            <option value="${norma.entidad.id}"><c:out value="${norma.entidad.clave}"/></option>
+                                                            <option value="${norma.entidad.clave}"><c:out value="${norma.entidad.clave}"/></option>
                                                         </c:forEach>
                                                     </select>
                                                     <br/>

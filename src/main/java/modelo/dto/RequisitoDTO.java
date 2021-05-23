@@ -26,7 +26,7 @@ public class RequisitoDTO {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("\n").append("ID: ").append(getEntidad().getId()).append("\n");
-        sb.append("ClaveNorma: ").append(getEntidad().getNorma().getClave()).append("\n");
+        sb.append("ClaveNorma: ").append(getEntidad().getClave_norma()).append("\n");
         sb.append("Descripcion: ").append(getEntidad().getDescripcion()).append("\n");
         sb.append("IDProceso: ").append(getEntidad().getProceso().getId()).append("\n");
         return sb.toString();        

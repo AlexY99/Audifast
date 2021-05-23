@@ -196,7 +196,7 @@ public class PlantillaServlet extends HttpServlet {
     
     private void almacenarRequisito(HttpServletRequest request, HttpServletResponse response) {
         String idPlantilla = request.getParameter("idPlantilla");
-        String idNorma = request.getParameter("txtIdNorma");
+        String claveNorma = request.getParameter("txtClaveNorma");
         String descripcion = request.getParameter("txtDescripcion");
         String idProceso = request.getParameter("idProceso");
         RequisitoDTO dto = new RequisitoDTO();
@@ -205,10 +205,7 @@ public class PlantillaServlet extends HttpServlet {
         ProcesoDTO auxpDTO = new ProcesoDTO();
         auxpDTO.getEntidad().setId(Integer.parseInt(idProceso));
         
-        NormaDTO auxnDTO = new NormaDTO();
-        auxnDTO.getEntidad().setId(Integer.parseInt(idNorma));
-        
-        dto.getEntidad().setNorma(auxnDTO.getEntidad());
+        dto.getEntidad().setClave_norma(claveNorma);
         dto.getEntidad().setProceso(auxpDTO.getEntidad());
         dto.getEntidad().setDescripcion(descripcion);
         
