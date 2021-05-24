@@ -17,10 +17,12 @@ import modelo.dao.AuditorAuxiliarDAO;
 import modelo.dao.AuditorDAO;
 import modelo.dao.AuditoriaDAO;
 import modelo.dao.ContactoAuditoriaDAO;
+import modelo.dao.PlantillaAuditorDAO;
 import modelo.dao.ProductoDAO;
 import modelo.dto.AuditorAuxiliarDTO;
 import modelo.dto.AuditorDTO;
 import modelo.dto.ContactoAuditoriaDTO;
+import modelo.dto.PlantillaAuditorDTO;
 import modelo.dto.ProductoDTO;
 import modelo.entidades.Auditoria;
 
@@ -140,17 +142,22 @@ public class AuditoriaServlet extends HttpServlet {
             AuditoriaDAO dao = new AuditoriaDAO();
 
             AuditorDTO adto = new AuditorDTO();
-            AuditorDTO adto1 = new AuditorDTO();
             AuditorDAO adao = new AuditorDAO();
 
-            adto1.getEntidad().setCorreo(correoAuditor);
-            adto1 = adao.read(adto1);
+            adto.getEntidad().setCorreo(correoAuditor);
+            adto = adao.read(adto);
+            request.setAttribute("auditor", adto);
 
             dto.getEntidad().setId(Integer.parseInt(id));
             dto = dao.read(dto);
             
             List<AuditorAuxiliarDTO> dtos = null;
             dtos = daoAuxiliar.readAll(Integer.parseInt(id));
+            
+            PlantillaAuditorDAO pldao = new PlantillaAuditorDAO();
+            
+            ArrayList<PlantillaAuditorDTO> listaPlantillas = pldao.readAllByAuditor(correoAuditor);
+            
             ArrayList<AuditorDTO> dtosAuditores = new ArrayList<>();
             for (AuditorAuxiliarDTO axdto : dtos) {
                 adto = new AuditorDTO();
@@ -168,10 +175,11 @@ public class AuditoriaServlet extends HttpServlet {
             List<ProductoDTO> listaProductos = null;
             listaProductos = daoProducto.readAll(Integer.parseInt(id));
                   
+            request.setAttribute("listaMisPlantillas",listaPlantillas);
             request.setAttribute("listaProductos", listaProductos);
             request.setAttribute("listaContactos", listaContactos);
             request.setAttribute("auditoria", dto);
-            request.setAttribute("auditor", adto1);
+            
             request.setAttribute("auditoresAuxiliares", dtosAuditores);
 
             RequestDispatcher vista = request.getRequestDispatcher("auditoria.jsp");

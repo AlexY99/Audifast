@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
         <script src="resources\js\jquery-3.6.0.js"></script>     
         <script src="resources\js\bootstrap.bundle.min.js" async="async"></script>
+        <script src="resources\js\auditoria.js" async="async"></script>
         <title>AF-Auditoría</title>
     </head>
 
@@ -58,7 +59,8 @@
         <div class="container">
             <br/>
             <h2 id="encabezado">Auditoría <c:out value="${auditoria.entidad.id}"/></h2>
-
+            <input type="hidden" id="txtIdAuditoria" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+            
             <div id="datosOrganizacion" class="apartado">
                 <h3 id="encabezadoDatos" class="encabezadoApartado">Datos de la Organización Auditada</h3>
                 RFC:  <c:out value="${auditoria.entidad.organizacion.getId().rfc}"/><br/>
@@ -67,6 +69,15 @@
                 Direccion de operacion:  <p><c:out value="${auditoria.entidad.organizacion.direccionO}"/></p>
             </div>
 
+            <br/>
+            
+            <div id="datosActa" class="apartado">
+                <h3 id="encabezadoActa" class="encabezadoApartado">Acta de Auditor&iacute;a</h3>
+                <button type="button" class="btnAdd btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormActaAuditoria">
+                    Acta de Auditor&iacute;a
+                </button>  
+            </div>
+            
             <br/>
 
             <div id="equipoAuditor" class="apartado">
@@ -202,25 +213,23 @@
         <!--modalFormAuditorAuxiliar  -->
         <div class="modal fade" id="modalFormAuditorAuxiliar" tabindex="-1" aria-labelledby="modalFormAuditorAuxiliarTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalFormAuditorAuxiliarTitulo">Agregar Auditor Auxiliar</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="AuditoriaServlet?accion=AlmacenarAuditorAuxiliar" method="POST">
-                            <div class="modal-body">
-                                <p>Ingrese el correo del auditor, debe haberse registrado previamente.</p>
-                                <label for="txtEmailAuditor">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="txtEmailAuditorAux" name="txtEmailAuditorAux" placeholder="correo@electronico.com">  
-                                <input type="hidden" value="${auditoria.entidad.id}" name="txtIdAuditoria" />
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <input type="submit" class="btn btn-primary" value="Registrar">
-                            </div>
-                        </form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFormAuditorAuxiliarTitulo">Agregar Auditor Auxiliar</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form action="AuditoriaServlet?accion=AlmacenarAuditorAuxiliar" method="POST">
+                        <div class="modal-body">
+                            <p>Ingrese el correo del auditor, debe haberse registrado previamente.</p>
+                            <label for="txtEmailAuditor">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="txtEmailAuditorAux" name="txtEmailAuditorAux" placeholder="correo@electronico.com">  
+                            <input type="hidden" value="${auditoria.entidad.id}" name="txtIdAuditoria" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <input type="submit" class="btn btn-primary" value="Registrar">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -228,33 +237,71 @@
         <!--modalFormContacto  -->
         <div class="modal fade" id="modalFormContacto" tabindex="-1" aria-labelledby="modalFormContactoTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalFormContactoTitulo">Agregar Contacto</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFormContactoTitulo">Agregar Contacto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="AuditoriaServlet?accion=AlmacenarContacto" method="POST">
+                        <div class="modal-body">
+                            <label for="txtNombreContacto">Nombre Completo</label>
+                            <input type="text" class="form-control" id="txtNombreContacto" name="txtNombreContacto" placeholder="Nombre">
+                            <br/>
+                            <label for="txtEmail">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="correo@electronico.com">  
+                            <br/>
+                            <label for="txtPuesto">Puesto</label>
+                            <input type="text" class="form-control" id="txtPuesto" name="txtPuesto" placeholder="Puesto que ocupa">  
+                            <br/>
+                            <label for="txtTelefono">Teléfono</label>
+                            <input type="tel" class="form-control" id="txtTelefono" name="txtTelefono" pattern="[0-9]{10}" placeholder="10 dígitos"> 
+                            <input type="hidden" value="${auditoria.entidad.id}" name="txtIdAuditoria" />
                         </div>
-                        <form action="AuditoriaServlet?accion=AlmacenarContacto" method="POST">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <input type="submit" class="btn btn-primary" value="Registrar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+                            
+        <!--modalFormActaAuditoria  -->
+        <div class="modal fade" id="modalFormActaAuditoria" tabindex="-1" aria-labelledby="modalFormActaAuditoriaTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFormActaAuditoriaTitulo">Seleccionar Plantilla como Acta de Auditor&iacute;a</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <c:choose>
+                        <c:when test="${not empty listaMisPlantillas}">
+                            <form action="AuditoriaServlet?accion=SeleccionarActa" method="POST">
+                                <div class="modal-body">
+                                    <select id="select-plantilla" class="form-select" aria-label="Plantilla">
+                                        <option value="0">Seleccione una Plantilla</option>
+                                        <c:forEach items ="${listaMisPlantillas}" var = "miPlantilla">
+                                            <option value="${miPlantilla.entidad.id}">${miPlantilla.entidad.nombre}</option>
+                                        </c:forEach>
+                                    </select>
+                                    <br/>
+                                    <div id="div-procesos" class="container-fluid"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <input type="submit" class="btn btn-primary" value="Registrar">
+                                </div>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
                             <div class="modal-body">
-                                <label for="txtNombreContacto">Nombre Completo</label>
-                                <input type="text" class="form-control" id="txtNombreContacto" name="txtNombreContacto" placeholder="Nombre">
-                                <br/>
-                                <label for="txtEmail">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="correo@electronico.com">  
-                                <br/>
-                                <label for="txtPuesto">Puesto</label>
-                                <input type="text" class="form-control" id="txtPuesto" name="txtPuesto" placeholder="Puesto que ocupa">  
-                                <br/>
-                                <label for="txtTelefono">Teléfono</label>
-                                <input type="tel" class="form-control" id="txtTelefono" name="txtTelefono" pattern="[0-9]{10}" placeholder="10 dígitos"> 
-                                <input type="hidden" value="${auditoria.entidad.id}" name="txtIdAuditoria" />
+                                Agregue una plantilla para utilizar como Acta de Auditor&iacute;a
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <input type="submit" class="btn btn-primary" value="Registrar">
                             </div>
-                        </form>
-                    </div>
+                        </c:otherwise>
+                    </c:choose>             
                 </div>
             </div>
         </div>
@@ -262,27 +309,25 @@
         <!--modalFormProducto  -->
         <div class="modal fade" id="modalFormProducto" tabindex="-1" aria-labelledby="modalFormProductoTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalFormProductoTitulo">Agregar Producto</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="AuditoriaServlet?accion=AlmacenarProducto" method="POST">
-                            <div class="modal-body">
-                                <label for="txtClaveProducto">Clave del Producto</label>
-                                <input type="text" class="form-control" id="txtClaveProducto" name="txtClaveProducto" placeholder="Nombre">
-                                <br/>
-                                <label for="txtDescripcionProducto">Nombre / Descripción</label>
-                                <input type="text" class="form-control" id="txtDescripcionProducto" name="txtDescripcion" placeholder="Descripcion"> 
-                                <input type="hidden" value="${auditoria.entidad.id}" name="txtIdAuditoria" />
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <input type="submit" class="btn btn-primary" value="Registrar">
-                            </div>
-                        </form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFormProductoTitulo">Agregar Producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form action="AuditoriaServlet?accion=AlmacenarProducto" method="POST">
+                        <div class="modal-body">
+                            <label for="txtClaveProducto">Clave del Producto</label>
+                            <input type="text" class="form-control" id="txtClaveProducto" name="txtClaveProducto" placeholder="Nombre">
+                            <br/>
+                            <label for="txtDescripcionProducto">Nombre / Descripción</label>
+                            <input type="text" class="form-control" id="txtDescripcionProducto" name="txtDescripcion" placeholder="Descripcion"> 
+                            <input type="hidden" value="${auditoria.entidad.id}" name="txtIdAuditoria" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <input type="submit" class="btn btn-primary" value="Registrar">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

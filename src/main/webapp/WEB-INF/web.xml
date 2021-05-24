@@ -16,6 +16,14 @@
         <servlet-name>PlantillaServlet</servlet-name>
         <servlet-class>controlador.PlantillaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NormaServlet</servlet-name>
+        <servlet-class>controlador.NormaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmpresaServlet</servlet-name>
+        <servlet-class>controlador.EmpresaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AuditorServlet</servlet-name>
         <url-pattern>/AuditorServlet</url-pattern>
@@ -27,6 +35,14 @@
     <servlet-mapping>
         <servlet-name>PlantillaServlet</servlet-name>
         <url-pattern>/PlantillaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NormaServlet</servlet-name>
+        <url-pattern>/NormaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmpresaServlet</servlet-name>
+        <url-pattern>/EmpresaServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

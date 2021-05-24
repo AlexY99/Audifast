@@ -1,8 +1,13 @@
 package controlador;
 
+import com.google.gson.Gson;
 import modelo.dto.PlantillaAuditorDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -11,11 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.dao.AuditorAuxiliarDAO;
 import modelo.dao.AuditorDAO;
 import modelo.dao.NormaDAO;
 import modelo.dao.PlantillaAuditorDAO;
 import modelo.dao.ProcesoDAO;
 import modelo.dao.RequisitoDAO;
+import modelo.dto.AuditorAuxiliarDTO;
 import modelo.dto.AuditorDTO;
 import modelo.dto.NormaDTO;
 import modelo.dto.ProcesoDTO;
@@ -26,8 +33,7 @@ public class PlantillaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.setCharacterEncoding("utf-8");
-
+        request.setCharacterEncoding("utf-8");        
         String accion = request.getParameter("accion");
 
         if (accion.equals("Almacenar")) 
@@ -44,6 +50,8 @@ public class PlantillaServlet extends HttpServlet {
             eliminarProceso(request, response);
         else if (accion.equals("EliminarRequisito")) 
             eliminarRequisito(request, response);   
+        else if (accion.equals("getProcesosPlantilla")) 
+            getProcesosPlantilla(request, response);   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -230,6 +238,61 @@ public class PlantillaServlet extends HttpServlet {
         request.setAttribute("mensaje", "Requisito Eliminado");
         request.setAttribute("id",idPlantilla);
         editarPlantilla(request, response);
+    }
+
+    private void getProcesosPlantilla(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+        
+        String idAuditoria = request.getParameter("idAuditoria");
+        String idPlantilla = request.getParameter("idPlantilla");
+        
+        PlantillaAuditorDTO dto = new PlantillaAuditorDTO();
+        dto.getEntidad().setId(Integer.parseInt(idPlantilla));
+        
+        ProcesoDAO pdao = new ProcesoDAO();
+        ArrayList<ProcesoDTO> procesos = pdao.readAllPlantilla(dto);
+        
+        AuditorAuxiliarDAO daoAuxiliar = new AuditorAuxiliarDAO();
+        List<AuditorAuxiliarDTO> dtos = daoAuxiliar.readAll(Integer.parseInt(idAuditoria));
+
+        AuditorDTO adto = new AuditorDTO();
+        AuditorDAO adao = new AuditorDAO();
+        
+        adto.getEntidad().setCorreo(session.getAttribute("CorreoAuditor").toString());
+        adto = adao.read(adto);
+        
+        String jsonResp = "{\"auditores\":{\"";
+        
+        jsonResp += adto.getEntidad().getCorreo()+"\":\""+adto.getEntidad().getNombre()+"\",";
+        
+        for (AuditorAuxiliarDTO axdto : dtos) {
+            jsonResp += "\"";
+            adto = new AuditorDTO();
+            adto.getEntidad().setCorreo(axdto.getEntidad().getId().getCorreo());
+            adto = adao.read(adto);
+            jsonResp += adto.getEntidad().getCorreo()+"\":\""+adto.getEntidad().getNombre()+"\",";
+        }
+        jsonResp = jsonResp.substring(0,jsonResp.length()-1);   
+        jsonResp+="},\"procesos\":{";
+       
+        for(ProcesoDTO pdto : procesos){
+            jsonResp += "\"";
+            jsonResp+=pdto.getEntidad().getId()+"\":\""+pdto.getEntidad().getDescripcion()+"\",";
+        }
+        jsonResp = jsonResp.substring(0,jsonResp.length()-1);
+        jsonResp += "}}";
+        //mandarlista de auditores auxiliares de la auditoria
+        
+        System.out.println(jsonResp);
+        
+        response.setContentType("text/plain");
+        response.setStatus(200);
+        PrintWriter out = response.getWriter();
+
+        out.println(jsonResp);
+        out.flush();
+        out.close();
+
     }
     
 }
