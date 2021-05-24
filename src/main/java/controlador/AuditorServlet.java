@@ -105,7 +105,7 @@ public class AuditorServlet extends HttpServlet {
         String correoAuditor = session.getAttribute("CorreoAuditor").toString();        
         PlantillaAuditorDAO dao = new PlantillaAuditorDAO();
         try {
-            ArrayList<PlantillaAuditorDTO> listaByAuditor = dao.readAllByAuditor(correoAuditor);
+            ArrayList<PlantillaAuditorDTO> listaByAuditor = dao.readAll(correoAuditor);
             //Hacer otro método para desplegar aquellas prediseñadas
             request.setAttribute("listaMisPlantillas",listaByAuditor);
             RequestDispatcher vista = request.getRequestDispatcher("misPlantillas.jsp");

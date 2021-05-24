@@ -156,7 +156,7 @@ public class AuditoriaServlet extends HttpServlet {
             
             PlantillaAuditorDAO pldao = new PlantillaAuditorDAO();
             
-            ArrayList<PlantillaAuditorDTO> listaPlantillas = pldao.readAllByAuditor(correoAuditor);
+            ArrayList<PlantillaAuditorDTO> listaPlantillas = pldao.readAll(correoAuditor);
             
             ArrayList<AuditorDTO> dtosAuditores = new ArrayList<>();
             for (AuditorAuxiliarDTO axdto : dtos) {
