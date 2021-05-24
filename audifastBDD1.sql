@@ -109,10 +109,9 @@ create table proceso(
 
 create table requisito(
     id int(10) auto_increment primary key,
-    id_norma int(10) not null,
+    clave_norma nvarchar(20) not null,
     descripcion nvarchar(100) not null,
     idProceso int(10) not null,
-    foreign key(id_norma) references norma(id),
     foreign key(idProceso) references proceso(id)
 		on delete cascade on update cascade
 );
@@ -162,22 +161,22 @@ insert into plantilla_auditor values('xtarevolution@yahoo.com.mx',1,'Plantilla 1
 insert into plantilla_auditor values('xtarevolution@yahoo.com.mx',2,'Plantilla 2');
 
 insert into proceso(idPlantilla,descripcion)values(1,"Control de plagas");
-insert into requisito(id_norma,descripcion,idproceso)values(1,'Se tienen protocolos para el control de fauna nociva',1);
-insert into requisito(id_norma,descripcion,idproceso)values(1,'Se hacen inspecciones periodicas para el control de fauna nociva',1);
+insert into requisito(clave_norma,descripcion,idproceso)values('NOM-Q016','Se tienen protocolos para el control de fauna nociva',1);
+insert into requisito(clave_norma,descripcion,idproceso)values('NOM-Q016','Se hacen inspecciones periodicas para el control de fauna nociva',1);
 
 insert into proceso(idPlantilla,descripcion)values(1,"Higiene de instalaciones");
-insert into requisito(id_norma,descripcion,idproceso)values(2,'Se realiza limpieza periodica de las instalaciones',2);
+insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','Se realiza limpieza periodica de las instalaciones',2);
 
 
 insert into proceso(idPlantilla,descripcion)values(2,"Control de plagas");
-insert into requisito(id_norma,descripcion,idproceso)values(1,'Se tienen protocolos para el control de fauna nociva',3);
-insert into requisito(id_norma,descripcion,idproceso)values(1,'Se hacen inspecciones periodicas para el control de fauna nociva',3);
+insert into requisito(clave_norma,descripcion,idproceso)values('NOM-Q016','Se tienen protocolos para el control de fauna nociva',3);
+insert into requisito(clave_norma,descripcion,idproceso)values('NOM-Q016','Se hacen inspecciones periodicas para el control de fauna nociva',3);
 
 insert into proceso(idPlantilla,descripcion)values(2,"Protección del personal");
-insert into requisito(id_norma,descripcion,idproceso)values(2,'El personal usa equipo de protección en las instalaciones',4);
+insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','El personal usa equipo de protección en las instalaciones',4);
 
 insert into proceso(idPlantilla,descripcion)values(2,"Higiene de instalaciones");
-insert into requisito(id_norma,descripcion,idproceso)values(2,'El personal usa equipo de protección en las instalaciones',5);
+insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','El personal usa equipo de protección en las instalaciones',5);
 
 select * from auditor;
 select * from plantilla_auditor;
