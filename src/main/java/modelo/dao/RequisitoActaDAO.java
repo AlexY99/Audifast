@@ -1,10 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package modelo.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import modelo.dto.ProcesoDTO;
-import modelo.dto.RequisitoDTO;
-import modelo.entidades.Requisito;
+import modelo.dto.RequisitoActaDTO;
+import modelo.entidades.RequisitoActa;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,9 +16,13 @@ import org.hibernate.query.Query;
 import utilidades.HibernateUtil;
 
 
-public class RequisitoDAO {
+/**
+ *
+ * @author azul-
+ */
+public class RequisitoActaDAO {
     
-    public void create(RequisitoDTO dto){
+    public void create(RequisitoActaDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{
@@ -25,10 +33,11 @@ public class RequisitoDAO {
             if(transaction!=null && transaction.isActive()){
                 transaction.rollback();
             }
+            System.out.println(he);
         }
     }
     
-    public void update(RequisitoDTO dto){
+    public void update(RequisitoActaDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{
@@ -42,7 +51,7 @@ public class RequisitoDAO {
         }
     }
     
-    public boolean delete(RequisitoDTO dto){
+    public boolean delete(RequisitoActaDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{
@@ -58,7 +67,7 @@ public class RequisitoDAO {
         return true;
     }
     
-    public RequisitoDTO read(RequisitoDTO dto){
+    public RequisitoActaDTO read(RequisitoActaDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{
@@ -74,14 +83,14 @@ public class RequisitoDAO {
         return dto;
     }
     
-    public ArrayList<RequisitoDTO> readAllProceso(ProcesoDTO proceso){
+    /*public ArrayList<RequisitoActaDTO> readAllPlantilla(PlantillaAuditorDTO plantilla){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
-        List<Requisito> lista = null;
+        List<ProcesoActa> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("select distinct r from Requisito r inner join fetch p.proceso where p.proceso = :proc");
-            q.setParameter("proc",proceso.getEntidad());
+            Query q = session.createQuery("select distinct p from ProcesoActa p where p.plantilla = :plant");
+            q.setParameter("plant",plantilla.getEntidad());
             lista = q.list();
             transaction.commit();
         }catch(HibernateException he){
@@ -89,21 +98,22 @@ public class RequisitoDAO {
                 transaction.rollback();
             }
         }
-        ArrayList<RequisitoDTO> dtos = new ArrayList<>();
-        for (Requisito o : lista) {
-            dtos.add(new RequisitoDTO(o));
+        ArrayList<RequisitoActaDTO> dtos = new ArrayList<>();
+        for (ProcesoActa o : lista) {
+            dtos.add(new RequisitoActaDTO(o));
         }
         return dtos;
-    }
+    }*/
     
-    public List<RequisitoDTO> Requisitos(int idProceso) {
+
+    public List<RequisitoActaDTO> RequisitosActa(int idProcesoActa) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
-        List<Requisito> lista = null;
+        List<RequisitoActa> lista = null;
         try{
             transaction.begin();
-            Query q = session.createQuery("from Requisito r where r.proceso.id = :id order by r.id");
-            q.setParameter("id", idProceso);
+            Query q = session.createQuery("from RequisitoActa r where r.procesoActa.id = :id order by r.id");
+            q.setParameter("id", idProcesoActa);
             lista = q.list();
             transaction.commit();
         }catch(HibernateException he){
@@ -111,15 +121,14 @@ public class RequisitoDAO {
                 transaction.rollback();
             }
         }
-        ArrayList<RequisitoDTO> dtos = new ArrayList<>();
-        for (Requisito o : lista) {
-            dtos.add(new RequisitoDTO(o));
+        ArrayList<RequisitoActaDTO> dtos = new ArrayList<>();
+        for (RequisitoActa o : lista) {
+            dtos.add(new RequisitoActaDTO(o));
         }
-        for(RequisitoDTO pDTO1 : dtos){
+        for(RequisitoActaDTO pDTO1 : dtos){
             System.out.println(pDTO1);
         }
         return dtos;
     }
     
 }
-

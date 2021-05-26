@@ -97,5 +97,9 @@ public class PlantillaAuditor implements Serializable {
     public String toString() {
         return "modelo.entidades.PlantillaAuditor[ id=" + id + " ]";
     }
+
+    public int getNProcesos() {
+        return procesos.size();
+    }
     
 }

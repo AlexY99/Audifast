@@ -30,7 +30,7 @@ function enviarDatos(idP,idA){
             html += '<tr>';
             html += '<th scope="row">'+value+'</th>';
             html += '<td><input type="number" id="txtPonderacionProceso'+key+'" name="txtPonderacionProceso'+key+'" class="form-control"/></td>';
-            html += '<td><select name="txtCorreoEncargadoProceso" class="form-select" aria-label="encargado">';
+            html += '<td><select name="txtCorreoEncargadoProceso'+key+'" class="form-select" aria-label="encargado">';
             $.each(resp.auditores, function(key,value){
                 html += '<option value='+key+'>'+value+'</option>';
             });

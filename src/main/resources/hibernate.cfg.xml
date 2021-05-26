@@ -40,5 +40,7 @@
         <mapping class="modelo.entidades.PlantillaAuditor" />
         <mapping class="modelo.entidades.Proceso" />
         <mapping class="modelo.entidades.Requisito" />
+        <mapping class="modelo.entidades.ProcesoActa" />
+        <mapping class="modelo.entidades.RequisitoActa" />
     </session-factory>
 </hibernate-configuration>

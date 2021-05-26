@@ -18,13 +18,22 @@ import modelo.dao.AuditorDAO;
 import modelo.dao.AuditoriaDAO;
 import modelo.dao.ContactoAuditoriaDAO;
 import modelo.dao.PlantillaAuditorDAO;
+import modelo.dao.ProcesoActaDAO;
+import modelo.dao.ProcesoDAO;
 import modelo.dao.ProductoDAO;
+import modelo.dao.RequisitoActaDAO;
+import modelo.dao.RequisitoDAO;
 import modelo.dto.AuditorAuxiliarDTO;
 import modelo.dto.AuditorDTO;
 import modelo.dto.ContactoAuditoriaDTO;
 import modelo.dto.PlantillaAuditorDTO;
+import modelo.dto.ProcesoActaDTO;
 import modelo.dto.ProductoDTO;
+import modelo.dto.ProcesoDTO;
+import modelo.dto.RequisitoActaDTO;
+import modelo.dto.RequisitoDTO;
 import modelo.entidades.Auditoria;
+
 
 public class AuditoriaServlet extends HttpServlet {
 
@@ -53,6 +62,12 @@ public class AuditoriaServlet extends HttpServlet {
             EliminarContacto(request, response);
         } else if (accion.equals("EliminarProducto")) {
             EliminarProducto(request, response);
+        } else if (accion.equals("SeleccionarActa")) {
+            SeleccionarActa(request, response);
+        } else if (accion.equals("EditarActa")) {
+            EditarActa(request, response);
+        } else if (accion.equals("EliminarActa")) {
+            EliminarActa(request, response);
         }
 
     }
@@ -143,6 +158,9 @@ public class AuditoriaServlet extends HttpServlet {
 
             AuditorDTO adto = new AuditorDTO();
             AuditorDAO adao = new AuditorDAO();
+            
+            ProcesoActaDTO padto = new ProcesoActaDTO();
+            ProcesoActaDAO padao = new ProcesoActaDAO();
 
             adto.getEntidad().setCorreo(correoAuditor);
             adto = adao.read(adto);
@@ -151,6 +169,18 @@ public class AuditoriaServlet extends HttpServlet {
             dto.getEntidad().setId(Integer.parseInt(id));
             dto = dao.read(dto);
             
+            padto.getEntidad().setAuditoria(dto.getEntidad());
+            List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
+            ArrayList<ProcesoDTO> listaProcesos = new ArrayList<>();
+            ProcesoDAO pdao = new ProcesoDAO();
+            ProcesoDTO pdto ;
+          
+            if(!listaProcesoActa.isEmpty())
+                for(ProcesoActaDTO padtoA: listaProcesoActa){
+                    pdto = new ProcesoDTO();
+                    pdto.getEntidad().setId(padtoA.getEntidad().getProceso().getId());
+                    listaProcesos.add(pdao.read(pdto));
+            }        
             List<AuditorAuxiliarDTO> dtos = null;
             dtos = daoAuxiliar.readAll(Integer.parseInt(id));
             
@@ -175,6 +205,8 @@ public class AuditoriaServlet extends HttpServlet {
             List<ProductoDTO> listaProductos = null;
             listaProductos = daoProducto.readAll(Integer.parseInt(id));
                   
+            request.setAttribute("listaProcesoActa",listaProcesoActa);
+            request.setAttribute("listaProcesos",listaProcesos);
             request.setAttribute("listaMisPlantillas",listaPlantillas);
             request.setAttribute("listaProductos", listaProductos);
             request.setAttribute("listaContactos", listaContactos);
@@ -297,4 +329,91 @@ public class AuditoriaServlet extends HttpServlet {
         infoAuditoria(request, response);
     }
 
+    private void SeleccionarActa(HttpServletRequest request, HttpServletResponse response) {
+        int idPlantilla = Integer.parseInt(request.getParameter("selectedPlantilla"));
+        PlantillaAuditorDTO plantillaDTO = new PlantillaAuditorDTO();
+        PlantillaAuditorDAO plantillaDAO = new PlantillaAuditorDAO();
+        plantillaDTO.getEntidad().setId(idPlantilla);
+        plantillaDTO = plantillaDAO.read(plantillaDTO);
+        ProcesoDAO pdao = new ProcesoDAO();
+        ArrayList<ProcesoDTO> procesos = pdao.readAllPlantilla(plantillaDTO);
+        int nProcesos = procesos.size();
+        ProcesoActaDTO dto;
+        ProcesoActaDAO dao = new ProcesoActaDAO();
+        AuditorDAO Adao = new AuditorDAO();
+        AuditorDTO Adto = new AuditorDTO();
+        AuditoriaDAO Audao = new AuditoriaDAO();
+        AuditoriaDTO Audto = new AuditoriaDTO();
+        RequisitoActaDAO RAdao = new RequisitoActaDAO();
+        RequisitoActaDTO RAdto = new RequisitoActaDTO();
+        RequisitoDAO Rdao = new RequisitoDAO();
+        List <RequisitoDTO> requisitos = null;
+        int id, idA;
+        idA = Integer.parseInt(request.getParameter("txtIdAuditoria"));
+        for(int i = 0; i < nProcesos; i++){
+            dto = new ProcesoActaDTO();
+            id = procesos.get(i).getEntidad().getId();
+            Adto.getEntidad().setCorreo(request.getParameter("txtCorreoEncargadoProceso"+Integer.toString(id)));
+            Adto = Adao.read(Adto);
+            Audto.getEntidad().setId(idA);
+            Audto = Audao.read(Audto);
+            dto.getEntidad().setAuditor(Adto.getEntidad());
+            dto.getEntidad().setProceso(procesos.get(i).getEntidad());
+            dto.getEntidad().setAuditoria(Audto.getEntidad());
+            dto.getEntidad().setPonderacion(Float.valueOf(request.getParameter("txtPonderacionProceso"+Integer.toString(id))));
+            dto.getEntidad().setResultado(0);
+            dao.create(dto);
+            System.out.println(dto);
+            requisitos = Rdao.Requisitos(id);
+            
+            for(RequisitoDTO r : requisitos){
+                RAdto = new RequisitoActaDTO();
+                RAdto.getEntidad().setProcesoActa(dto.getEntidad());
+                RAdto.getEntidad().setRequisito(r.getEntidad());
+                RAdao.create(RAdto);
+                System.out.println(RAdto);
+            }
+        }
+        request.setAttribute("mensaje", "Acta Creada");
+        request.setAttribute("id", String.valueOf(idA));
+        infoAuditoria(request, response);
+    }
+
+    private void EditarActa(HttpServletRequest request, HttpServletResponse response) {
+        int idAuditoria = Integer.parseInt(request.getParameter("txtIdAuditoria"));
+        int idP;
+        float ponderacion;
+        ProcesoActaDAO padao = new ProcesoActaDAO();
+        ProcesoActaDTO padto = new ProcesoActaDTO();
+        padto.getEntidad().setAuditoria(new Auditoria());
+        padto.getEntidad().getAuditoria().setId(idAuditoria);
+        List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
+        for( ProcesoActaDTO pa : listaProcesoActa ){
+            padto = new ProcesoActaDTO();
+            idP = pa.getEntidad().getProceso().getId();
+            ponderacion = Float.valueOf(request.getParameter("txtPonderacionProceso"+Integer.toString(idP)));
+            padto.setEntidad(pa.getEntidad());
+            padto.getEntidad().setPonderacion(ponderacion);
+            padto.getEntidad().getAuditor().setCorreo(request.getParameter("txtCorreoEncargadoProceso"+Integer.toString(idP)));
+            padao.update(padto);
+        }
+        request.setAttribute("mensaje", "Acta Editada");
+        request.setAttribute("id", String.valueOf(idAuditoria));
+        infoAuditoria(request, response);
+    }
+
+    private void EliminarActa(HttpServletRequest request, HttpServletResponse response) {
+        int idAuditoria = Integer.parseInt(request.getParameter("txtIdAuditoria"));
+        ProcesoActaDAO padao = new ProcesoActaDAO();
+        ProcesoActaDTO padto = new ProcesoActaDTO();
+        padto.getEntidad().setAuditoria(new Auditoria());
+        padto.getEntidad().getAuditoria().setId(idAuditoria);
+        List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
+        for(ProcesoActaDTO dto : listaProcesoActa){
+            padao.delete(dto);
+        }
+        request.setAttribute("mensaje", "Acta Eliminada");
+        request.setAttribute("id", String.valueOf(idAuditoria));
+        infoAuditoria(request, response);
+    }
 }
