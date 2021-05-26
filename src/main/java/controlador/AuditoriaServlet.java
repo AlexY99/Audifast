@@ -159,59 +159,65 @@ public class AuditoriaServlet extends HttpServlet {
             AuditorDTO adto = new AuditorDTO();
             AuditorDAO adao = new AuditorDAO();
             
+            AuditorDTO adtoLider = new AuditorDTO();
+            
             ProcesoActaDTO padto = new ProcesoActaDTO();
             ProcesoActaDAO padao = new ProcesoActaDAO();
-
-            adto.getEntidad().setCorreo(correoAuditor);
-            adto = adao.read(adto);
-            request.setAttribute("auditor", adto);
-
+            
             dto.getEntidad().setId(Integer.parseInt(id));
             dto = dao.read(dto);
             
             padto.getEntidad().setAuditoria(dto.getEntidad());
             List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
+            
             ArrayList<ProcesoDTO> listaProcesos = new ArrayList<>();
             ProcesoDAO pdao = new ProcesoDAO();
-            ProcesoDTO pdto ;
           
             if(!listaProcesoActa.isEmpty())
                 for(ProcesoActaDTO padtoA: listaProcesoActa){
-                    pdto = new ProcesoDTO();
+                    ProcesoDTO pdto = new ProcesoDTO();
                     pdto.getEntidad().setId(padtoA.getEntidad().getProceso().getId());
                     listaProcesos.add(pdao.read(pdto));
-            }        
-            List<AuditorAuxiliarDTO> dtos = null;
-            dtos = daoAuxiliar.readAll(Integer.parseInt(id));
+                }
             
             PlantillaAuditorDAO pldao = new PlantillaAuditorDAO();
-            
             ArrayList<PlantillaAuditorDTO> listaPlantillas = pldao.readAll(correoAuditor);
+            
+            List<AuditorAuxiliarDTO> dtos = daoAuxiliar.readAll(Integer.parseInt(id));
             
             ArrayList<AuditorDTO> dtosAuditores = new ArrayList<>();
             for (AuditorAuxiliarDTO axdto : dtos) {
-                adto = new AuditorDTO();
-                adto.getEntidad().setCorreo(axdto.getEntidad().getId().getCorreo());
-                adto = adao.read(adto);
-                System.out.println(adto);
-                dtosAuditores.add(new AuditorDTO(adto.getEntidad()));
+                AuditorDTO auxdto = new AuditorDTO();
+                auxdto.getEntidad().setCorreo(axdto.getEntidad().getId().getCorreo());
+                auxdto = adao.read(auxdto);
+                dtosAuditores.add(auxdto);
             }
             
             ContactoAuditoriaDAO daoContacto = new ContactoAuditoriaDAO();
-            List<ContactoAuditoriaDTO> listaContactos = null;
-            listaContactos = daoContacto.readAll(Integer.parseInt(id));
+            List<ContactoAuditoriaDTO> listaContactos = daoContacto.readAll(Integer.parseInt(id));
             
             ProductoDAO daoProducto = new ProductoDAO();
-            List<ProductoDTO> listaProductos = null;
-            listaProductos = daoProducto.readAll(Integer.parseInt(id));
-                  
+            List<ProductoDTO> listaProductos = daoProducto.readAll(Integer.parseInt(id));
+            
+            adtoLider.getEntidad().setCorreo(dto.getEntidad().getCorreo_auditor_lider());
+            adtoLider = adao.read(adtoLider);
+            
+            adto.getEntidad().setCorreo(correoAuditor);
+            adto = adao.read(adto);
+            
+            boolean permisoEdicion;
+            
+            permisoEdicion = adtoLider.getEntidad().getCorreo().equals(adto.getEntidad().getCorreo());
+            
+            request.setAttribute("auditoria", dto);
+            request.setAttribute("auditorLider",adtoLider);
+            request.setAttribute("auditor", adto);
+            request.setAttribute("permisoEdicion",permisoEdicion);
             request.setAttribute("listaProcesoActa",listaProcesoActa);
             request.setAttribute("listaProcesos",listaProcesos);
             request.setAttribute("listaMisPlantillas",listaPlantillas);
             request.setAttribute("listaProductos", listaProductos);
             request.setAttribute("listaContactos", listaContactos);
-            request.setAttribute("auditoria", dto);
-            
             request.setAttribute("auditoresAuxiliares", dtosAuditores);
 
             RequestDispatcher vista = request.getRequestDispatcher("auditoria.jsp");
