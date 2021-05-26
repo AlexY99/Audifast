@@ -117,7 +117,7 @@ create table requisito(
 );
 
 create table proceso_acta(
-    id int(10) primary key,
+    id int(10) auto_increment primary key,
     idAuditoria int(10),
     correo_encargado nvarchar(50) not null,
     idProceso int(10) not null,
