@@ -34,7 +34,7 @@ public class FiltroAcceso implements Filter{
 
         if(correoAuditor.isEmpty()){ // Si el tipo es nulo
             // Si no es el index, el formulario de registro o un recurso js o css redirecciona al index
-            if(!url.endsWith("/") && !url.contains("index") && !url.contains("registro") && !url.endsWith(".js") && !url.endsWith(".css") && !url.endsWith(".jpg") && !url.endsWith(".png") && !url.endsWith(".jar") && !url.endsWith(".war")){
+            if(!url.endsWith("/") && !url.contains("index") && !url.contains("AudiFastWS") && !url.contains("registro") && !url.endsWith(".js") && !url.endsWith(".css") && !url.endsWith(".jpg") && !url.endsWith(".png") && !url.endsWith(".jar") && !url.endsWith(".war")){
                 if(url.contains("AuditorServlet")){
                     String queryString = req.getQueryString();
                     if(queryString.contains("Login") || queryString.contains("Almacenar"))
