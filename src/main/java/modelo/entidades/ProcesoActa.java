@@ -15,10 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-/**
- *
- * @author azul-
- */
 @Entity
 @Table(name = "proceso_acta", schema = "public")
 public class ProcesoActa implements Serializable {
