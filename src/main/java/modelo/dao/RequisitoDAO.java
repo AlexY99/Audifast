@@ -70,7 +70,6 @@ public class RequisitoDAO {
                 transaction.rollback();
             }
         }
-        System.out.println(dto);
         return dto;
     }
     
@@ -114,9 +113,6 @@ public class RequisitoDAO {
         ArrayList<RequisitoDTO> dtos = new ArrayList<>();
         for (Requisito o : lista) {
             dtos.add(new RequisitoDTO(o));
-        }
-        for(RequisitoDTO pDTO1 : dtos){
-            System.out.println(pDTO1);
         }
         return dtos;
     }

@@ -69,7 +69,6 @@ public class PlantillaAuditorDAO {
                 transaction.rollback();
             }
         }
-        System.out.println(dto);
         return dto;
     }
     

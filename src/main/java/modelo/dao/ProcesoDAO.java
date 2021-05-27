@@ -70,7 +70,6 @@ public class ProcesoDAO {
                 transaction.rollback();
             }
         }
-        System.out.println(dto);
         return dto;
     }
     

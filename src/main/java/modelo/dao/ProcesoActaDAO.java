@@ -31,7 +31,6 @@ public class ProcesoActaDAO {
             if(transaction!=null && transaction.isActive()){
                 transaction.rollback();
             }
-            System.out.println(he);
         }
     }
     
@@ -77,7 +76,6 @@ public class ProcesoActaDAO {
                 transaction.rollback();
             }
         }
-        System.out.println(dto);
         return dto;
     }
     
@@ -122,9 +120,6 @@ public class ProcesoActaDAO {
         ArrayList<ProcesoActaDTO> dtos = new ArrayList<>();
         for (ProcesoActa o : lista) {
             dtos.add(new ProcesoActaDTO(o));
-        }
-        for(ProcesoActaDTO pDTO1 : dtos){
-            System.out.println(pDTO1);
         }
         return dtos;
     }

@@ -69,7 +69,6 @@ public class EmpresaDAO {
                 transaction.rollback();
             }
         }
-        System.out.println(dto);
         return dto;
     }
     

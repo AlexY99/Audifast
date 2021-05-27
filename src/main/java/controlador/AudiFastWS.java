@@ -50,21 +50,25 @@ public class AudiFastWS {
 
         String jsonResp = "{\"listaLideradas\":{";
         
-        for (AuditoriaDTO adto : listaByAuditor) {
-            jsonResp += "\""+adto.getEntidad().getId()+"\":{";
-            jsonResp += "\"fecha_registro\":\"" + adto.getEntidad().fecha()+"\",";
-             jsonResp += "\"organizacion\":\""+adto.getEntidad().getOrganizacion().getNombre()+"\"},";
+        if(!listaByAuditor.isEmpty()){
+            for (AuditoriaDTO adto : listaByAuditor) {
+                jsonResp += "\""+adto.getEntidad().getId()+"\":{";
+                jsonResp += "\"fecha_registro\":\"" + adto.getEntidad().fecha()+"\",";
+                 jsonResp += "\"organizacion\":\""+adto.getEntidad().getOrganizacion().getNombre()+"\"},";
+            }
+            jsonResp = jsonResp.substring(0,jsonResp.length()-1);   
         }
-        jsonResp = jsonResp.substring(0,jsonResp.length()-1);   
         jsonResp+="},\"listaAuxiliadas\":{";
        
-        for(AuditoriaDTO adto : listaWithAuditor){
-            jsonResp += "\""+adto.getEntidad().getId()+"\":{";
-            jsonResp += "\"correo_auditor_lider\":\"" + adto.getEntidad().getCorreo_auditor_lider()+"\",";
-            jsonResp += "\"fecha_registro\":\"" + adto.getEntidad().fecha()+"\",";
-            jsonResp += "\"organizacion\":\""+adto.getEntidad().getOrganizacion().getNombre()+"\"},";
+        if(!listaWithAuditor.isEmpty()){
+            for(AuditoriaDTO adto : listaWithAuditor){
+                jsonResp += "\""+adto.getEntidad().getId()+"\":{";
+                jsonResp += "\"correo_auditor_lider\":\"" + adto.getEntidad().getCorreo_auditor_lider()+"\",";
+                jsonResp += "\"fecha_registro\":\"" + adto.getEntidad().fecha()+"\",";
+                jsonResp += "\"organizacion\":\""+adto.getEntidad().getOrganizacion().getNombre()+"\"},";
+            }
+            jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         jsonResp += "}}";
         return jsonResp;
     }
@@ -94,7 +98,7 @@ public class AudiFastWS {
         dtoLider.getEntidad().setCorreo(dto.getEntidad().getCorreo_auditor_lider());
         dtoLider = daoLider.read(dtoLider);
         
-        jsonResp += "{\"auditorLider\":{";
+        jsonResp += "\"auditorLider\":{";
         jsonResp += "\"correo\":\""+dtoLider.getEntidad().getCorreo()+"\",";
         jsonResp += "\"nombre\":\""+dtoLider.getEntidad().getNombre()+"\",";
         jsonResp += "\"telefono\":\""+dtoLider.getEntidad().getTelefono()+"\"},";
@@ -103,49 +107,55 @@ public class AudiFastWS {
         AuditorAuxiliarDAO daoAuxiliar = new AuditorAuxiliarDAO();
         List<AuditorAuxiliarDTO> listaAuxiliares = daoAuxiliar.readAll(id);
 
-        jsonResp += "{\"auditoresAuxiliares\":{";
+        jsonResp += "\"auditoresAuxiliares\":{";
         
-        ArrayList<AuditorDTO> dtosAuditores = new ArrayList<>();
-        for (AuditorAuxiliarDTO axdto : listaAuxiliares) {
-            AuditorDTO auxdto = new AuditorDTO();
-            AuditorDAO auxdao = new AuditorDAO();
-            auxdto.getEntidad().setCorreo(axdto.getEntidad().getId().getCorreo());
-            auxdto = auxdao.read(auxdto);
-            jsonResp += "\""+auxdto.getEntidad().getCorreo()+"\":{";
-            jsonResp += "\"nombre\":\"" + auxdto.getEntidad().getNombre()+"\",";
-            jsonResp += "\"telefono\":\""+auxdto.getEntidad().getTelefono()+"\"},";
+        if(!listaAuxiliares.isEmpty()){
+            ArrayList<AuditorDTO> dtosAuditores = new ArrayList<>();
+            for (AuditorAuxiliarDTO axdto : listaAuxiliares) {
+                AuditorDTO auxdto = new AuditorDTO();
+                AuditorDAO auxdao = new AuditorDAO();
+                auxdto.getEntidad().setCorreo(axdto.getEntidad().getId().getCorreo());
+                auxdto = auxdao.read(auxdto);
+                jsonResp += "\""+auxdto.getEntidad().getCorreo()+"\":{";
+                jsonResp += "\"nombre\":\"" + auxdto.getEntidad().getNombre()+"\",";
+                jsonResp += "\"telefono\":\""+auxdto.getEntidad().getTelefono()+"\"},";
+            }
+            jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        
-        jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         jsonResp+="},\"contactos\":{";
         
         ContactoAuditoriaDAO daoContacto = new ContactoAuditoriaDAO();
         List<ContactoAuditoriaDTO> listaContactos = daoContacto.readAll(id);
 
-        for (ContactoAuditoriaDTO cdto : listaContactos) {
-            jsonResp += "\""+cdto.getEntidad().getId().getCorreo()+"\":{";
-            jsonResp += "\"nombre\":\"" + cdto.getEntidad().getNombre()+"\",";
-            jsonResp += "\"puesto\":\"" + cdto.getEntidad().getPuesto()+"\",";
-            jsonResp += "\"telefono\":\""+cdto.getEntidad().getTelefono()+"\"},";
+        if(!listaContactos.isEmpty()){
+            for (ContactoAuditoriaDTO cdto : listaContactos) {
+                jsonResp += "\""+cdto.getEntidad().getId().getCorreo()+"\":{";
+                jsonResp += "\"nombre\":\"" + cdto.getEntidad().getNombre()+"\",";
+                jsonResp += "\"puesto\":\"" + cdto.getEntidad().getPuesto()+"\",";
+                jsonResp += "\"telefono\":\""+cdto.getEntidad().getTelefono()+"\"},";
+            }
+            jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         jsonResp+="},\"productos\":{";
+        
         
         ProductoDAO daoProducto = new ProductoDAO();
         List<ProductoDTO> listaProductos = daoProducto.readAll(id);
         
-        for (ProductoDTO prdto : listaProductos) {
-            jsonResp += "\""+prdto.getEntidad().getId().getClave()+"\":{";
-            jsonResp += "\"nombre\":\"" + prdto.getEntidad().getDescripcion()+"\"},";
+        if(!listaProductos.isEmpty()){
+            for (ProductoDTO prdto : listaProductos) {
+                jsonResp += "\""+prdto.getEntidad().getId().getClave()+"\":{";
+                jsonResp += "\"nombre\":\"" + prdto.getEntidad().getDescripcion()+"\"},";
+            }
+            jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         jsonResp+="},\"procesosActa\":{";
 
         padto.getEntidad().setAuditoria(dto.getEntidad());
         List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
         ProcesoDAO pdao = new ProcesoDAO();
 
-        if(!listaProcesoActa.isEmpty())
+        if(!listaProcesoActa.isEmpty()){
             for(ProcesoActaDTO padtoA: listaProcesoActa){
                 ProcesoDTO pdto = new ProcesoDTO();
                 pdto.getEntidad().setId(padtoA.getEntidad().getProceso().getId());
@@ -156,11 +166,24 @@ public class AudiFastWS {
                 jsonResp += "\"encargado\":\""+padtoA.getEntidad().getAuditor().getNombre()+"\"},";
                 //añadir listaProcesos a json
             }
-        jsonResp = jsonResp.substring(0,jsonResp.length()-1);
+            jsonResp = jsonResp.substring(0,jsonResp.length()-1);
+        }
         jsonResp+="}}";
         return jsonResp;
     }
     
+    /*
+    public static void main(String[] args) {
+        AudiFastWS ws = new AudiFastWS();
+        System.out.println("-----------------------------------");
+        System.out.println("");
+        System.out.println("");
+        
+        System.out.println(ws.iniciarSesion("xtarevolution@yahoo.com.mx","abc123"));
+        System.out.println(ws.listasAuditorias("xtarevolution@yahoo.com.mx"));
+        System.out.println(ws.infoAuditoria(1));
+    }
+    */
 
         
    

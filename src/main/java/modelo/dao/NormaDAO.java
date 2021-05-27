@@ -70,7 +70,6 @@ public class NormaDAO {
                 transaction.rollback();
             }
         }
-        System.out.println(dto);
         return dto;
     }
     

@@ -33,7 +33,6 @@ public class RequisitoActaDAO {
             if(transaction!=null && transaction.isActive()){
                 transaction.rollback();
             }
-            System.out.println(he);
         }
     }
     
@@ -79,7 +78,6 @@ public class RequisitoActaDAO {
                 transaction.rollback();
             }
         }
-        System.out.println(dto);
         return dto;
     }
     
@@ -124,9 +122,6 @@ public class RequisitoActaDAO {
         ArrayList<RequisitoActaDTO> dtos = new ArrayList<>();
         for (RequisitoActa o : lista) {
             dtos.add(new RequisitoActaDTO(o));
-        }
-        for(RequisitoActaDTO pDTO1 : dtos){
-            System.out.println(pDTO1);
         }
         return dtos;
     }
