@@ -40,7 +40,6 @@ public class AudiFastWS {
     
     @WebMethod(operationName = "listasAuditorias")
     public String listasAuditorias(@WebParam(name = "correo") String correo) {
-        System.out.println("listasAuditorias_correo = "+correo);
         
         AuditorDTO dto = new AuditorDTO();
         dto.getEntidad().setCorreo(correo);
@@ -79,16 +78,12 @@ public class AudiFastWS {
     
     @WebMethod(operationName = "infoAuditoria")
     public String infoAuditoria(@WebParam(name = "id") int id) {
-        System.out.println("infoAuditoria_id = "+id);
             
         AuditoriaDTO dto = new AuditoriaDTO();
         AuditoriaDAO dao = new AuditoriaDAO();
 
         AuditorDTO dtoLider = new AuditorDTO();
         AuditorDAO daoLider = new AuditorDAO();
-
-        ProcesoActaDTO padto = new ProcesoActaDTO();
-        ProcesoActaDAO padao = new ProcesoActaDAO();
 
         dto.getEntidad().setId(id);
         dto = dao.read(dto);
@@ -106,16 +101,20 @@ public class AudiFastWS {
         jsonResp += "\"auditorLider\":{";
         jsonResp += "\"correo\":\""+dtoLider.getEntidad().getCorreo()+"\",";
         jsonResp += "\"nombre\":\""+dtoLider.getEntidad().getNombre()+"\",";
-        jsonResp += "\"telefono\":\""+dtoLider.getEntidad().getTelefono()+"\"},";
+        jsonResp += "\"telefono\":\""+dtoLider.getEntidad().getTelefono()+"\"}}";
+
+        return jsonResp;
+    }
         
-        
+    @WebMethod(operationName = "auxiliaresAuditoria")
+    public String auxiliaresAuditoria(@WebParam(name = "id") int id) {
+            
         AuditorAuxiliarDAO daoAuxiliar = new AuditorAuxiliarDAO();
         List<AuditorAuxiliarDTO> listaAuxiliares = daoAuxiliar.readAll(id);
 
-        jsonResp += "\"auditoresAuxiliares\":[";
+        String jsonResp = "[";
         
         if(!listaAuxiliares.isEmpty()){
-            ArrayList<AuditorDTO> dtosAuditores = new ArrayList<>();
             for (AuditorAuxiliarDTO axdto : listaAuxiliares) {
                 AuditorDTO auxdto = new AuditorDTO();
                 AuditorDAO auxdao = new AuditorDAO();
@@ -127,11 +126,17 @@ public class AudiFastWS {
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp+="],\"contactos\":[";
+        jsonResp+="]";
+        return jsonResp;
+    }
         
+    @WebMethod(operationName = "contactosAuditoria")
+    public String contactosAuditoria(@WebParam(name = "id") int id) {
+            
         ContactoAuditoriaDAO daoContacto = new ContactoAuditoriaDAO();
         List<ContactoAuditoriaDTO> listaContactos = daoContacto.readAll(id);
-
+        String jsonResp ="[";
+  
         if(!listaContactos.isEmpty()){
             for (ContactoAuditoriaDTO cdto : listaContactos) {
                 jsonResp += "{\"correo\":\"" +cdto.getEntidad().getId().getCorreo()+"\",";
@@ -141,12 +146,17 @@ public class AudiFastWS {
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp+="],\"productos\":[";
+        jsonResp+="]";
+        return jsonResp;
+    }
         
-        
+    @WebMethod(operationName = "productosAuditoria")
+    public String productosAuditoria(@WebParam(name = "id") int id) {
+            
         ProductoDAO daoProducto = new ProductoDAO();
         List<ProductoDTO> listaProductos = daoProducto.readAll(id);
-        
+        String jsonResp = "[";
+
         if(!listaProductos.isEmpty()){
             for (ProductoDTO prdto : listaProductos) {
                 jsonResp += "{\"clave\":\""+prdto.getEntidad().getId().getClave()+"\",";
@@ -154,7 +164,18 @@ public class AudiFastWS {
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp+="],\"procesosActa\":[";
+        jsonResp+="]";
+        return jsonResp;
+    }
+    
+    @WebMethod(operationName = "procesosActaAuditoria")
+    public String procesosActaAuditoria(@WebParam(name = "id") int id) {
+            
+        AuditoriaDTO dto = new AuditoriaDTO();
+        ProcesoActaDTO padto = new ProcesoActaDTO();
+        ProcesoActaDAO padao = new ProcesoActaDAO();
+
+        String jsonResp ="[";
 
         padto.getEntidad().setAuditoria(dto.getEntidad());
         List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
@@ -172,9 +193,16 @@ public class AudiFastWS {
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp+="]}";
+        jsonResp+="]";
         return jsonResp;
     }
-        
    
+    //metodo para obtencion de procesos acta donde el encargado es el auditor
+    
+    //metodo para obtencion de requisitos acta a partir de id del proceso acta
+    
+    //metodo para registro de evaluacion de requisitos de proceso acta y observaciones del proceso acta
+    
+    //metodo para finalizar evaluacion de auditoria
+    
 }
