@@ -17,6 +17,7 @@ public class Organizacion implements Serializable{
        
     @EmbeddedId
     private IdOrganizacion id;
+    
     private String nombre;
     private String giro;
     @Column(name = "direccion_operacion", nullable = false, length = 50)

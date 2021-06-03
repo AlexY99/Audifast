@@ -40,6 +40,8 @@ public class AudiFastWS {
     
     @WebMethod(operationName = "listasAuditorias")
     public String listasAuditorias(@WebParam(name = "correo") String correo) {
+        System.out.println("listasAuditorias_correo = "+correo);
+        
         AuditorDTO dto = new AuditorDTO();
         dto.getEntidad().setCorreo(correo);
         
@@ -48,33 +50,36 @@ public class AudiFastWS {
         ArrayList<AuditoriaDTO> listaByAuditor = dao.readAllByAuditor(dto);
         ArrayList<AuditoriaDTO> listaWithAuditor = dao.readAllWithAuditor(dto);
 
-        String jsonResp = "{\"listaLideradas\":{";
+        String jsonResp = "{\"listaLideradas\":[";
         
         if(!listaByAuditor.isEmpty()){
             for (AuditoriaDTO adto : listaByAuditor) {
-                jsonResp += "\""+adto.getEntidad().getId()+"\":{";
+                jsonResp += "{\"id\":" + adto.getEntidad().getId()+",";
+                jsonResp += "\"correo_auditor_lider\":\"" + adto.getEntidad().getCorreo_auditor_lider()+"\",";
                 jsonResp += "\"fecha_registro\":\"" + adto.getEntidad().fecha()+"\",";
-                 jsonResp += "\"organizacion\":\""+adto.getEntidad().getOrganizacion().getNombre()+"\"},";
+                jsonResp += "\"organizacion\":\""+adto.getEntidad().getOrganizacion().getNombre()+"\"},";
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);   
         }
-        jsonResp+="},\"listaAuxiliadas\":{";
+        jsonResp+="],\"listaAuxiliadas\":[";
        
         if(!listaWithAuditor.isEmpty()){
             for(AuditoriaDTO adto : listaWithAuditor){
-                jsonResp += "\""+adto.getEntidad().getId()+"\":{";
+                jsonResp += "{\"id\":" + adto.getEntidad().getId()+",";
                 jsonResp += "\"correo_auditor_lider\":\"" + adto.getEntidad().getCorreo_auditor_lider()+"\",";
                 jsonResp += "\"fecha_registro\":\"" + adto.getEntidad().fecha()+"\",";
                 jsonResp += "\"organizacion\":\""+adto.getEntidad().getOrganizacion().getNombre()+"\"},";
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp += "}}";
+        jsonResp += "]}";
+        System.out.println(jsonResp);
         return jsonResp;
     }
     
     @WebMethod(operationName = "infoAuditoria")
     public String infoAuditoria(@WebParam(name = "id") int id) {
+        System.out.println("infoAuditoria_id = "+id);
             
         AuditoriaDTO dto = new AuditoriaDTO();
         AuditoriaDAO dao = new AuditoriaDAO();
@@ -107,7 +112,7 @@ public class AudiFastWS {
         AuditorAuxiliarDAO daoAuxiliar = new AuditorAuxiliarDAO();
         List<AuditorAuxiliarDTO> listaAuxiliares = daoAuxiliar.readAll(id);
 
-        jsonResp += "\"auditoresAuxiliares\":{";
+        jsonResp += "\"auditoresAuxiliares\":[";
         
         if(!listaAuxiliares.isEmpty()){
             ArrayList<AuditorDTO> dtosAuditores = new ArrayList<>();
@@ -116,27 +121,27 @@ public class AudiFastWS {
                 AuditorDAO auxdao = new AuditorDAO();
                 auxdto.getEntidad().setCorreo(axdto.getEntidad().getId().getCorreo());
                 auxdto = auxdao.read(auxdto);
-                jsonResp += "\""+auxdto.getEntidad().getCorreo()+"\":{";
+                jsonResp += "{\"correo\":\"" + auxdto.getEntidad().getCorreo()+"\",";
                 jsonResp += "\"nombre\":\"" + auxdto.getEntidad().getNombre()+"\",";
                 jsonResp += "\"telefono\":\""+auxdto.getEntidad().getTelefono()+"\"},";
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp+="},\"contactos\":{";
+        jsonResp+="],\"contactos\":[";
         
         ContactoAuditoriaDAO daoContacto = new ContactoAuditoriaDAO();
         List<ContactoAuditoriaDTO> listaContactos = daoContacto.readAll(id);
 
         if(!listaContactos.isEmpty()){
             for (ContactoAuditoriaDTO cdto : listaContactos) {
-                jsonResp += "\""+cdto.getEntidad().getId().getCorreo()+"\":{";
+                jsonResp += "{\"correo\":\"" +cdto.getEntidad().getId().getCorreo()+"\",";
                 jsonResp += "\"nombre\":\"" + cdto.getEntidad().getNombre()+"\",";
                 jsonResp += "\"puesto\":\"" + cdto.getEntidad().getPuesto()+"\",";
                 jsonResp += "\"telefono\":\""+cdto.getEntidad().getTelefono()+"\"},";
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp+="},\"productos\":{";
+        jsonResp+="],\"productos\":[";
         
         
         ProductoDAO daoProducto = new ProductoDAO();
@@ -144,12 +149,12 @@ public class AudiFastWS {
         
         if(!listaProductos.isEmpty()){
             for (ProductoDTO prdto : listaProductos) {
-                jsonResp += "\""+prdto.getEntidad().getId().getClave()+"\":{";
+                jsonResp += "{\"clave\":\""+prdto.getEntidad().getId().getClave()+"\",";
                 jsonResp += "\"nombre\":\"" + prdto.getEntidad().getDescripcion()+"\"},";
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp+="},\"procesosActa\":{";
+        jsonResp+="],\"procesosActa\":[";
 
         padto.getEntidad().setAuditoria(dto.getEntidad());
         List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
@@ -160,31 +165,16 @@ public class AudiFastWS {
                 ProcesoDTO pdto = new ProcesoDTO();
                 pdto.getEntidad().setId(padtoA.getEntidad().getProceso().getId());
                 pdto = pdao.read(pdto);
-                jsonResp += "\""+pdto.getEntidad().getId()+"\":{";
+                jsonResp += "{\"id\":\"" + pdto.getEntidad().getId()+"\",";
                 jsonResp += "\"descripcion\":\"" + pdto.getEntidad().getDescripcion()+"\",";
                 jsonResp += "\"ponderacion\":\"" + padtoA.getEntidad().getPonderacion()+"\",";
                 jsonResp += "\"encargado\":\""+padtoA.getEntidad().getAuditor().getNombre()+"\"},";
-                //añadir listaProcesos a json
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
-        jsonResp+="}}";
+        jsonResp+="]}";
         return jsonResp;
     }
-    
-    /*
-    public static void main(String[] args) {
-        AudiFastWS ws = new AudiFastWS();
-        System.out.println("-----------------------------------");
-        System.out.println("");
-        System.out.println("");
-        
-        System.out.println(ws.iniciarSesion("xtarevolution@yahoo.com.mx","abc123"));
-        System.out.println(ws.listasAuditorias("xtarevolution@yahoo.com.mx"));
-        System.out.println(ws.infoAuditoria(1));
-    }
-    */
-
         
    
 }

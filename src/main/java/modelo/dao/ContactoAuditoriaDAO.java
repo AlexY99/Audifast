@@ -16,10 +16,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utilidades.HibernateUtil;
 
-/**
- *
- * @author azul-
- */
 public class ContactoAuditoriaDAO {
     
     public void create(ContactoAuditoriaDTO dto){
