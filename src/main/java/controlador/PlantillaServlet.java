@@ -1,6 +1,5 @@
 package controlador;
 
-import com.google.gson.Gson;
 import modelo.dto.PlantillaAuditorDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
