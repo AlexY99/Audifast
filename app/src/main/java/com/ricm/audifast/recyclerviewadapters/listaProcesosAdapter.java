@@ -41,7 +41,7 @@ public class listaProcesosAdapter extends RecyclerView.Adapter<listaProcesosAdap
                 String correoEncargado = procesoList.get(vHolder.getAdapterPosition()).getCorreo_encargado();
                 if(correoEncargado.equals(correoAuditor)){
                     int id = procesoList.get(vHolder.getAdapterPosition()).getId();
-                    //cambiar clase por la de la actividad de evaluacion
+                    //cambiar clase por la de la actividad de evaluacion (recuerda que se manda la id del proceso, por eso ahora no funca bien)
                     Intent intent = new Intent(parent.getContext(), InfoAuditoria.class);
                     intent.putExtra("id",id);
                     parent.getContext().startActivity(intent);

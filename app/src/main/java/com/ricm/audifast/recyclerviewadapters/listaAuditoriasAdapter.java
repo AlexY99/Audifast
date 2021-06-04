@@ -54,7 +54,7 @@ public class listaAuditoriasAdapter extends RecyclerView.Adapter<listaAuditorias
 
         Auditoria modal = auditoriaList.get(position);
 
-        rowViewHolder.txtID.setText(modal.getId()+"");
+        rowViewHolder.txtID.setText("Auditoría "+modal.getId());
         rowViewHolder.txtCorreoLider.setText("Auditor Líder: "+modal.getCorreo_auditor_lider());
         rowViewHolder.txtOrganizacion.setText("Organización: "+modal.getOrganizacion());
         rowViewHolder.txtFechaRegistro.setText("Creada: "+modal.getFecha_registro());

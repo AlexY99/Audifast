@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.listaAuditorias.auxiliadasFragment">
 
-    <HorizontalScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginEnd="8dp"
@@ -26,6 +26,6 @@
             android:layout_gravity="center_horizontal"
             tools:listitem="@layout/table_auditorias_item" />
 
-    </HorizontalScrollView>
+    </ScrollView>
 
 </FrameLayout>
