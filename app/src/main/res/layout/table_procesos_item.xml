@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="horizontal"
     android:padding="5dp"
     android:id="@+id/item_proceso">
@@ -59,7 +60,7 @@
 
         <TextView
             android:id="@+id/lblValor"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:text="Valor:"
@@ -69,7 +70,7 @@
 
         <TextView
             android:id="@+id/txtPonderacionProceso"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
