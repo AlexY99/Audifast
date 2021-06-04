@@ -175,25 +175,30 @@ public class AudiFastWS {
         ProcesoActaDTO padto = new ProcesoActaDTO();
         ProcesoActaDAO padao = new ProcesoActaDAO();
 
+        dto.getEntidad().setId(id);
         String jsonResp ="[";
 
         padto.getEntidad().setAuditoria(dto.getEntidad());
         List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
         ProcesoDAO pdao = new ProcesoDAO();
 
+            
+
         if(!listaProcesoActa.isEmpty()){
             for(ProcesoActaDTO padtoA: listaProcesoActa){
                 ProcesoDTO pdto = new ProcesoDTO();
                 pdto.getEntidad().setId(padtoA.getEntidad().getProceso().getId());
                 pdto = pdao.read(pdto);
-                jsonResp += "{\"id\":\"" + pdto.getEntidad().getId()+"\",";
+                jsonResp += "{\"id\":" + pdto.getEntidad().getId()+",";
                 jsonResp += "\"descripcion\":\"" + pdto.getEntidad().getDescripcion()+"\",";
-                jsonResp += "\"ponderacion\":\"" + padtoA.getEntidad().getPonderacion()+"\",";
-                jsonResp += "\"encargado\":\""+padtoA.getEntidad().getAuditor().getNombre()+"\"},";
+                jsonResp += "\"ponderacion\":" + padtoA.getEntidad().getPonderacion()+",";
+                jsonResp += "\"encargado\":\""+padtoA.getEntidad().getAuditor().getNombre()+"\",";
+                jsonResp += "\"correo_encargado\":\""+padtoA.getEntidad().getAuditor().getCorreo()+"\"},";
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
         jsonResp+="]";
+        System.out.println("procesosjson: "+jsonResp);
         return jsonResp;
     }
    
