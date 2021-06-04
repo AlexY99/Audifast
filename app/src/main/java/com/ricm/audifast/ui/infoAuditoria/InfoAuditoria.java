@@ -61,6 +61,8 @@ public class InfoAuditoria extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Auditores Auxiliares"));
         tabLayout.addTab(tabLayout.newTab().setText("Contactos de Auditoría"));
         tabLayout.addTab(tabLayout.newTab().setText("Productos Auditados"));
+        tabLayout.setTabMode(TabLayout.MODE_AUTO);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
