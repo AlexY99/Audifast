@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/txtID"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ID"
             android:textSize="18sp"
@@ -45,7 +45,6 @@
             android:layout_gravity="top"
             android:text="12/12/20 08:00:00"
             android:textSize="18sp" />
-
     </LinearLayout>
 
 

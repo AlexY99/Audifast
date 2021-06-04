@@ -36,9 +36,8 @@ public class listaAuditoriasAdapter extends RecyclerView.Adapter<listaAuditorias
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(parent.getContext(), InfoAuditoria.class);
-                String id = vHolder.txtID.getText().toString();
-
-                intent.putExtra("id",Integer.parseInt(id));
+                int id = auditoriaList.get(vHolder.getAdapterPosition()).getId();
+                intent.putExtra("id",id);
                 parent.getContext().startActivity(intent);
             }
         });
