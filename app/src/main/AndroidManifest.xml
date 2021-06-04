@@ -12,10 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PruebaLogin"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.procesosActa.ProcesosActa"></activity>
-        <activity android:name=".ui.infoAuditoria.InfoAuditoria" />
-        <activity android:name=".ui.listaAuditorias.ListaAuditorias" />
-        <activity android:name=".ui.MainActivity">
+        <activity
+            android:name=".ui.procesosActa.ProcesosActa"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".ui.infoAuditoria.InfoAuditoria"
+            android:screenOrientation = "portrait"/>
+        <activity
+            android:name=".ui.listaAuditorias.ListaAuditorias"
+            android:screenOrientation = "portrait"/>
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation = "portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,5 +31,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
