@@ -20,17 +20,26 @@
             android:text="Cerrar Sesión"
             android:textAlignment="center" />
 
+        <TextView
+            android:id="@+id/txtAuditoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Auditoría 1000"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="20dp">
+            android:layout_marginTop="15dp">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabsApartados"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </com.google.android.material.tabs.TabLayout>
+                android:layout_height="wrap_content"></com.google.android.material.tabs.TabLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pagerApartados"

@@ -25,7 +25,7 @@ public class listaContactosAdapter extends RecyclerView.Adapter<listaContactosAd
     public RowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.
                 from(parent.getContext()).
-                inflate(R.layout.table_contactos_item,null,false);
+                inflate(R.layout.table_contactos_item,parent,false);
 
         RowViewHolder vHolder = new RowViewHolder(itemView);
 

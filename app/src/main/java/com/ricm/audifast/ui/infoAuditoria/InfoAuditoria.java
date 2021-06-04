@@ -31,13 +31,17 @@ public class InfoAuditoria extends AppCompatActivity {
     String resultString;
     Button btnLogout;
 
+    TextView txtAuditoria;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         id = intent.getIntExtra("id",0);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_auditoria);
+
+        txtAuditoria = (TextView) findViewById(R.id.txtAuditoria);
+        txtAuditoria.setText("Auditoría "+id);
 
         btnLogout = (Button) findViewById(R.id.btnLogout);
 

@@ -24,7 +24,7 @@ public class listaAuxiliaresAdapter extends RecyclerView.Adapter<listaAuxiliares
     public RowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.
                 from(parent.getContext()).
-                inflate(R.layout.table_auxiliares_item,null,false);
+                inflate(R.layout.table_auxiliares_item,parent,false);
 
         RowViewHolder vHolder = new RowViewHolder(itemView);
 

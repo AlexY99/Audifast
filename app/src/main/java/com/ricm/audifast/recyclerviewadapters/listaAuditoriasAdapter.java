@@ -28,15 +28,15 @@ public class listaAuditoriasAdapter extends RecyclerView.Adapter<listaAuditorias
     public RowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.
                 from(parent.getContext()).
-                inflate(R.layout.table_auditorias_item,null,false);
+                inflate(R.layout.table_auditorias_item, parent, false);
 
-        RowViewHolder vHolder =  new RowViewHolder(itemView);
+        RowViewHolder vHolder = new RowViewHolder(itemView);
         vHolder.item_auditoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(parent.getContext(), InfoAuditoria.class);
                 int id = auditoriaList.get(vHolder.getAdapterPosition()).getId();
-                intent.putExtra("id",id);
+                intent.putExtra("id", id);
                 parent.getContext().startActivity(intent);
             }
         });
@@ -46,23 +46,23 @@ public class listaAuditoriasAdapter extends RecyclerView.Adapter<listaAuditorias
 
     @Override
     public void onBindViewHolder(RowViewHolder rowViewHolder, int position) {
-        if(sonLideradas){
+        if (sonLideradas) {
             rowViewHolder.txtCorreoLider.setVisibility(View.GONE);
         }
 
         Auditoria modal = auditoriaList.get(position);
 
-        rowViewHolder.txtID.setText("Auditoría "+modal.getId());
-        rowViewHolder.txtCorreoLider.setText("Auditor Líder: "+modal.getCorreo_auditor_lider());
-        rowViewHolder.txtOrganizacion.setText("Organización: "+modal.getOrganizacion());
-        rowViewHolder.txtFechaRegistro.setText("Creada: "+modal.getFecha_registro());
+        rowViewHolder.txtID.setText("Auditoría " + modal.getId());
+        rowViewHolder.txtCorreoLider.setText("Auditor Líder: " + modal.getCorreo_auditor_lider());
+        rowViewHolder.txtOrganizacion.setText("Organización: " + modal.getOrganizacion());
+        rowViewHolder.txtFechaRegistro.setText("Creada: " + modal.getFecha_registro());
     }
 
     @Override
     public int getItemCount() {
-        if(auditoriaList != null){
+        if (auditoriaList != null) {
             return auditoriaList.size();
-        }else{
+        } else {
             return 0;
         }
 
@@ -86,7 +86,7 @@ public class listaAuditoriasAdapter extends RecyclerView.Adapter<listaAuditorias
         }
     }
 
-    public void updateList (List<Auditoria> listaActualizada) {
+    public void updateList(List<Auditoria> listaActualizada) {
         if (listaActualizada != null && listaActualizada.size() > 0) {
             auditoriaList.clear();
             auditoriaList.addAll(listaActualizada);

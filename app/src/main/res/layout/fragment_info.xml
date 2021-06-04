@@ -7,239 +7,276 @@
     android:orientation="vertical"
     tools:context=".ui.infoAuditoria.infoFragment">
 
-    <TextView
-        android:id="@+id/txtAuditoria"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="Auditoría 1000"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:paddingTop="20dp"
-        android:paddingBottom="30dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="40dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
-
-
-
-        <TextView
-            android:id="@+id/lblDatosOrganizacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Datos de la Organización"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/lblOrganizacionNombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre:"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtOrganizacionNombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:text="La Organización S.A. de C.V."
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lblRFC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RFC: "
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtRFC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:text="VDA045119KJ3"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lblGiro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Giro: "
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtGiro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:text="Proveedor de Alimentos"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lblDireccionO"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dirección de Operación: "
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtDireccionO"
+            <Button
+                android:id="@+id/btnActa"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:text="Una dirección de Operación"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:text="Consultar Acta de Auditoría"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lblDireccionF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dirección Fiscal: "
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtDireccionF"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:text="Una dirección Fiscal"
-                android:textSize="18sp" />
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/table_content_cell_bg"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <TextView
+                    android:id="@+id/lblDatosOrganizacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Datos de la Organización"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="7dp">
+
+
+                    <TextView
+                        android:id="@+id/lblOrganizacionNombre"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:text="Nombre:"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtOrganizacionNombre"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="La Organización S.A. de C.V."
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="7dp">
+
+
+                    <TextView
+                        android:id="@+id/lblRFC"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:text="RFC: "
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtRFC"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="VDA045119KJ3"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="7dp">
+
+
+                    <TextView
+                        android:id="@+id/lblGiro"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:text="Giro: "
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtGiro"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="Proveedor de Alimentos"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="7dp">
+
+
+                    <TextView
+                        android:id="@+id/lblDireccionO"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dirección de Operación: "
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtDireccionO"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="Una dirección de Operación"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="7dp">
+
+
+                    <TextView
+                        android:id="@+id/lblDireccionF"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dirección Fiscal: "
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtDireccionF"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="Una dirección Fiscal"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/table_content_cell_bg"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <TextView
+                    android:id="@+id/lblDatosAuditorLider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Datos del Auditor Líder"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="7dp">
+
+
+                    <TextView
+                        android:id="@+id/lblAuditorLiderNombre"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:text="Nombre:"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtAuditorLiderNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="Auditor Líder"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="7dp">
+
+
+                    <TextView
+                        android:id="@+id/lblAuditorLiderCorreo"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:text="e-mail: "
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtAuditorLiderCorreo"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="auditor@lider.com.mx"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="7dp">
+
+
+                    <TextView
+                        android:id="@+id/lblAuditorLiderTelefono"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:text="Teléfono: "
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtauditorLiderTelefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:text="5562894552"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="40dp">
-
-        <TextView
-            android:id="@+id/lblDatosAuditorLider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Datos del Auditor Líder"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lblAuditorLiderNombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre:"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtAuditorLiderNombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:text="Auditor Líder"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lblAuditorLiderCorreo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="e-mail: "
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtAuditorLiderCorreo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:text="auditor@lider.com.mx"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lblAuditorLiderTelefono"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Teléfono: "
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtauditorLiderTelefono"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:text="5562894552"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnActa"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Consultar Acta de Auditoría"
-        android:textAlignment="center" />
+    </ScrollView>
 </LinearLayout>

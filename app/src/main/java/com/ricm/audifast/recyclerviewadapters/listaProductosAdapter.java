@@ -24,7 +24,7 @@ public class listaProductosAdapter extends RecyclerView.Adapter<listaProductosAd
     public RowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.
                 from(parent.getContext()).
-                inflate(R.layout.table_productos_item,null,false);
+                inflate(R.layout.table_productos_item,parent,false);
 
         RowViewHolder vHolder = new RowViewHolder(itemView);
 

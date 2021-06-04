@@ -41,8 +41,6 @@ public class  infoFragment extends Fragment {
 
     Button btnActa;
 
-    TextView txtAuditoria;
-
     TextView txtOrganizacionNombre;
     TextView txtRFC;
     TextView txtGiro;
@@ -70,8 +68,7 @@ public class  infoFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_info, container, false);
 
-        txtAuditoria = (TextView) view.findViewById(R.id.txtAuditoria);
-        txtAuditoria.setText("Auditoría "+id);
+
 
         txtOrganizacionNombre = (TextView) view.findViewById(R.id.txtOrganizacionNombre);
         txtRFC = (TextView) view.findViewById(R.id.txtRFC);

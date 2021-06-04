@@ -31,7 +31,7 @@ public class listaProcesosAdapter extends RecyclerView.Adapter<listaProcesosAdap
     public listaProcesosAdapter.RowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.
                 from(parent.getContext()).
-                inflate(R.layout.table_procesos_item,null,false);
+                inflate(R.layout.table_procesos_item,parent,false);
 
         listaProcesosAdapter.RowViewHolder vHolder = new listaProcesosAdapter.RowViewHolder(itemView,parent.getContext(),correoAuditor);
 
