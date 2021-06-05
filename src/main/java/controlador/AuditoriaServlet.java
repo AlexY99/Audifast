@@ -149,6 +149,7 @@ public class AuditoriaServlet extends HttpServlet {
         String id = request.getParameter("id");
         if( id == null)
             id =(String) request.getAttribute("id");
+        int idAuditoria = Integer.parseInt(id);
         HttpSession session = request.getSession();
         String correoAuditor = session.getAttribute("CorreoAuditor").toString();
         try {
@@ -164,11 +165,10 @@ public class AuditoriaServlet extends HttpServlet {
             ProcesoActaDTO padto = new ProcesoActaDTO();
             ProcesoActaDAO padao = new ProcesoActaDAO();
             
-            dto.getEntidad().setId(Integer.parseInt(id));
+            dto.getEntidad().setId(idAuditoria);
             dto = dao.read(dto);
             
-            padto.getEntidad().setAuditoria(dto.getEntidad());
-            List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
+            List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(idAuditoria);
             
             ArrayList<ProcesoDTO> listaProcesos = new ArrayList<>();
             ProcesoDAO pdao = new ProcesoDAO();
@@ -390,10 +390,8 @@ public class AuditoriaServlet extends HttpServlet {
         int idP;
         float ponderacion;
         ProcesoActaDAO padao = new ProcesoActaDAO();
-        ProcesoActaDTO padto = new ProcesoActaDTO();
-        padto.getEntidad().setAuditoria(new Auditoria());
-        padto.getEntidad().getAuditoria().setId(idAuditoria);
-        List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
+        ProcesoActaDTO padto;
+        List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(idAuditoria);
         for( ProcesoActaDTO pa : listaProcesoActa ){
             padto = new ProcesoActaDTO();
             idP = pa.getEntidad().getProceso().getId();
@@ -411,12 +409,9 @@ public class AuditoriaServlet extends HttpServlet {
     private void EliminarActa(HttpServletRequest request, HttpServletResponse response) {
         int idAuditoria = Integer.parseInt(request.getParameter("txtIdAuditoria"));
         ProcesoActaDAO padao = new ProcesoActaDAO();
-        ProcesoActaDTO padto = new ProcesoActaDTO();
-        padto.getEntidad().setAuditoria(new Auditoria());
-        padto.getEntidad().getAuditoria().setId(idAuditoria);
-        List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
-        for(ProcesoActaDTO dto : listaProcesoActa){
-            padao.delete(dto);
+        List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(idAuditoria);
+        for(ProcesoActaDTO padto : listaProcesoActa){
+            padao.delete(padto);
         }
         request.setAttribute("mensaje", "Acta Eliminada");
         request.setAttribute("id", String.valueOf(idAuditoria));

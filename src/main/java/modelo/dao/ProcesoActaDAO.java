@@ -102,14 +102,14 @@ public class ProcesoActaDAO {
     }*/
     
 
-    public List<ProcesoActaDTO> ProcesosActa(ProcesoActaDTO padto) {
+    public List<ProcesoActaDTO> ProcesosActa(int idAuditoria) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         List<ProcesoActa> lista = null;
         try{
             transaction.begin();
             Query q = session.createQuery("from ProcesoActa p where p.auditoria.id = :id order by p.id");
-            q.setParameter("id", padto.getEntidad().getAuditoria().getId());
+            q.setParameter("id", idAuditoria);
             lista = q.list();
             transaction.commit();
         }catch(HibernateException he){
