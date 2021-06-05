@@ -10,19 +10,15 @@ import modelo.dao.AuditorDAO;
 import modelo.dao.AuditoriaDAO;
 import modelo.dao.ContactoAuditoriaDAO;
 import modelo.dao.ProcesoActaDAO;
-import modelo.dao.ProcesoDAO;
 import modelo.dao.ProductoDAO;
 import modelo.dao.RequisitoActaDAO;
-import modelo.dao.RequisitoDAO;
 import modelo.dto.AuditorAuxiliarDTO;
 import modelo.dto.AuditorDTO;
 import modelo.dto.AuditoriaDTO;
 import modelo.dto.ContactoAuditoriaDTO;
 import modelo.dto.ProcesoActaDTO;
-import modelo.dto.ProcesoDTO;
 import modelo.dto.ProductoDTO;
 import modelo.dto.RequisitoActaDTO;
-import modelo.dto.RequisitoDTO;
 
 @WebService(serviceName = "AudiFastWS")
 public class AudiFastWS {
