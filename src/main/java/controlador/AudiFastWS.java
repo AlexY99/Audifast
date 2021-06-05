@@ -19,6 +19,8 @@ import modelo.dto.ContactoAuditoriaDTO;
 import modelo.dto.ProcesoActaDTO;
 import modelo.dto.ProductoDTO;
 import modelo.dto.RequisitoActaDTO;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 @WebService(serviceName = "AudiFastWS")
 public class AudiFastWS {
@@ -180,6 +182,7 @@ public class AudiFastWS {
                 jsonResp += "{\"id\":" + padtoA.getEntidad().getProceso().getId()+",";
                 jsonResp += "\"descripcion\":\"" + padtoA.getEntidad().getProceso().getDescripcion()+"\",";
                 jsonResp += "\"ponderacion\":" + padtoA.getEntidad().getPonderacion()+",";
+                jsonResp += "\"resultado\":"+padtoA.getEntidad().getResultado()+",";
                 jsonResp += "\"encargado\":\""+padtoA.getEntidad().getAuditor().getNombre()+"\",";
                 jsonResp += "\"correo_encargado\":\""+padtoA.getEntidad().getAuditor().getCorreo()+"\"},";
             }
@@ -192,6 +195,7 @@ public class AudiFastWS {
     
     @WebMethod(operationName = "requisitosProcesoActa")
     public String requisitosProcesoActa(@WebParam(name = "id") int id) {
+        ProcesoActaDAO padao = new ProcesoActaDAO();
         RequisitoActaDAO radao = new RequisitoActaDAO();
         String jsonResp ="[";
 
@@ -207,6 +211,40 @@ public class AudiFastWS {
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
         jsonResp+="]";
+        return jsonResp;
+    }
+    
+    @WebMethod(operationName = "evaluacionActa")
+    public String evaluacionActa(@WebParam(name = "json") String json) {
+        ProcesoActaDTO padto = new ProcesoActaDTO();
+        ProcesoActaDAO padao = new ProcesoActaDAO();
+        RequisitoActaDTO radto;
+        RequisitoActaDAO radao = new RequisitoActaDAO();
+         
+        JSONObject evaluacion = new JSONObject();
+        JSONObject procesoEvaluacion = evaluacion.getJSONObject("procesoEvaluacion");
+        int idProceso = procesoEvaluacion.getInt("id");
+        String observaciones = procesoEvaluacion.getString("observaciones");
+        
+        JSONArray requisitosEvaluacion = evaluacion.getJSONArray("requisitosEvaluacion");
+        for (int i = 0; i < requisitosEvaluacion.length(); i++){
+            JSONObject requisitoEvaluacion = requisitosEvaluacion.getJSONObject(i);
+            int idRequisito = requisitoEvaluacion.getInt("id");
+            int cumplimiento = requisitoEvaluacion.getInt("cumplimiento");
+            radto = new RequisitoActaDTO();
+            radto.getEntidad().setId(idRequisito);
+            radto.getEntidad().setCumplimiento(cumplimiento);
+            radao.update(radto);
+        }
+        
+        padto.getEntidad().setId(idProceso);
+        padto.getEntidad().setObservaciones(observaciones);
+        //Calcular el resultado
+        float resultado = 0;
+        padto.getEntidad().setResultado(resultado);
+        padao.update(padto);
+        
+        String jsonResp ="";
         return jsonResp;
     }
     
