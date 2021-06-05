@@ -12,6 +12,8 @@ import modelo.dao.ContactoAuditoriaDAO;
 import modelo.dao.ProcesoActaDAO;
 import modelo.dao.ProcesoDAO;
 import modelo.dao.ProductoDAO;
+import modelo.dao.RequisitoActaDAO;
+import modelo.dao.RequisitoDAO;
 import modelo.dto.AuditorAuxiliarDTO;
 import modelo.dto.AuditorDTO;
 import modelo.dto.AuditoriaDTO;
@@ -19,6 +21,8 @@ import modelo.dto.ContactoAuditoriaDTO;
 import modelo.dto.ProcesoActaDTO;
 import modelo.dto.ProcesoDTO;
 import modelo.dto.ProductoDTO;
+import modelo.dto.RequisitoActaDTO;
+import modelo.dto.RequisitoDTO;
 
 @WebService(serviceName = "AudiFastWS")
 public class AudiFastWS {
@@ -170,27 +174,15 @@ public class AudiFastWS {
     
     @WebMethod(operationName = "procesosActaAuditoria")
     public String procesosActaAuditoria(@WebParam(name = "id") int id) {
-            
-        AuditoriaDTO dto = new AuditoriaDTO();
-        ProcesoActaDTO padto = new ProcesoActaDTO();
         ProcesoActaDAO padao = new ProcesoActaDAO();
-
-        dto.getEntidad().setId(id);
         String jsonResp ="[";
 
-        padto.getEntidad().setAuditoria(dto.getEntidad());
-        List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(padto);
-        ProcesoDAO pdao = new ProcesoDAO();
-
-            
+        List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(id);
 
         if(!listaProcesoActa.isEmpty()){
             for(ProcesoActaDTO padtoA: listaProcesoActa){
-                ProcesoDTO pdto = new ProcesoDTO();
-                pdto.getEntidad().setId(padtoA.getEntidad().getProceso().getId());
-                pdto = pdao.read(pdto);
-                jsonResp += "{\"id\":" + pdto.getEntidad().getId()+",";
-                jsonResp += "\"descripcion\":\"" + pdto.getEntidad().getDescripcion()+"\",";
+                jsonResp += "{\"id\":" + padtoA.getEntidad().getProceso().getId()+",";
+                jsonResp += "\"descripcion\":\"" + padtoA.getEntidad().getProceso().getDescripcion()+"\",";
                 jsonResp += "\"ponderacion\":" + padtoA.getEntidad().getPonderacion()+",";
                 jsonResp += "\"encargado\":\""+padtoA.getEntidad().getAuditor().getNombre()+"\",";
                 jsonResp += "\"correo_encargado\":\""+padtoA.getEntidad().getAuditor().getCorreo()+"\"},";
@@ -201,13 +193,33 @@ public class AudiFastWS {
         System.out.println("procesosjson: "+jsonResp);
         return jsonResp;
     }
-   
-    //metodo para obtencion de procesos acta donde el encargado es el auditor
     
-    //metodo para obtencion de requisitos acta a partir de id del proceso acta
+    @WebMethod(operationName = "requisitosProcesoActa")
+    public String requisitosProcesoActa(@WebParam(name = "id") int id) {
+        RequisitoActaDAO radao = new RequisitoActaDAO();
+        String jsonResp ="[";
+
+        List<RequisitoActaDTO> listaRequisitosActa = radao.RequisitosActa(id);
+            
+        if(!listaRequisitosActa.isEmpty()){
+            for(RequisitoActaDTO radtoA: listaRequisitosActa){
+                jsonResp += "{\"id\":" + radtoA.getEntidad().getRequisito().getId()+",";
+                jsonResp += "\"descripcion\":\"" + radtoA.getEntidad().getRequisito().getDescripcion()+"\",";
+                jsonResp += "\"clave_norma\":\"" + radtoA.getEntidad().getRequisito().getClave_norma()+"\",";
+                jsonResp += "\"cumplimiento\":" + radtoA.getEntidad().getCumplimiento()+"},";
+            }
+            jsonResp = jsonResp.substring(0,jsonResp.length()-1);
+        }
+        jsonResp+="]";
+        return jsonResp;
+    }
     
     //metodo para registro de evaluacion de requisitos de proceso acta y observaciones del proceso acta
     
     //metodo para finalizar evaluacion de auditoria
     
+    public static void main(String[] args) {
+        AudiFastWS ws = new  AudiFastWS();
+        ws.procesosActaAuditoria(1);
+    }
 }
