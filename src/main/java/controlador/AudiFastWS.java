@@ -214,6 +214,7 @@ public class AudiFastWS {
         return jsonResp;
     }
     
+    //metodo para registro de evaluacion de requisitos de proceso acta y observaciones del proceso acta
     @WebMethod(operationName = "evaluacionActa")
     public String evaluacionActa(@WebParam(name = "json") String json) {
         ProcesoActaDTO padto = new ProcesoActaDTO();
@@ -247,8 +248,6 @@ public class AudiFastWS {
         String jsonResp ="";
         return jsonResp;
     }
-    
-    //metodo para registro de evaluacion de requisitos de proceso acta y observaciones del proceso acta
     
     //metodo para finalizar evaluacion de auditoria
     
