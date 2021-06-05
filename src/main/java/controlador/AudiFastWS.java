@@ -215,8 +215,8 @@ public class AudiFastWS {
     }
     
     //metodo para registro de evaluacion de requisitos de proceso acta y observaciones del proceso acta
-    @WebMethod(operationName = "evaluacionActa")
-    public String evaluacionActa(@WebParam(name = "json") String json) {
+    @WebMethod(operationName = "evaluacionProceso")
+    public String evaluacionProceso(@WebParam(name = "json") String json) {
         ProcesoActaDTO padto = new ProcesoActaDTO();
         ProcesoActaDAO padao = new ProcesoActaDAO();
         RequisitoActaDTO radto;
@@ -228,24 +228,30 @@ public class AudiFastWS {
         String observaciones = procesoEvaluacion.getString("observaciones");
         
         JSONArray requisitosEvaluacion = evaluacion.getJSONArray("requisitosEvaluacion");
+        int puntosTotales = requisitosEvaluacion.length()*2;
+        int puntosObtenidos = 0;
+        
         for (int i = 0; i < requisitosEvaluacion.length(); i++){
             JSONObject requisitoEvaluacion = requisitosEvaluacion.getJSONObject(i);
             int idRequisito = requisitoEvaluacion.getInt("id");
-            int cumplimiento = requisitoEvaluacion.getInt("cumplimiento");
+            int cumplimiento = requisitoEvaluacion.getInt("cumplimiento");         
             radto = new RequisitoActaDTO();
             radto.getEntidad().setId(idRequisito);
             radto.getEntidad().setCumplimiento(cumplimiento);
             radao.update(radto);
+            puntosObtenidos += cumplimiento;
         }
         
         padto.getEntidad().setId(idProceso);
+        padto = padao.read(padto);
+        float ponderacion = padto.getEntidad().getPonderacion();
+        
+        float resultado = (puntosObtenidos/puntosTotales)*ponderacion;
         padto.getEntidad().setObservaciones(observaciones);
-        //Calcular el resultado
-        float resultado = 0;
         padto.getEntidad().setResultado(resultado);
         padao.update(padto);
         
-        String jsonResp ="";
+        String jsonResp ="Ok";
         return jsonResp;
     }
     
