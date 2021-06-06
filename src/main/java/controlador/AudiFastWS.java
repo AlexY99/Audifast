@@ -179,7 +179,7 @@ public class AudiFastWS {
 
         if(!listaProcesoActa.isEmpty()){
             for(ProcesoActaDTO padtoA: listaProcesoActa){
-                jsonResp += "{\"id\":" + padtoA.getEntidad().getProceso().getId()+",";
+                jsonResp += "{\"id\":" + padtoA.getEntidad().getId()+",";
                 jsonResp += "\"descripcion\":\"" + padtoA.getEntidad().getProceso().getDescripcion()+"\",";
                 jsonResp += "\"ponderacion\":" + padtoA.getEntidad().getPonderacion()+",";
                 jsonResp += "\"resultado\":"+padtoA.getEntidad().getResultado()+",";
@@ -206,7 +206,7 @@ public class AudiFastWS {
             
         if(!listaRequisitosActa.isEmpty()){
             for(RequisitoActaDTO radtoA: listaRequisitosActa){
-                jsonResp += "{\"id\":" + radtoA.getEntidad().getRequisito().getId()+",";
+                jsonResp += "{\"id\":" + radtoA.getEntidad().getId()+",";
                 jsonResp += "\"descripcion\":\"" + radtoA.getEntidad().getRequisito().getDescripcion()+"\",";
                 jsonResp += "\"clave_norma\":\"" + radtoA.getEntidad().getRequisito().getClave_norma()+"\",";
                 jsonResp += "\"cumplimiento\":" + radtoA.getEntidad().getCumplimiento()+"},";
