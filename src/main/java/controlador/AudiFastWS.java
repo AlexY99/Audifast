@@ -184,6 +184,10 @@ public class AudiFastWS {
                 jsonResp += "\"ponderacion\":" + padtoA.getEntidad().getPonderacion()+",";
                 jsonResp += "\"resultado\":"+padtoA.getEntidad().getResultado()+",";
                 jsonResp += "\"encargado\":\""+padtoA.getEntidad().getAuditor().getNombre()+"\",";
+                if(padtoA.getEntidad().getObservaciones()==null)
+                    jsonResp += "\"observaciones\":\"\",";
+                else
+                    jsonResp += "\"observaciones\":\""+padtoA.getEntidad().getObservaciones()+"\",";
                 jsonResp += "\"correo_encargado\":\""+padtoA.getEntidad().getAuditor().getCorreo()+"\"},";
             }
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
@@ -195,7 +199,6 @@ public class AudiFastWS {
     
     @WebMethod(operationName = "requisitosProcesoActa")
     public String requisitosProcesoActa(@WebParam(name = "id") int id) {
-        ProcesoActaDAO padao = new ProcesoActaDAO();
         RequisitoActaDAO radao = new RequisitoActaDAO();
         String jsonResp ="[";
 
@@ -222,7 +225,7 @@ public class AudiFastWS {
         RequisitoActaDTO radto;
         RequisitoActaDAO radao = new RequisitoActaDAO();
          
-        JSONObject evaluacion = new JSONObject();
+        JSONObject evaluacion = new JSONObject(json);
         JSONObject procesoEvaluacion = evaluacion.getJSONObject("procesoEvaluacion");
         int idProceso = procesoEvaluacion.getInt("id");
         String observaciones = procesoEvaluacion.getString("observaciones");
@@ -237,6 +240,7 @@ public class AudiFastWS {
             int cumplimiento = requisitoEvaluacion.getInt("cumplimiento");         
             radto = new RequisitoActaDTO();
             radto.getEntidad().setId(idRequisito);
+            radto = radao.read(radto);
             radto.getEntidad().setCumplimiento(cumplimiento);
             radao.update(radto);
             puntosObtenidos += cumplimiento;
@@ -245,8 +249,9 @@ public class AudiFastWS {
         padto.getEntidad().setId(idProceso);
         padto = padao.read(padto);
         float ponderacion = padto.getEntidad().getPonderacion();
+                
+        float resultado = ((float)puntosObtenidos/puntosTotales)*ponderacion;
         
-        float resultado = (puntosObtenidos/puntosTotales)*ponderacion;
         padto.getEntidad().setObservaciones(observaciones);
         padto.getEntidad().setResultado(resultado);
         padao.update(padto);
