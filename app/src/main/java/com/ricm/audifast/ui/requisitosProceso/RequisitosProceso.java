@@ -220,7 +220,7 @@ public class RequisitosProceso extends AppCompatActivity {
     public void noRequisitos(){
         Toast.makeText(getApplicationContext(),"No se han asignado requisitos al proceso",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, ProcesosActa.class);
-        intent.putExtra("id", idProceso);
+        intent.putExtra("id", idAuditoria);
         startActivity(intent);
         finish();
     }

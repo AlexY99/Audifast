@@ -69,8 +69,6 @@ public class listaProcesosAdapter extends RecyclerView.Adapter<listaProcesosAdap
         rowViewHolder.txtEncargado.setText(modal.getEncargado());
         rowViewHolder.txtResultado.setText(modal.getResultado()+"");
 
-
-
         if(correoAuditor.equals(modal.getCorreo_encargado())){
             rowViewHolder.itemView.setBackgroundColor(Color.YELLOW);
         }
