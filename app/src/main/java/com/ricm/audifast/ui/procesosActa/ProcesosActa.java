@@ -14,10 +14,8 @@ import android.widget.Toast;
 import com.ricm.audifast.R;
 import com.ricm.audifast.SessionManager;
 import com.ricm.audifast.entidades.Proceso;
-import com.ricm.audifast.entidades.Producto;
 import com.ricm.audifast.recyclerviewadapters.listaProcesosAdapter;
 import com.ricm.audifast.ui.infoAuditoria.InfoAuditoria;
-import com.ricm.audifast.ui.listaAuditorias.ListaAuditorias;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,13 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProcesosActa extends AppCompatActivity {
-    int id;
+    int idAuditoria;
     String correo;
     SessionManager sm;
 
     Button btnLogout;
 
     String resultString;
+    String correo_lider;
 
     private List<Proceso> listaProcesos;
     private RecyclerView recyclerProcesos;
@@ -56,7 +55,8 @@ public class ProcesosActa extends AppCompatActivity {
         correo = sm.getUserEmail();
 
         Intent intent = this.getIntent();
-        id = intent.getIntExtra("id",0);
+        idAuditoria = intent.getIntExtra("id",0);
+        correo_lider = intent.getStringExtra("correo_lider");
 
         btnLogout = (Button) findViewById(R.id.btnLogout);
 
@@ -68,11 +68,11 @@ public class ProcesosActa extends AppCompatActivity {
         });
 
         recyclerProcesos = (RecyclerView) findViewById(R.id.ReciclerViewProcesos);
-        adapter = new listaProcesosAdapter(new ArrayList<Proceso>(),correo);
+        adapter = new listaProcesosAdapter(new ArrayList<Proceso>(),correo,idAuditoria,correo_lider);
         recyclerProcesos.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerProcesos.setAdapter(adapter);
 
-        ObtencionProcesos obtencionProcesos = new ObtencionProcesos(id);
+        ObtencionProcesos obtencionProcesos = new ObtencionProcesos(idAuditoria);
         obtencionProcesos.start();
     }
 
@@ -87,7 +87,9 @@ public class ProcesosActa extends AppCompatActivity {
                     double ponderacion = proceso.getDouble("ponderacion");
                     String encargado = proceso.getString("encargado");
                     String correo_encargado = proceso.getString("correo_encargado");
-                    listaProcesos.add(new Proceso(id,descripcion,ponderacion,encargado,correo_encargado));
+                    String observaciones = proceso.getString("observaciones");
+                    double resultado = proceso.getDouble("resultado");
+                    listaProcesos.add(new Proceso(id,descripcion,ponderacion,encargado,correo_encargado,observaciones,resultado));
                 }
         } catch (JSONException e) {
             Log.e("Error",e.getMessage());
@@ -145,7 +147,7 @@ public class ProcesosActa extends AppCompatActivity {
     public void noProcesos(){
         Toast.makeText(getApplicationContext(),"No se ha asignado acta de auditoria",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, InfoAuditoria.class);
-        intent.putExtra("id",id);
+        intent.putExtra("id", idAuditoria);
         startActivity(intent);
         finish();
     }

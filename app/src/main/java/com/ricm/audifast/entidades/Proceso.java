@@ -3,16 +3,20 @@ package com.ricm.audifast.entidades;
 public class Proceso {
     int id;
     String descripcion;
-    Double ponderacion;
+    double ponderacion;
     String encargado;
+    String observaciones;
     String correo_encargado;
+    double resultado;
 
-    public Proceso(int id, String descripcion, Double ponderacion, String encargado, String correo_encargado) {
+    public Proceso(int id, String descripcion, Double ponderacion, String encargado, String correo_encargado, String observaciones,double resultado) {
         this.id = id;
         this.descripcion = descripcion;
         this.ponderacion = ponderacion;
         this.encargado = encargado;
         this.correo_encargado = correo_encargado;
+        this.observaciones = observaciones;
+        this.resultado = resultado;
     }
 
     public int getId() {
@@ -31,11 +35,11 @@ public class Proceso {
         this.descripcion = descripcion;
     }
 
-    public Double getPonderacion() {
+    public double getPonderacion() {
         return ponderacion;
     }
 
-    public void setPonderacion(Double ponderacion) {
+    public void setPonderacion(double ponderacion) {
         this.ponderacion = ponderacion;
     }
 
@@ -55,6 +59,22 @@ public class Proceso {
         this.correo_encargado = correo_encargado;
     }
 
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public double getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(double resultado) {
+        this.resultado = resultado;
+    }
+
     @Override
     public String toString() {
         return "Proceso{" +
@@ -62,7 +82,9 @@ public class Proceso {
                 ", descripcion='" + descripcion + '\'' +
                 ", ponderacion=" + ponderacion +
                 ", encargado='" + encargado + '\'' +
+                ", observaciones='" + observaciones + '\'' +
                 ", correo_encargado='" + correo_encargado + '\'' +
+                ", resultado=" + resultado +
                 '}';
     }
 }

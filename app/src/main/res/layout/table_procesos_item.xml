@@ -9,14 +9,14 @@
     android:id="@+id/item_proceso">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/table_content_cell_bg">
 
         <TextView
             android:id="@+id/txtDescripcionProceso"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:text="Higiene de las Instalaciones"
@@ -25,12 +25,12 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lblEncargado"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="top"
                 android:text="Encargado:"
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/txtEncargadoProceso"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:text="Juan Pérez"
@@ -48,37 +48,61 @@
 
         </LinearLayout>
 
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/table_content_cell_bg">
-
-        <TextView
-            android:id="@+id/lblValor"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:text="Valor:"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/txtPonderacionProceso"
-            android:layout_width="60dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="100%"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblPonderacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:text="Ponderación:"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtPonderacionProceso"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="100%"
+                android:textSize="18sp"
+                android:paddingLeft="12dp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblResultado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:text="Resultado:"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtResultadoProceso"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="100%"
+                android:textSize="18sp"
+                android:paddingLeft="12dp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
 </LinearLayout>

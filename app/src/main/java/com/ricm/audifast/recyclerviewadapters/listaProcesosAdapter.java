@@ -15,16 +15,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ricm.audifast.R;
 import com.ricm.audifast.entidades.Proceso;
 import com.ricm.audifast.ui.infoAuditoria.InfoAuditoria;
+import com.ricm.audifast.ui.requisitosProceso.RequisitosProceso;
 
 import java.util.List;
 
 public class listaProcesosAdapter extends RecyclerView.Adapter<listaProcesosAdapter.RowViewHolder>  {
     List<Proceso> procesoList;
     String correoAuditor;
+    String correoLider;
+    int idAuditoria;
 
-    public listaProcesosAdapter(List<Proceso> procesoList,String correoAuditor) {
+    public listaProcesosAdapter(List<Proceso> procesoList,String correoAuditor,int idAuditoria,String correoLider) {
         this.procesoList = procesoList;
         this.correoAuditor = correoAuditor;
+        this.correoLider = correoLider;
+        this.idAuditoria = idAuditoria;
     }
 
     @Override
@@ -33,24 +38,25 @@ public class listaProcesosAdapter extends RecyclerView.Adapter<listaProcesosAdap
                 from(parent.getContext()).
                 inflate(R.layout.table_procesos_item,parent,false);
 
-        listaProcesosAdapter.RowViewHolder vHolder = new listaProcesosAdapter.RowViewHolder(itemView,parent.getContext(),correoAuditor);
+        listaProcesosAdapter.RowViewHolder vHolder = new listaProcesosAdapter.RowViewHolder(itemView,parent.getContext());
 
         vHolder.item_proceso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String correoEncargado = procesoList.get(vHolder.getAdapterPosition()).getCorreo_encargado();
-                if(correoEncargado.equals(correoAuditor)){
-                    int id = procesoList.get(vHolder.getAdapterPosition()).getId();
-                    //cambiar clase por la de la actividad de evaluacion (recuerda que se manda la id del proceso, por eso ahora no funca bien)
-                    Intent intent = new Intent(parent.getContext(), InfoAuditoria.class);
-                    intent.putExtra("id",id);
+                String observacionesProceso = procesoList.get(vHolder.getAdapterPosition()).getObservaciones();
+                if(correoAuditor.equals(correoEncargado)||correoAuditor.equals(correoLider)){
+                    int idProceso = procesoList.get(vHolder.getAdapterPosition()).getId();
+                    Intent intent = new Intent(parent.getContext(), RequisitosProceso.class);
+                    intent.putExtra("idProceso",idProceso);
+                    intent.putExtra("observacionesProceso",observacionesProceso);
+                    intent.putExtra("idAuditoria",idAuditoria);
                     parent.getContext().startActivity(intent);
                 }else{
                     Toast.makeText(parent.getContext(),"No eres el encargado de este proceso",Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
         return vHolder;
     }
 
@@ -61,6 +67,7 @@ public class listaProcesosAdapter extends RecyclerView.Adapter<listaProcesosAdap
         rowViewHolder.txtDescripcion.setText(modal.getDescripcion());
         rowViewHolder.txtPonderacion.setText(modal.getPonderacion()+"");
         rowViewHolder.txtEncargado.setText(modal.getEncargado());
+
 
         if(correoAuditor.equals(modal.getCorreo_encargado())){
             rowViewHolder.itemView.setBackgroundColor(Color.YELLOW);
@@ -81,15 +88,17 @@ public class listaProcesosAdapter extends RecyclerView.Adapter<listaProcesosAdap
         protected TextView txtDescripcion;
         protected TextView txtPonderacion;
         protected TextView txtEncargado;
+        protected TextView txtResultado;
         protected LinearLayout item_proceso;
 
-        public RowViewHolder(View itemView,Context context, String correoAuditor) {
+
+        public RowViewHolder(View itemView,Context context) {
             super(itemView);
             txtDescripcion = itemView.findViewById(R.id.txtDescripcionProceso);
             txtPonderacion = itemView.findViewById(R.id.txtPonderacionProceso);
             txtEncargado = itemView.findViewById(R.id.txtEncargadoProceso);
             item_proceso = itemView.findViewById(R.id.item_proceso);
-
+            txtResultado = itemView.findViewById(R.id.txtResultadoProceso);
         }
     }
 
