@@ -67,6 +67,8 @@ public class listaProcesosAdapter extends RecyclerView.Adapter<listaProcesosAdap
         rowViewHolder.txtDescripcion.setText(modal.getDescripcion());
         rowViewHolder.txtPonderacion.setText(modal.getPonderacion()+"");
         rowViewHolder.txtEncargado.setText(modal.getEncargado());
+        rowViewHolder.txtResultado.setText(modal.getResultado()+"");
+
 
 
         if(correoAuditor.equals(modal.getCorreo_encargado())){
