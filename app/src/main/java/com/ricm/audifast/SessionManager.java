@@ -10,6 +10,7 @@ public class SessionManager {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
     Context context;
+    int num=10;
 
     int PRIVATE_MODE = 0;
 
