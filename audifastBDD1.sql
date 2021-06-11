@@ -122,6 +122,7 @@ create table proceso_acta(
     correo_encargado nvarchar(50) not null,
     idProceso int(10) not null,
     ponderacion float not null,
+    evaluado boolean not null default false,
     resultado float not null,
     observaciones nvarchar(100),
     foreign key(idAuditoria) references auditoria(id)
@@ -154,6 +155,8 @@ end **
 delimiter ;
 
 insert into Auditor values('xtarevolution@yahoo.com.mx','Ricardo Cruz','abc123','5561997887');
+insert into Auditor values('carmacmor@yahoo.com','Carmen Macias','abc123','5523686257');
+
 insert into Norma(clave,correo_auditor,nombre) values ('NOM-Q016','xtarevolution@yahoo.com.mx','Norma Mexicana Q016');
 insert into Norma(clave,correo_auditor,nombre) values ('ISO:9000','xtarevolution@yahoo.com.mx','Norma ISO 9000');
 insert into Norma(clave,correo_auditor,nombre) values ('ISO:25010','xtarevolution@yahoo.com.mx','Norma ISO modelo SQUARE');
@@ -182,3 +185,9 @@ select * from auditor;
 select * from plantilla_auditor;
 select * from proceso;
 select * from requisito;
+
+select * from auditor_auxiliar;
+
+select * from proceso_acta;
+
+select auditoria0_.id as id1_2_, auditoria0_.correo_auditor_lider as correo_a2_2_, auditoria0_.fecha_registro as fecha_re3_2_, auditoria0_.rfc_organizacion as rfc_orga4_2_ from Auditoria auditoria0_ where auditoria0_.correo_auditor_lider='xtarevolution@yahoo.com.mx' order by auditoria0_.fecha_registro
