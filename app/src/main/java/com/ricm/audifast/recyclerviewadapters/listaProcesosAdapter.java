@@ -67,7 +67,13 @@ public class listaProcesosAdapter extends RecyclerView.Adapter<listaProcesosAdap
         rowViewHolder.txtDescripcion.setText(modal.getDescripcion());
         rowViewHolder.txtPonderacion.setText(modal.getPonderacion()+"");
         rowViewHolder.txtEncargado.setText(modal.getEncargado());
-        rowViewHolder.txtResultado.setText(modal.getResultado()+"");
+
+        if(modal.isEvaluado()){
+            rowViewHolder.txtResultado.setText(modal.getResultado()+"");
+        }else{
+            rowViewHolder.txtResultado.setText("No evaluado");
+        }
+
 
         if(correoAuditor.equals(modal.getCorreo_encargado())){
             rowViewHolder.itemView.setBackgroundColor(Color.YELLOW);

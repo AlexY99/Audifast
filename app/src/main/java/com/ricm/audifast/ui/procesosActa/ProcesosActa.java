@@ -86,10 +86,11 @@ public class ProcesosActa extends AppCompatActivity {
                     String descripcion = proceso.getString("descripcion");
                     double ponderacion = proceso.getDouble("ponderacion");
                     String encargado = proceso.getString("encargado");
+                    boolean evaluado = proceso.getBoolean("evaluado");
                     String correo_encargado = proceso.getString("correo_encargado");
                     String observaciones = proceso.getString("observaciones");
                     double resultado = proceso.getDouble("resultado");
-                    listaProcesos.add(new Proceso(id,descripcion,ponderacion,encargado,correo_encargado,observaciones,resultado));
+                    listaProcesos.add(new Proceso(id,descripcion,ponderacion,encargado,correo_encargado,evaluado,observaciones,resultado));
                 }
         } catch (JSONException e) {
             Log.e("Error",e.getMessage());

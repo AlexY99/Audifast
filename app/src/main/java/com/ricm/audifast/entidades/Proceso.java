@@ -6,15 +6,17 @@ public class Proceso {
     double ponderacion;
     String encargado;
     String observaciones;
+    boolean evaluado;
     String correo_encargado;
     double resultado;
 
-    public Proceso(int id, String descripcion, Double ponderacion, String encargado, String correo_encargado, String observaciones,double resultado) {
+    public Proceso(int id, String descripcion, Double ponderacion, String encargado, String correo_encargado, boolean evaluado, String observaciones,double resultado) {
         this.id = id;
         this.descripcion = descripcion;
         this.ponderacion = ponderacion;
         this.encargado = encargado;
         this.correo_encargado = correo_encargado;
+        this.evaluado = evaluado;
         this.observaciones = observaciones;
         this.resultado = resultado;
     }
@@ -57,6 +59,14 @@ public class Proceso {
 
     public void setCorreo_encargado(String correo_encargado) {
         this.correo_encargado = correo_encargado;
+    }
+
+    public boolean isEvaluado() {
+        return evaluado;
+    }
+
+    public void setEvaluado(boolean evaluado) {
+        this.evaluado = evaluado;
     }
 
     public String getObservaciones() {
