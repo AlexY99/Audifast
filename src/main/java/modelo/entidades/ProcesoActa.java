@@ -20,6 +20,7 @@ public class ProcesoActa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private float ponderacion;
+    private boolean evaluado;
     private float resultado ;
     private String observaciones;
     
@@ -59,6 +60,14 @@ public class ProcesoActa implements Serializable {
 
     public void setPonderacion(float ponderacion) {
         this.ponderacion = ponderacion;
+    }
+
+    public boolean getEvaluado() {
+        return evaluado;
+    }
+
+    public void setEvaluado(boolean evaluado) {
+        this.evaluado = evaluado;
     }
 
     public float getResultado() {

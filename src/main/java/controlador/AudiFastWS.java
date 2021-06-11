@@ -182,6 +182,7 @@ public class AudiFastWS {
                 jsonResp += "{\"id\":" + padtoA.getEntidad().getId()+",";
                 jsonResp += "\"descripcion\":\"" + padtoA.getEntidad().getProceso().getDescripcion()+"\",";
                 jsonResp += "\"ponderacion\":" + padtoA.getEntidad().getPonderacion()+",";
+                jsonResp += "\"evaluado\":" + padtoA.getEntidad().getEvaluado()+",";
                 jsonResp += "\"resultado\":"+padtoA.getEntidad().getResultado()+",";
                 jsonResp += "\"encargado\":\""+padtoA.getEntidad().getAuditor().getNombre()+"\",";
                 if(padtoA.getEntidad().getObservaciones()==null)
@@ -252,6 +253,7 @@ public class AudiFastWS {
                 
         float resultado = ((float)puntosObtenidos/puntosTotales)*ponderacion;
         
+        padto.getEntidad().setEvaluado(true);
         padto.getEntidad().setObservaciones(observaciones);
         padto.getEntidad().setResultado(resultado);
         padao.update(padto);
