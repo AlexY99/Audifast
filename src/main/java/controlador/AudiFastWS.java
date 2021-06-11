@@ -74,7 +74,6 @@ public class AudiFastWS {
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
         jsonResp += "]}";
-        System.out.println(jsonResp);
         return jsonResp;
     }
     
@@ -194,7 +193,6 @@ public class AudiFastWS {
             jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         }
         jsonResp+="]";
-        System.out.println("procesosjson: "+jsonResp);
         return jsonResp;
     }
     
