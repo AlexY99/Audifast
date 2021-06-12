@@ -1,12 +1,16 @@
 package com.ricm.audifast.ui.procesosActa;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,6 +20,7 @@ import com.ricm.audifast.SessionManager;
 import com.ricm.audifast.entidades.Proceso;
 import com.ricm.audifast.recyclerviewadapters.listaProcesosAdapter;
 import com.ricm.audifast.ui.infoAuditoria.InfoAuditoria;
+import com.ricm.audifast.ui.listaAuditorias.ListaAuditorias;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,8 +39,6 @@ public class ProcesosActa extends AppCompatActivity {
     String correo;
     SessionManager sm;
 
-    Button btnLogout;
-
     String resultString;
     String correo_lider;
 
@@ -49,6 +52,9 @@ public class ProcesosActa extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_procesos_acta);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         listaProcesos = new ArrayList<Proceso>();
 
         sm = new SessionManager(getApplicationContext());
@@ -57,15 +63,6 @@ public class ProcesosActa extends AppCompatActivity {
         Intent intent = this.getIntent();
         idAuditoria = intent.getIntExtra("id",0);
         correo_lider = intent.getStringExtra("correo_lider");
-
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sm.logoutUser();
-            }
-        });
 
         recyclerProcesos = (RecyclerView) findViewById(R.id.ReciclerViewProcesos);
         adapter = new listaProcesosAdapter(new ArrayList<Proceso>(),correo,idAuditoria,correo_lider);
@@ -151,5 +148,29 @@ public class ProcesosActa extends AppCompatActivity {
         intent.putExtra("id", idAuditoria);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        SessionManager sm = new SessionManager(getApplicationContext());
+        switch(item.getItemId()){
+            case R.id.itemLista:
+                Intent intent = new Intent(this, ListaAuditorias.class);
+                intent.putExtra("correo",sm.getUserEmail());
+                startActivity(intent);
+            break;
+
+            case R.id.itemLogout:
+                sm.logoutUser();
+                finish();
+            break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,12 +1,16 @@
 package com.ricm.audifast.ui.infoAuditoria;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +19,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.ricm.audifast.R;
 import com.ricm.audifast.SessionManager;
 import com.ricm.audifast.entidades.Auditoria;
+import com.ricm.audifast.ui.listaAuditorias.ListaAuditorias;
 import com.ricm.audifast.viewpageradapters.tabsApartadosAdapter;
 
 import org.json.JSONArray;
@@ -29,7 +34,6 @@ import org.ksoap2.transport.HttpTransportSE;
 public class InfoAuditoria extends AppCompatActivity {
     int id;
     String resultString;
-    Button btnLogout;
 
     TextView txtAuditoria;
 
@@ -40,19 +44,11 @@ public class InfoAuditoria extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_auditoria);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         txtAuditoria = (TextView) findViewById(R.id.txtAuditoria);
         txtAuditoria.setText("Auditoría "+id);
-
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SessionManager sm = new SessionManager(getApplicationContext());
-                sm.logoutUser();
-
-            }
-        });
 
         TabLayout tabLayout = findViewById(R.id.tabsApartados);
         ViewPager2 viewPager2 = findViewById(R.id.pagerApartados);
@@ -91,6 +87,29 @@ public class InfoAuditoria extends AppCompatActivity {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        SessionManager sm = new SessionManager(getApplicationContext());
+        switch(item.getItemId()){
+            case R.id.itemLista:
+                Intent intent = new Intent(this, ListaAuditorias.class);
+                intent.putExtra("correo",sm.getUserEmail());
+                startActivity(intent);
+            break;
+
+            case R.id.itemLogout:
+                sm.logoutUser();
+                finish();
+            break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -21,8 +21,6 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import static java.lang.Thread.sleep;
-
  public class MainActivity extends AppCompatActivity {
 
     private EditText txtCorreo;
@@ -130,7 +128,7 @@ import static java.lang.Thread.sleep;
         Intent intent = new Intent(this,ListaAuditorias.class);
         intent.putExtra("correo",correo);
         startActivity(intent);
-        this.finish();
+        finish();
     }
 
 }

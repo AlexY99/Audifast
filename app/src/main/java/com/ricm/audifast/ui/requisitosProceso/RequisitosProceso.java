@@ -1,12 +1,16 @@
 package com.ricm.audifast.ui.requisitosProceso;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +22,7 @@ import com.ricm.audifast.SessionManager;
 import com.ricm.audifast.entidades.Requisito;
 import com.ricm.audifast.recyclerviewadapters.listaRequisitosAdapter;
 import com.ricm.audifast.ui.infoAuditoria.InfoAuditoria;
+import com.ricm.audifast.ui.listaAuditorias.ListaAuditorias;
 import com.ricm.audifast.ui.procesosActa.ProcesosActa;
 
 import org.json.JSONArray;
@@ -38,7 +43,6 @@ public class RequisitosProceso extends AppCompatActivity {
     String observacionesProceso;
     SessionManager sm;
 
-    Button btnLogout;
     Button btnActa;
 
     EditText txtObservacionesProceso;
@@ -55,6 +59,9 @@ public class RequisitosProceso extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requisitos_proceso);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         listaRequisitos = new ArrayList<Requisito>();
 
         sm = new SessionManager(getApplicationContext());
@@ -65,18 +72,11 @@ public class RequisitosProceso extends AppCompatActivity {
         observacionesProceso = intent.getStringExtra("observacionesProceso");
 
 
-        btnLogout = (Button) findViewById(R.id.btnLogout);
         btnActa = (Button) findViewById(R.id.btnEvaluar);
 
         txtObservacionesProceso = (EditText) findViewById(R.id.txtObservacionesProceso);
         txtObservacionesProceso.setText(observacionesProceso);
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sm.logoutUser();
-            }
-        });
 
         recyclerRequisitos = (RecyclerView) findViewById(R.id.ReciclerViewRequisitos);
         adapter = new listaRequisitosAdapter(new ArrayList<Requisito>());
@@ -233,5 +233,28 @@ public class RequisitosProceso extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        SessionManager sm = new SessionManager(getApplicationContext());
+        switch(item.getItemId()){
+            case R.id.itemLista:
+                Intent intent = new Intent(this, ListaAuditorias.class);
+                intent.putExtra("correo",sm.getUserEmail());
+                startActivity(intent);
+            break;
+
+            case R.id.itemLogout:
+                sm.logoutUser();
+                finish();
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }
