@@ -109,7 +109,7 @@ public class productosFragment extends Fragment {
             final String metodo = "productosAuditoria";
             final String namespace = "http://controlador/";
             final String accionSoap = namespace + metodo;
-            final String url = "http://192.168.100.16:8080/AudiFast/AudiFastWS?wsdl";
+            final String url = "http://192.168.100.53:8083/AudiFast/AudiFastWS?wsdl";
             String response;
 
             SoapObject request = new SoapObject(namespace,metodo);
