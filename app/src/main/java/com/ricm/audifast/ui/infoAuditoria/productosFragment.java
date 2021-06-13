@@ -48,14 +48,19 @@ public class productosFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static contactosFragment newInstance(String json) {
-        contactosFragment fragment = new contactosFragment();
+    public static productosFragment newInstance(String json) {
+        productosFragment fragment = new productosFragment();
         Bundle args = new Bundle();
         args.putString(ARG_JSON_APARTADOS, json);
         fragment.setArguments(args);
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        listaProductos = new ArrayList<>();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
