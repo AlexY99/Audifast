@@ -34,7 +34,7 @@
                 </div>
             </div>
             <br/>
-            <div class="col-lg-6 col-sm-11" style="margin-top: 25px">
+            <div class="col-lg-6 col-sm-11" style="margin-top: 30px">
                 <div class="card">
                     <form onsubmit="event.preventDefault()" class="box">
                         <h2 class="text-white"style="margin-top: 15px">Acceda a una Auditoría</h2>

@@ -123,5 +123,34 @@ public class ProcesoActaDAO {
         }
         return dtos;
     }
-
+    
+    public boolean AuditoriaCompleta(int idAuditoria){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        List<ProcesoActa> lista = null;
+        try{
+            transaction.begin();
+            Query q = session.createQuery("from ProcesoActa p where p.auditoria.id = :id order by p.id");
+            q.setParameter("id", idAuditoria);
+            lista = q.list();
+            transaction.commit();
+        }catch(HibernateException he){
+            if(transaction!=null && transaction.isActive()){
+                transaction.rollback();
+            }
+        }
+        ArrayList<ProcesoActaDTO> dtos = new ArrayList<>();
+        for (ProcesoActa o : lista) {
+            dtos.add(new ProcesoActaDTO(o));
+        }
+        boolean evaluada = true;
+        for(int i = 0 ; i < dtos.size() ; i++)
+            if(dtos.get(i).getEntidad().getEvaluado())
+                continue;
+            else{
+                evaluada = false;
+                break;
+            }
+        return evaluada;
+    }
 }

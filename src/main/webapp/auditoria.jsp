@@ -19,7 +19,9 @@
     <body>        
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">AudiFast</a>
+                <a class="navbar-brand" href="#">
+                    <img src="resources\imagenes\logo.png" width="150" height="50" alt="" class="d-inline-block align-top">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -70,49 +72,73 @@
             </div>
 
             <br/>
-            
+
             <div id="datosActa" class="apartado">
                 <h3 id="encabezadoActa" class="encabezadoApartado">Acta de Auditor&iacute;a</h3>
-            <c:choose>
-                <c:when test="${empty listaProcesoActa}">
-                    <c:choose>
-                        <c:when test="${permisoEdicion}">
-                            <button type="button" class="btnAdd btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormActaAuditoria">
-                                Acta de Auditor&iacute;a
-                            </button>  
-                        </c:when>
-                        <c:otherwise>
-                            El auditor líder no ha asignado un acta de auditor&iacute;a.
-                        </c:otherwise>
-                    </c:choose>
-                </c:when>
-                <c:otherwise>
-                    <c:choose>
-                        <c:when test="${permisoEdicion}">
-                            <div class="row">
-                                <div class="col-6">
-                                    <button type="button" class="btnAdd btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditarActaAuditoria">
-                                        Editar Acta Auditor&iacute;a
-                                    </button>  
-                                </div>
-                                <div class="col-6">
-                                    <form method="POST" action="AuditoriaServlet?accion=EliminarActa" id="form-EliminarActa">
-                                        <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
-                                        <button class='btn btn-danger' type='submit' form='form-EliminarActa'>
-                                            Eliminar Acta Auditor&iacute;a
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <button type="button" class="btnAdd btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConsultarActaAuditoria">
-                                Consultar Acta de Auditor&iacute;a
-                            </button> 
-                        </c:otherwise>
-                    </c:choose>
-                </c:otherwise>
-            </c:choose>
+                <c:choose>
+                    <c:when test="${empty listaProcesoActa}">
+                        <c:choose>
+                            <c:when test="${permisoEdicion}">
+                                <button type="button" class="btnAdd btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFormActaAuditoria">
+                                    Acta de Auditor&iacute;a
+                                </button>  
+                            </c:when>
+                            <c:otherwise>
+                                El auditor líder no ha asignado un acta de auditor&iacute;a.
+                            </c:otherwise>
+                        </c:choose>
+                    </c:when>
+                    <c:otherwise>
+                        <c:choose>
+                            <c:when test="${completa}">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <form target="_blank" method="POST" action="AuditoriaServlet?accion=Reporte" id="form-ReportePDF">
+                                            <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+                                            <button class='btn btn-primary' type='submit' form='form-ReportePDF'>
+                                                Reporte de Auditoria
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="col-6">
+                                        <form method="POST" action="AuditoriaServlet?accion=Retroalimentacion" id="form-Retroalimentacion">
+                                            <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+                                            <button class='btn btn-primary' type='submit' form='form-Retroalimentacion'>
+                                                Espacio de Retroalimentaci&oacute;n
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>  
+                            </c:when>
+                            <c:otherwise>
+                                <c:choose>
+                                    <c:when test="${permisoEdicion}">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button type="button" class="btnAdd btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditarActaAuditoria">
+                                                    Editar Acta Auditor&iacute;a
+                                                </button>  
+                                            </div>
+                                            <div class="col-6">
+                                                <form method="POST" action="AuditoriaServlet?accion=EliminarActa" id="form-EliminarActa">
+                                                    <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+                                                    <button class='btn btn-danger' type='submit' form='form-EliminarActa'>
+                                                        Eliminar Acta Auditor&iacute;a
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="button" class="btnAdd btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConsultarActaAuditoria">
+                                            Consultar Acta de Auditor&iacute;a
+                                        </button> 
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
             <br/>
@@ -144,17 +170,17 @@
                                     <td>Auditor Auxiliar</td>
                                     <td><c:out value="${auditorAux.entidad.telefono}"/></td>
                                     <c:if test="${permisoEdicion}">
-                                        <form method="POST" action="AuditoriaServlet?accion=EliminarAuditorAuxiliar" id="form-${auditorAux.entidad.correo}">
-                                            <input type="hidden" name="txtCorreo" value='${auditorAux.entidad.correo}' />
-                                            <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
-                                            <td>
-                                                <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${auditorAux.entidad.correo}'>
-                                                    X
-                                                </button>
-                                            </td>
-                                        </form>
-                                    </c:if>
-                                </tr>
+                                <form method="POST" action="AuditoriaServlet?accion=EliminarAuditorAuxiliar" id="form-${auditorAux.entidad.correo}">
+                                    <input type="hidden" name="txtCorreo" value='${auditorAux.entidad.correo}' />
+                                    <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+                                    <td>
+                                        <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${auditorAux.entidad.correo}'>
+                                            X
+                                        </button>
+                                    </td>
+                                </form>
+                            </c:if>
+                            </tr>
                         </c:forEach>
                         </tbody>
                     </table>
@@ -165,7 +191,7 @@
                     </button>  
                     <br/>
                 </c:if>
-                
+
             </div>    
 
             <br/>
@@ -191,18 +217,18 @@
                                     <td><c:out value="${contacto.entidad.puesto}"/></td>
                                     <td><c:out value="${contacto.entidad.telefono}"/></td>
                                     <c:if test="${permisoEdicion}">
-                                        <form method="POST" action="AuditoriaServlet?accion=EliminarContacto" id="form-${contacto.entidad.getId().correo}">
-                                            <input type="hidden" name="txtCorreo" value='${contacto.entidad.getId().correo}' />
-                                            <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
-                                            <td>
-                                                <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${contacto.entidad.getId().correo}'>
-                                                    X
-                                                </button>
-                                            </td>
-                                        </form>
-                                    </c:if>
-                                </tr>
-                            </c:forEach>
+                                <form method="POST" action="AuditoriaServlet?accion=EliminarContacto" id="form-${contacto.entidad.getId().correo}">
+                                    <input type="hidden" name="txtCorreo" value='${contacto.entidad.getId().correo}' />
+                                    <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+                                    <td>
+                                        <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${contacto.entidad.getId().correo}'>
+                                            X
+                                        </button>
+                                    </td>
+                                </form>
+                            </c:if>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -233,18 +259,18 @@
                                     <td><c:out value="${producto.entidad.getId().clave}"/></td>
                                     <td><c:out value="${producto.entidad.descripcion}"/></td>
                                     <c:if test="${permisoEdicion}">
-                                        <form method="POST" action="AuditoriaServlet?accion=EliminarProducto" id="form-${producto.entidad.getId().clave}">
-                                            <input type="hidden" name="txtClave" value='${producto.entidad.getId().clave}' />
-                                            <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
-                                            <td>
-                                                <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${producto.entidad.getId().clave}'>
-                                                    X
-                                                </button>
-                                            </td>
-                                        </form>
-                                    </c:if>
-                                </tr>
-                            </c:forEach>
+                                <form method="POST" action="AuditoriaServlet?accion=EliminarProducto" id="form-${producto.entidad.getId().clave}">
+                                    <input type="hidden" name="txtClave" value='${producto.entidad.getId().clave}' />
+                                    <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
+                                    <td>
+                                        <button class='btn btn-danger' style="font-size: 0.6rem;" type='submit' form='form-${producto.entidad.getId().clave}'>
+                                            X
+                                        </button>
+                                    </td>
+                                </form>
+                            </c:if>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
@@ -256,7 +282,7 @@
             </div>
             <br/>          
         </div>
-        
+
         <c:if test="${permisoEdicion}">
             <!--modalFormAuditorAuxiliar  -->
             <div class="modal fade" id="modalFormAuditorAuxiliar" tabindex="-1" aria-labelledby="modalFormAuditorAuxiliarTitulo" aria-hidden="true">
@@ -438,7 +464,7 @@
                 </div>
             </div>
         </c:if>
-            
+
         <c:if test="${!permisoEdicion}">
             <!--modalConsultarActaAuditoria  -->
             <div class="modal fade" id="modalConsultarActaAuditoria" tabindex="-1" aria-labelledby="modalConsultarActaAuditoriaTitulo" aria-hidden="true">
@@ -448,31 +474,31 @@
                             <h5 class="modal-title" id="modalConsultarActaAuditoriaTitulo">Acta de Auditor&iacute;a</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                            <div class="modal-body">
-                                <table id="tableProcesos" class="table table-bordered table-responsive">
-                                    <thead>
+                        <div class="modal-body">
+                            <table id="tableProcesos" class="table table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">Nombre del Proceso</th>
+                                        <th scope="col" class="text-center">Ponderaci&oacute;n (%)</th>
+                                        <th scope="col" class="text-center">Encargado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:set var="i" value="0" scope="page" />
+                                    <c:forEach items="${listaProcesos}" var="proceso">
                                         <tr>
-                                            <th scope="col" class="text-center">Nombre del Proceso</th>
-                                            <th scope="col" class="text-center">Ponderaci&oacute;n (%)</th>
-                                            <th scope="col" class="text-center">Encargado</th>
+                                            <th scope="row"><c:out value="${proceso.entidad.descripcion}"/></th>
+                                            <td><c:out value="${listaProcesoActa[i].entidad.ponderacion}"/></td>
+                                            <td><c:out value="${listaProcesoActa[i].entidad.auditor.nombre}"/></td>  
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:set var="i" value="0" scope="page" />
-                                        <c:forEach items="${listaProcesos}" var="proceso">
-                                            <tr>
-                                                <th scope="row"><c:out value="${proceso.entidad.descripcion}"/></th>
-                                                <td><c:out value="${listaProcesoActa[i].entidad.ponderacion}"/></td>
-                                                <td><c:out value="${listaProcesoActa[i].entidad.auditor.nombre}"/></td>  
-                                            </tr>
-                                            <c:set var="i" value="${i + 1}" scope="page"/>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
+                                        <c:set var="i" value="${i + 1}" scope="page"/>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>

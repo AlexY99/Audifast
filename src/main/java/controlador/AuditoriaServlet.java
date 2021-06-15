@@ -1,14 +1,19 @@
 package controlador;
 
+import java.io.File;
 import modelo.dto.AuditoriaDTO;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +37,8 @@ import modelo.dto.ProductoDTO;
 import modelo.dto.ProcesoDTO;
 import modelo.dto.RequisitoActaDTO;
 import modelo.dto.RequisitoDTO;
-import modelo.entidades.Auditoria;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 
 
 public class AuditoriaServlet extends HttpServlet {
@@ -68,6 +74,8 @@ public class AuditoriaServlet extends HttpServlet {
             EditarActa(request, response);
         } else if (accion.equals("EliminarActa")) {
             EliminarActa(request, response);
+        } else if (accion.equals("Reporte")) {
+            ReporteAuditoria(request, response);
         }
 
     }
@@ -209,8 +217,13 @@ public class AuditoriaServlet extends HttpServlet {
             
             permisoEdicion = adtoLider.getEntidad().getCorreo().equals(adto.getEntidad().getCorreo());
             
+            boolean completa = padao.AuditoriaCompleta(idAuditoria);
+            
+            System.out.println(completa);
+            
             request.setAttribute("auditoria", dto);
             request.setAttribute("auditorLider",adtoLider);
+            request.setAttribute("completa",completa);
             request.setAttribute("auditor", adto);
             request.setAttribute("permisoEdicion",permisoEdicion);
             request.setAttribute("listaProcesoActa",listaProcesoActa);
@@ -416,5 +429,31 @@ public class AuditoriaServlet extends HttpServlet {
         request.setAttribute("mensaje", "Acta Eliminada");
         request.setAttribute("id", String.valueOf(idAuditoria));
         infoAuditoria(request, response);
+    }
+
+    private void ReporteAuditoria(HttpServletRequest request, HttpServletResponse response) {
+        int idAuditoria = Integer.parseInt(request.getParameter("txtIdAuditoria"));
+        System.out.println(idAuditoria);
+        AuditoriaDAO dao = new AuditoriaDAO();
+        try{
+            File reporte = new File(getServletConfig().getServletContext().getRealPath("/Reports/ReporteAudifast.jasper"));
+            Map parametro = new HashMap();
+            parametro.put("idAuditoria", idAuditoria);
+            //JasperPrint print = JasperFillManager.fillReport(reporte.getPath(), parametro, dao.obtenerConexion());
+            //byte[] bytes = JasperExportManager.exportReportToPdf(print);
+            byte[] bytes = JasperRunManager.runReportToPdf(reporte.getPath(), parametro, dao.obtenerConexion());
+            ServletOutputStream sos = response.getOutputStream();
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            sos.write(bytes,0,bytes.length);
+            sos.flush();
+            sos.close();
+        }catch (IOException ex){
+            Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
