@@ -24,8 +24,8 @@
       </div>
     <div class="container">
 	<div class="row align-items-start justify-content-left">
-            <div class="col-lg-1 col-sm-1"></div>
-            <div class="col-lg-4 col-sm-10">
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            <div class="col-lg-4 col-md-10 col-sm-10">
                 <div class="card">
                     <form action="AuditorServlet?accion=Login" method="POST" class="box">
                         <h2 class="text-white" style="margin-top: 40px">Inicio de Sesión</h2>
@@ -37,10 +37,10 @@
                 </div>
             </div>
             <br/>
-            <div class="col-lg-1 col-sm-1"></div>
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
             
-            <div class="col-lg-1 col-sm-1"></div>
-            <div class="col-lg-4 col-sm-10" style="margin-top: 40px">
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            <div class="col-lg-4 col-md-10 col-sm-10" style="margin-top: 40px">
                 <div class="card">
                     <form onsubmit="event.preventDefault()" class="box">
                         <h2 class="text-white"style="margin-top: 30px">Acceda a una Auditoría</h2>
@@ -49,7 +49,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col-lg-1 col-sm-1"></div>
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
         </div>
     </div>
 </body>
