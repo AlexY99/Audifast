@@ -39,7 +39,10 @@
                             <a class="nav-link" aria-current="page" href="AuditorServlet?accion=Plantillas">Mis plantillas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Datos Personales</a>
+                            <form id="form-infoAuditor"action="AuditorServlet?accion=InfoAuditor" method="POST">
+                                <input type="hidden" id="txtCorreo" value="${CorreoAuditor}" name="txtCorreo">
+                                <input class="btn btn-link nav-link" aria-current="page" type="submit" name="" value="Consulta de Auditor" form='form-infoAuditor'>
+                            </form>                            
                         </li>
                     </ul>        
                     <ul class="navbar-nav ms-auto">

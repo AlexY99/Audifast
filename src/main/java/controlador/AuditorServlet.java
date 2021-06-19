@@ -202,13 +202,17 @@ public class AuditorServlet extends HttpServlet {
     }
 
     private void infoAuditor(HttpServletRequest request, HttpServletResponse response) {
-        String correo = request.getParameter("txtCorreo");
+        HttpSession session = request.getSession();
+        String correoAuditor = session.getAttribute("CorreoAuditor").toString();
+        String correoConsultado = request.getParameter("txtCorreo");
+        boolean propioPerfil = correoAuditor.equals(correoConsultado);
         try {
             AuditorDTO dto = new AuditorDTO();
             AuditorDAO dao = new AuditorDAO();
-            dto.getEntidad().setCorreo(correo);
+            dto.getEntidad().setCorreo(correoConsultado);
             dto = dao.read(dto);
-            request.setAttribute("Auditor",dto);
+            request.setAttribute("auditor",dto);
+            request.setAttribute("propioPerfil",propioPerfil);
             RequestDispatcher vista = request.getRequestDispatcher("infoAuditor.jsp");
             vista.forward(request, response);
         } catch (IOException | ServletException ex) {

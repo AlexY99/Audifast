@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #b92b27, #1565c0)
+}
+
+.encabezado{
+    text-align: center;
+    color: whitesmoke;
+    padding-bottom: 20px;
+        
+}
+
+.box {
+    width: 500px;
+    padding: 20px;
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    background: #191919;
+    text-align: center;
+    transition: 0.25s;
+    margin-top: 30px;
+}
+
+.box label {
+    color: white
+}
+
+.box input[type="text"],
+.box input[type="email"]{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 3px auto 15px;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+
+.box input[type="submit"] {
+    background: #2ecc71;
+    padding: 10px;
+    text-align: center;
+    border: 2px solid;
+    border-color: seagreen;
+    width: auto;
+    color: black;
+    border-radius: 24px;
+    cursor: pointer
+}
+
+.box input[type="text"]:disabled,
+.box input[type="email"]:disabled{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 3px auto 15px;
+    text-align: center;
+    border: 2px solid;
+    border-color: #b92b27;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}

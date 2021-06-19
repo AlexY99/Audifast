@@ -4,9 +4,7 @@ import modelo.dto.PlantillaAuditorDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -280,18 +278,16 @@ public class PlantillaServlet extends HttpServlet {
         }
         jsonResp = jsonResp.substring(0,jsonResp.length()-1);
         jsonResp += "}}";
-        //mandarlista de auditores auxiliares de la auditoria
         
         System.out.println(jsonResp);
         
         response.setContentType("text/plain");
         response.setStatus(200);
+        
         PrintWriter out = response.getWriter();
-
         out.println(jsonResp);
         out.flush();
         out.close();
-
     }
     
 }

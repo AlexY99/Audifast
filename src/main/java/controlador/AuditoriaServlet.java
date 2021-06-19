@@ -170,7 +170,6 @@ public class AuditoriaServlet extends HttpServlet {
             
             AuditorDTO adtoLider = new AuditorDTO();
             
-            ProcesoActaDTO padto = new ProcesoActaDTO();
             ProcesoActaDAO padao = new ProcesoActaDAO();
             
             dto.getEntidad().setId(idAuditoria);
@@ -439,8 +438,6 @@ public class AuditoriaServlet extends HttpServlet {
             File reporte = new File(getServletConfig().getServletContext().getRealPath("/Reports/ReporteAudifast.jasper"));
             Map parametro = new HashMap();
             parametro.put("idAuditoria", idAuditoria);
-            //JasperPrint print = JasperFillManager.fillReport(reporte.getPath(), parametro, dao.obtenerConexion());
-            //byte[] bytes = JasperExportManager.exportReportToPdf(print);
             byte[] bytes = JasperRunManager.runReportToPdf(reporte.getPath(), parametro, dao.obtenerConexion());
             ServletOutputStream sos = response.getOutputStream();
             response.setContentType("application/pdf");
@@ -448,11 +445,7 @@ public class AuditoriaServlet extends HttpServlet {
             sos.write(bytes,0,bytes.length);
             sos.flush();
             sos.close();
-        }catch (IOException ex){
-            Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JRException ex) {
-            Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        }catch (IOException | JRException | SQLException ex){
             Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
