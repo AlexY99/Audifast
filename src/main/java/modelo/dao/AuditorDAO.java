@@ -4,7 +4,6 @@ import modelo.dto.AuditorDTO;
 import utilidades.HibernateUtil;
 import java.util.List;
 import javax.persistence.ParameterMode;
-import modelo.entidades.Auditor;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,7 +12,7 @@ import org.hibernate.query.Query;
 import org.hibernate.result.ResultSetOutput;
 
 public class AuditorDAO {
-   public void create(AuditorDTO dto){
+    public void create(AuditorDTO dto){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         try{

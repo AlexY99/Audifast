@@ -6,13 +6,15 @@
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
         <link rel="stylesheet" href="resources\css\bootstrap.css">
         <link rel="stylesheet" href="resources\css\auditoria.css">
-        <link rel="stylesheet" href="resources\css\IconColors.css">
-        <script src="resources\js\all.min.js"></script>   
+        <link rel="stylesheet" href="resources\css\IconColors.css"> 
+        <link rel="stylesheet" href="resources\plugins\alertifyjs\css\alertify.min.css" />
+        <link rel="stylesheet" href="resources\plugins\alertifyjs\css\themes\bootstrap.min.css" />
         <script src="resources\js\jquery-3.6.0.js"></script>     
+        <script src="resources\js\all.min.js"></script>     
         <script src="resources\js\bootstrap.bundle.min.js" async="async"></script>
+        <script src="resources\plugins\alertifyjs\alertify.min.js"></script>
         <title>AF-Auditoría</title>
     </head>
 
