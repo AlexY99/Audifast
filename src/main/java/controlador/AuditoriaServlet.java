@@ -39,7 +39,10 @@ import modelo.dto.ProductoDTO;
 import modelo.dto.ProcesoDTO;
 import modelo.dto.RequisitoActaDTO;
 import modelo.dto.RequisitoDTO;
+import modelo.entidades.IdAuditorAuxiliar;
+import modelo.entidades.IdContactoAuditoria;
 import modelo.entidades.IdOrganizacion;
+import modelo.entidades.IdProducto;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 
@@ -176,79 +179,85 @@ public class AuditoriaServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String correoAuditor = session.getAttribute("CorreoAuditor").toString();
         try {
+            
             AuditorAuxiliarDAO daoAuxiliar = new AuditorAuxiliarDAO();
             AuditoriaDTO dto = new AuditoriaDTO();
             AuditoriaDAO dao = new AuditoriaDAO();
 
-            AuditorDTO adto = new AuditorDTO();
-            AuditorDAO adao = new AuditorDAO();
-            
-            AuditorDTO adtoLider = new AuditorDTO();
-            
-            ProcesoActaDAO padao = new ProcesoActaDAO();
-            
             dto.getEntidad().setId(idAuditoria);
             dto = dao.read(dto);
             
-            List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(idAuditoria);
-            
-            ArrayList<ProcesoDTO> listaProcesos = new ArrayList<>();
-            ProcesoDAO pdao = new ProcesoDAO();
-          
-            if(!listaProcesoActa.isEmpty())
-                for(ProcesoActaDTO padtoA: listaProcesoActa){
-                    ProcesoDTO pdto = new ProcesoDTO();
-                    pdto.getEntidad().setId(padtoA.getEntidad().getProceso().getId());
-                    listaProcesos.add(pdao.read(pdto));
-                }
-            
-            PlantillaAuditorDAO pldao = new PlantillaAuditorDAO();
-            ArrayList<PlantillaAuditorDTO> listaPlantillas = pldao.readAll(correoAuditor);
-            
-            List<AuditorAuxiliarDTO> dtos = daoAuxiliar.readAll(Integer.parseInt(id));
-            
-            ArrayList<AuditorDTO> dtosAuditores = new ArrayList<>();
-            for (AuditorAuxiliarDTO axdto : dtos) {
-                AuditorDTO auxdto = new AuditorDTO();
-                auxdto.getEntidad().setCorreo(axdto.getEntidad().getId().getCorreo());
-                auxdto = adao.read(auxdto);
-                dtosAuditores.add(auxdto);
-            }
-            
-            ContactoAuditoriaDAO daoContacto = new ContactoAuditoriaDAO();
-            List<ContactoAuditoriaDTO> listaContactos = daoContacto.readAll(Integer.parseInt(id));
-            
-            ProductoDAO daoProducto = new ProductoDAO();
-            List<ProductoDTO> listaProductos = daoProducto.readAll(Integer.parseInt(id));
-            
-            adtoLider.getEntidad().setCorreo(dto.getEntidad().getCorreo_auditor_lider());
-            adtoLider = adao.read(adtoLider);
-            
-            adto.getEntidad().setCorreo(correoAuditor);
-            adto = adao.read(adto);
-            
-            boolean permisoEdicion;
-            
-            permisoEdicion = adtoLider.getEntidad().getCorreo().equals(adto.getEntidad().getCorreo());
-            
-            boolean completa = padao.AuditoriaCompleta(idAuditoria);
-            
-            System.out.println(completa);
-            
-            request.setAttribute("auditoria", dto);
-            request.setAttribute("auditorLider",adtoLider);
-            request.setAttribute("completa",completa);
-            request.setAttribute("auditor", adto);
-            request.setAttribute("permisoEdicion",permisoEdicion);
-            request.setAttribute("listaProcesoActa",listaProcesoActa);
-            request.setAttribute("listaProcesos",listaProcesos);
-            request.setAttribute("listaMisPlantillas",listaPlantillas);
-            request.setAttribute("listaProductos", listaProductos);
-            request.setAttribute("listaContactos", listaContactos);
-            request.setAttribute("auditoresAuxiliares", dtosAuditores);
+            if(dto.getEntidad() == null){
+                request.setAttribute("mensaje", "No existe la auditoria con ID:  "+idAuditoria);    
+                getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);
+            }else{
+                AuditorDTO adto = new AuditorDTO();
+                AuditorDAO adao = new AuditorDAO();
 
-            RequestDispatcher vista = request.getRequestDispatcher("auditoria.jsp");
-            vista.forward(request, response);
+                AuditorDTO adtoLider = new AuditorDTO();
+
+                ProcesoActaDAO padao = new ProcesoActaDAO();
+
+                List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(idAuditoria);
+
+                ArrayList<ProcesoDTO> listaProcesos = new ArrayList<>();
+                ProcesoDAO pdao = new ProcesoDAO();
+
+                if(!listaProcesoActa.isEmpty())
+                    for(ProcesoActaDTO padtoA: listaProcesoActa){
+                        ProcesoDTO pdto = new ProcesoDTO();
+                        pdto.getEntidad().setId(padtoA.getEntidad().getProceso().getId());
+                        listaProcesos.add(pdao.read(pdto));
+                    }
+
+                PlantillaAuditorDAO pldao = new PlantillaAuditorDAO();
+                ArrayList<PlantillaAuditorDTO> listaPlantillas = pldao.readAll(correoAuditor);
+
+                List<AuditorAuxiliarDTO> dtos = daoAuxiliar.readAll(Integer.parseInt(id));
+
+                ArrayList<AuditorDTO> dtosAuditores = new ArrayList<>();
+                for (AuditorAuxiliarDTO axdto : dtos) {
+                    AuditorDTO auxdto = new AuditorDTO();
+                    auxdto.getEntidad().setCorreo(axdto.getEntidad().getId().getCorreo());
+                    auxdto = adao.read(auxdto);
+                    dtosAuditores.add(auxdto);
+                }
+
+                ContactoAuditoriaDAO daoContacto = new ContactoAuditoriaDAO();
+                List<ContactoAuditoriaDTO> listaContactos = daoContacto.readAll(Integer.parseInt(id));
+
+                ProductoDAO daoProducto = new ProductoDAO();
+                List<ProductoDTO> listaProductos = daoProducto.readAll(Integer.parseInt(id));
+
+                adtoLider.getEntidad().setCorreo(dto.getEntidad().getCorreo_auditor_lider());
+                adtoLider = adao.read(adtoLider);
+
+                adto.getEntidad().setCorreo(correoAuditor);
+                adto = adao.read(adto);
+
+                boolean permisoEdicion;
+
+                permisoEdicion = adtoLider.getEntidad().getCorreo().equals(adto.getEntidad().getCorreo());
+
+                boolean completa = padao.AuditoriaCompleta(idAuditoria);
+
+                System.out.println(completa);
+
+                request.setAttribute("auditoria", dto);
+                request.setAttribute("auditorLider",adtoLider);
+                request.setAttribute("completa",completa);
+                request.setAttribute("auditor", adto);
+                request.setAttribute("permisoEdicion",permisoEdicion);
+                request.setAttribute("listaProcesoActa",listaProcesoActa);
+                request.setAttribute("listaProcesos",listaProcesos);
+                request.setAttribute("listaMisPlantillas",listaPlantillas);
+                request.setAttribute("listaProductos", listaProductos);
+                request.setAttribute("listaContactos", listaContactos);
+                request.setAttribute("auditoresAuxiliares", dtosAuditores);
+
+                RequestDispatcher vista = request.getRequestDispatcher("auditoria.jsp");
+                vista.forward(request, response);
+            }     
         } catch (IOException | ServletException ex) {
             Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -259,20 +268,37 @@ public class AuditoriaServlet extends HttpServlet {
         String correoAuditorAux = request.getParameter("txtEmailAuditorAux");
         AuditorAuxiliarDTO dto = new AuditorAuxiliarDTO();
         AuditorAuxiliarDAO dao = new AuditorAuxiliarDAO();
-        dto.getEntidad().getId().setCorreo_auditor(correoAuditorAux);
-        dto.getEntidad().getId().setIdAuditoria(idAuditoria);
-        AuditoriaDTO auditoriaDTO = new AuditoriaDTO();
-        AuditoriaDAO auDAO = new AuditoriaDAO();
-        auditoriaDTO.getEntidad().setId(idAuditoria);
-        auditoriaDTO = auDAO.read(auditoriaDTO);
-        dto.getEntidad().setAuditoria(auditoriaDTO.getEntidad());
-        System.out.println(dto);
-        dao.create(dto);
-        System.out.println("Creado->" + dto.toString());
-        request.setAttribute("mensaje", "Auditor auxiliar registrado exitosamente");
+        
+        AuditorDTO adto = new AuditorDTO();
+        AuditorDAO adao = new AuditorDAO();
+        adto.getEntidad().setCorreo(correoAuditorAux);
+        adto = adao.read(adto);
+        
+        if(adto.getEntidad()==null){
+            request.setAttribute("mensaje", "No existe un auditor registrado con el correo ingresado");
+        }else{
+            IdAuditorAuxiliar idAux = new IdAuditorAuxiliar();
+            idAux.setCorreo_auditor(correoAuditorAux);
+            idAux.setIdAuditoria(idAuditoria);
+            dto.getEntidad().setId(idAux);
+            dto = dao.read(dto);
+            if(dto.getEntidad() == null){
+                dto = new AuditorAuxiliarDTO();
+                dto.getEntidad().setId(idAux);
+                AuditoriaDTO auditoriaDTO = new AuditoriaDTO();
+                AuditoriaDAO auDAO = new AuditoriaDAO();
+                auditoriaDTO.getEntidad().setId(idAuditoria);
+                auditoriaDTO = auDAO.read(auditoriaDTO);
+                dto.getEntidad().setAuditoria(auditoriaDTO.getEntidad());
+                dao.create(dto);
+                System.out.println("Creado->" + dto.toString());
+                request.setAttribute("mensaje", "Auditor auxiliar registrado exitosamente");
+            }else{
+                request.setAttribute("mensaje", "Correo de auditor auxiliar ya registrado");
+            }
+        }
         request.setAttribute("id", String.valueOf(idAuditoria));
         infoAuditoria(request, response);
-
     }
 
     private void AlmacenarContacto(HttpServletRequest request, HttpServletResponse response) {
@@ -283,20 +309,28 @@ public class AuditoriaServlet extends HttpServlet {
         String telefono = request.getParameter("txtTelefono");
         ContactoAuditoriaDTO dto = new ContactoAuditoriaDTO();
         ContactoAuditoriaDAO dao = new ContactoAuditoriaDAO();
-        dto.getEntidad().getId().setCorreo(correo);
-        dto.getEntidad().setNombre(nombre);
-        dto.getEntidad().setPuesto(puesto);
-        dto.getEntidad().setTelefono(telefono);
-        dto.getEntidad().getId().setIdAuditoria(idAuditoria);
-        AuditoriaDTO auditoriaDTO = new AuditoriaDTO();
-        AuditoriaDAO auDAO = new AuditoriaDAO();
-        auditoriaDTO.getEntidad().setId(idAuditoria);
-        auditoriaDTO = auDAO.read(auditoriaDTO);
-        dto.getEntidad().setAuditoria(auditoriaDTO.getEntidad());
-        System.out.println(dto);
-        dao.create(dto);
-        System.out.println("Creado->" + dto.toString());
-        request.setAttribute("mensaje", "Contacto de auditoria registrado exitosamente");
+        IdContactoAuditoria idContacto = new IdContactoAuditoria();
+        idContacto.setCorreo(correo);
+        idContacto.setIdAuditoria(idAuditoria);
+        dto.getEntidad().setId(idContacto);
+        dto = dao.read(dto);
+        if(dto.getEntidad()==null){
+            dto = new ContactoAuditoriaDTO();
+            dto.getEntidad().setId(idContacto);
+            dto.getEntidad().setNombre(nombre);
+            dto.getEntidad().setPuesto(puesto);
+            dto.getEntidad().setTelefono(telefono);
+            AuditoriaDTO auditoriaDTO = new AuditoriaDTO();
+            AuditoriaDAO auDAO = new AuditoriaDAO();
+            auditoriaDTO.getEntidad().setId(idAuditoria);
+            auditoriaDTO = auDAO.read(auditoriaDTO);
+            dto.getEntidad().setAuditoria(auditoriaDTO.getEntidad());
+            dao.create(dto);
+            System.out.println("Creado->" + dto.toString());
+            request.setAttribute("mensaje", "Contacto de auditoria registrado exitosamente");
+        }else{
+            request.setAttribute("mensaje", "Correo de contacto ya registrado");
+        }
         request.setAttribute("id", String.valueOf(idAuditoria));
         infoAuditoria(request, response);
     }
@@ -307,18 +341,26 @@ public class AuditoriaServlet extends HttpServlet {
         String descripcion = request.getParameter("txtDescripcion");
         ProductoDTO dto = new ProductoDTO();
         ProductoDAO dao = new ProductoDAO();
-        dto.getEntidad().getId().setClave(clave);
-        dto.getEntidad().setDescripcion(descripcion);
-        dto.getEntidad().getId().setIdAuditoria(idAuditoria);
-        AuditoriaDTO auditoriaDTO = new AuditoriaDTO();
-        AuditoriaDAO auDAO = new AuditoriaDAO();
-        auditoriaDTO.getEntidad().setId(idAuditoria);
-        auditoriaDTO = auDAO.read(auditoriaDTO);
-        dto.getEntidad().setAuditoria(auditoriaDTO.getEntidad());
-        System.out.println(dto);
-        dao.create(dto);
-        System.out.println("Creado->" + dto.toString());
-        request.setAttribute("mensaje", "Producto de auditoria creado con exito");
+        IdProducto idProducto = new IdProducto();
+        idProducto.setClave(clave);
+        idProducto.setIdAuditoria(idAuditoria);
+        dto.getEntidad().setId(idProducto);
+        dto = dao.read(dto);
+        if(dto.getEntidad()==null){
+            dto = new ProductoDTO();
+            dto.getEntidad().setId(idProducto);
+            dto.getEntidad().setDescripcion(descripcion);        
+            AuditoriaDTO auditoriaDTO = new AuditoriaDTO();
+            AuditoriaDAO auDAO = new AuditoriaDAO();
+            auditoriaDTO.getEntidad().setId(idAuditoria);
+            auditoriaDTO = auDAO.read(auditoriaDTO);
+            dto.getEntidad().setAuditoria(auditoriaDTO.getEntidad());
+            dao.create(dto);
+            System.out.println("Creado->" + dto.toString());
+            request.setAttribute("mensaje", "Producto de auditoria creado con exito");
+        }else{
+            request.setAttribute("mensaje", "Clave de producto ya agregada");
+        }       
         request.setAttribute("id", String.valueOf(idAuditoria));
         infoAuditoria(request, response);
     }
@@ -378,36 +420,45 @@ public class AuditoriaServlet extends HttpServlet {
         AuditoriaDAO Audao = new AuditoriaDAO();
         AuditoriaDTO Audto = new AuditoriaDTO();
         RequisitoActaDAO RAdao = new RequisitoActaDAO();
-        RequisitoActaDTO RAdto = new RequisitoActaDTO();
+        RequisitoActaDTO RAdto;
         RequisitoDAO Rdao = new RequisitoDAO();
-        List <RequisitoDTO> requisitos = null;
+        List <RequisitoDTO> requisitos;
         int id, idA;
         idA = Integer.parseInt(request.getParameter("txtIdAuditoria"));
+        float suma = 0;
         for(int i = 0; i < nProcesos; i++){
-            dto = new ProcesoActaDTO();
             id = procesos.get(i).getEntidad().getId();
-            Adto.getEntidad().setCorreo(request.getParameter("txtCorreoEncargadoProceso"+Integer.toString(id)));
-            Adto = Adao.read(Adto);
-            Audto.getEntidad().setId(idA);
-            Audto = Audao.read(Audto);
-            dto.getEntidad().setAuditor(Adto.getEntidad());
-            dto.getEntidad().setProceso(procesos.get(i).getEntidad());
-            dto.getEntidad().setAuditoria(Audto.getEntidad());
-            dto.getEntidad().setPonderacion(Float.valueOf(request.getParameter("txtPonderacionProceso"+Integer.toString(id))));
-            dto.getEntidad().setResultado(0);
-            dao.create(dto);
-            System.out.println(dto);
-            requisitos = Rdao.Requisitos(id);
-            
-            for(RequisitoDTO r : requisitos){
-                RAdto = new RequisitoActaDTO();
-                RAdto.getEntidad().setProcesoActa(dto.getEntidad());
-                RAdto.getEntidad().setRequisito(r.getEntidad());
-                RAdao.create(RAdto);
-                System.out.println(RAdto);
-            }
+            suma += Float.valueOf(request.getParameter("txtPonderacionProceso"+Integer.toString(id)));
         }
-        request.setAttribute("mensaje", "Acta Creada");
+        if(suma<=100.0&&suma>98.0){
+            for(int i = 0; i < nProcesos; i++){
+                dto = new ProcesoActaDTO();
+                id = procesos.get(i).getEntidad().getId();
+                Adto.getEntidad().setCorreo(request.getParameter("txtCorreoEncargadoProceso"+Integer.toString(id)));
+                Adto = Adao.read(Adto);
+                Audto.getEntidad().setId(idA);
+                Audto = Audao.read(Audto);
+                dto.getEntidad().setAuditor(Adto.getEntidad());
+                dto.getEntidad().setProceso(procesos.get(i).getEntidad());
+                dto.getEntidad().setAuditoria(Audto.getEntidad());
+                dto.getEntidad().setPonderacion(Float.valueOf(request.getParameter("txtPonderacionProceso"+Integer.toString(id))));
+                dto.getEntidad().setResultado(0);
+                dao.create(dto);
+                System.out.println(dto);
+                requisitos = Rdao.Requisitos(id);
+
+                for(RequisitoDTO r : requisitos){
+                    RAdto = new RequisitoActaDTO();
+                    RAdto.getEntidad().setProcesoActa(dto.getEntidad());
+                    RAdto.getEntidad().setRequisito(r.getEntidad());
+                    RAdao.create(RAdto);
+                    System.out.println(RAdto);
+                }
+            }
+            request.setAttribute("mensaje", "Acta Creada");
+        }else{
+            request.setAttribute("mensaje", "Las ponderaciones deben sumar un valor de 100%");
+        }
         request.setAttribute("id", String.valueOf(idA));
         infoAuditoria(request, response);
     }
@@ -419,16 +470,26 @@ public class AuditoriaServlet extends HttpServlet {
         ProcesoActaDAO padao = new ProcesoActaDAO();
         ProcesoActaDTO padto;
         List<ProcesoActaDTO> listaProcesoActa = padao.ProcesosActa(idAuditoria);
+        float suma = 0;
         for( ProcesoActaDTO pa : listaProcesoActa ){
-            padto = new ProcesoActaDTO();
             idP = pa.getEntidad().getProceso().getId();
             ponderacion = Float.valueOf(request.getParameter("txtPonderacionProceso"+Integer.toString(idP)));
-            padto.setEntidad(pa.getEntidad());
-            padto.getEntidad().setPonderacion(ponderacion);
-            padto.getEntidad().getAuditor().setCorreo(request.getParameter("txtCorreoEncargadoProceso"+Integer.toString(idP)));
-            padao.update(padto);
+            suma+=ponderacion;
         }
-        request.setAttribute("mensaje", "Acta Editada");
+        if(suma<=100.0&&suma>98.0){
+            for( ProcesoActaDTO pa : listaProcesoActa ){
+                padto = new ProcesoActaDTO();
+                idP = pa.getEntidad().getProceso().getId();
+                ponderacion = Float.valueOf(request.getParameter("txtPonderacionProceso"+Integer.toString(idP)));
+                padto.setEntidad(pa.getEntidad());
+                padto.getEntidad().setPonderacion(ponderacion);
+                padto.getEntidad().getAuditor().setCorreo(request.getParameter("txtCorreoEncargadoProceso"+Integer.toString(idP)));
+                padao.update(padto);
+            }
+            request.setAttribute("mensaje", "Acta Editada");
+        }else{
+            request.setAttribute("mensaje", "Las ponderaciones deben sumar un valor de 100%");
+        }
         request.setAttribute("id", String.valueOf(idAuditoria));
         infoAuditoria(request, response);
     }

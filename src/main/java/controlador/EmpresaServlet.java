@@ -94,14 +94,20 @@ public class EmpresaServlet extends HttpServlet {
             id.setCorreo_auditor(correo);
             id.setRfc(request.getParameter("txtRFC"));
             dto.getEntidad().setId(id);
-            dto.getEntidad().setNombre(request.getParameter("txtNombre"));
-            dto.getEntidad().setGiro(request.getParameter("txtGiro"));
-            dto.getEntidad().setDireccionF(request.getParameter("txtDireccionF"));
-            dto.getEntidad().setDireccionO(request.getParameter("txtDireccionOp"));
-            dao.create(dto);
-            
-            System.out.println("Creado->" + dto.toString());
-            request.setAttribute("mensaje", "Empresa registrada exitosamente");
+            dto = dao.read(dto);
+            if(dto.getEntidad()==null){
+                dto = new EmpresaDTO();
+                dto.getEntidad().setId(id);
+                dto.getEntidad().setNombre(request.getParameter("txtNombre"));
+                dto.getEntidad().setGiro(request.getParameter("txtGiro"));
+                dto.getEntidad().setDireccionF(request.getParameter("txtDireccionF"));
+                dto.getEntidad().setDireccionO(request.getParameter("txtDireccionOp"));
+                dao.create(dto);
+                System.out.println("Creado->" + dto.toString());
+                request.setAttribute("mensaje", "Empresa registrada exitosamente");
+            }else{
+                request.setAttribute("mensaje", "RFC ya registrado"); 
+            }
             getServletContext().getRequestDispatcher("/EmpresaServlet?accion=listaEmpresas").forward(request, response);
         } catch (IOException | ServletException ex) {
             Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);

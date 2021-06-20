@@ -168,12 +168,17 @@ public class AuditorServlet extends HttpServlet {
         HttpSession session = request.getSession();
         dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
         dto = dao.read(dto);
-        dao.delete(dto);
-        request.setAttribute("mensaje","Auditor eliminado satisfactoriamente");
-        if(dto.getEntidad().getCorreo().equals(session.getAttribute("txtCorreo"))){
-            logout(request,response);
-        }else{
+        if(dto.getEntidad() == null){
+            request.setAttribute("mensaje","Correo electrónico del auditor no encontrado");
             paginaInicio(request,response);
+        }else{
+            request.setAttribute("mensaje","Auditor eliminado satisfactoriamente");
+            dao.delete(dto);
+            if(dto.getEntidad().getCorreo().equals(session.getAttribute("txtCorreo"))){
+                logout(request,response);
+            }else{
+                paginaInicio(request,response);
+            }
         }
     }
     

@@ -15,6 +15,7 @@
         <script src="resources\js\all.min.js"></script>     
         <script src="resources\js\bootstrap.bundle.min.js" async="async"></script>
         <script src="resources\plugins\alertifyjs\alertify.min.js"></script>
+        <script src="resources\js\auditoria.js" async="async"></script>     
         <title>AF-Auditoría</title>
     </head>
 
