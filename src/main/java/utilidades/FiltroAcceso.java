@@ -51,7 +51,7 @@ public class FiltroAcceso implements Filter{
             
         }else{
             if(url.endsWith("/") || url.contains("index")){
-                res.sendRedirect("/AuditorServlet?accion=Inicio");
+                res.sendRedirect("/AudiFast/AuditorServlet?accion=Inicio");
             }else chain.doFilter(request, response);
         }     
     }

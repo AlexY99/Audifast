@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import modelo.dto.AuditoriaDTO;
 import utilidades.HibernateUtil;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.Context;
 import modelo.dto.AuditorDTO;
 import modelo.entidades.Auditoria;

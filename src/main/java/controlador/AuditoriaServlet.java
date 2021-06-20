@@ -22,6 +22,7 @@ import modelo.dao.AuditorAuxiliarDAO;
 import modelo.dao.AuditorDAO;
 import modelo.dao.AuditoriaDAO;
 import modelo.dao.ContactoAuditoriaDAO;
+import modelo.dao.EmpresaDAO;
 import modelo.dao.PlantillaAuditorDAO;
 import modelo.dao.ProcesoActaDAO;
 import modelo.dao.ProcesoDAO;
@@ -31,12 +32,14 @@ import modelo.dao.RequisitoDAO;
 import modelo.dto.AuditorAuxiliarDTO;
 import modelo.dto.AuditorDTO;
 import modelo.dto.ContactoAuditoriaDTO;
+import modelo.dto.EmpresaDTO;
 import modelo.dto.PlantillaAuditorDTO;
 import modelo.dto.ProcesoActaDTO;
 import modelo.dto.ProductoDTO;
 import modelo.dto.ProcesoDTO;
 import modelo.dto.RequisitoActaDTO;
 import modelo.dto.RequisitoDTO;
+import modelo.entidades.IdOrganizacion;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 
@@ -122,16 +125,28 @@ public class AuditoriaServlet extends HttpServlet {
     private void almacenarAuditoria(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.setCharacterEncoding("utf-8");
-            AuditoriaDAO dao = new AuditoriaDAO();
-            AuditoriaDTO dto = new AuditoriaDTO();
             HttpSession session = request.getSession();
             String correo = session.getAttribute("CorreoAuditor").toString();
-            dto.getEntidad().setCorreo_auditor_lider(correo);
-            dto.getEntidad().setRfc_organizacion(request.getParameter("txtRFC"));
-            dto.getEntidad().setFecha_registro(new Date());
-            dao.create(dto);
-            System.out.println("Creado->" + dto.toString());
-            request.setAttribute("mensaje", "Auditoría creada exitosamente");
+            String rfc = request.getParameter("txtRFC");           
+            EmpresaDTO odto = new EmpresaDTO();
+            EmpresaDAO odao = new EmpresaDAO();
+            IdOrganizacion ido = new IdOrganizacion();
+            ido.setCorreo_auditor(correo);
+            ido.setRfc(rfc);
+            odto.getEntidad().setId(ido);
+            odto = odao.read(odto);
+            if(odto.getEntidad() == null){
+                request.setAttribute("mensaje", "No existe la organización con RFC:  "+rfc);    
+            }else{
+                AuditoriaDAO dao = new AuditoriaDAO();
+                AuditoriaDTO dto = new AuditoriaDTO();
+                dto.getEntidad().setCorreo_auditor_lider(correo);
+                dto.getEntidad().setRfc_organizacion(rfc);
+                dto.getEntidad().setFecha_registro(new Date());
+                dao.create(dto);
+                System.out.println("Creado->" + dto.toString());
+                request.setAttribute("mensaje", "Auditoría creada exitosamente");    
+            }
             getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);
         } catch (IOException | ServletException ex) {
             Logger.getLogger(AuditoriaServlet.class.getName()).log(Level.SEVERE, null, ex);

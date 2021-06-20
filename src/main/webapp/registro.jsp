@@ -46,7 +46,7 @@
         </div>
         <c:if test="${not empty mensaje}">
             <script>
-                alertify.alert('Datos incorrectos','<div class="text-center">${mensaje}</div>');
+                alertify.alert('Mensaje','<div class="text-center">${mensaje}</div>');
             </script>  
         </c:if>
     </body>
