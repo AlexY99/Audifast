@@ -3,6 +3,7 @@ import modelo.dao.AuditorDAO;
 import modelo.dto.AuditorDTO;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -131,12 +132,22 @@ public class AuditorServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);
             }else{
                 dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
-                dto.getEntidad().setNombre(request.getParameter("txtNombre"));
-                dto.getEntidad().setPswd(request.getParameter("txtPswd"));
-                dto.getEntidad().setTelefono(request.getParameter("txtTelefono"));
-                dao.create(dto);
-                System.out.println("Creado->"+dto.toString());
-                request.setAttribute("mensaje", "Auditor creado exitosamente");
+                dto = dao.read(dto);
+                if(dto.getEntidad() == null){
+                    dto = new AuditorDTO();
+                    dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
+                    dto.getEntidad().setNombre(request.getParameter("txtNombre"));
+                    dto.getEntidad().setPswd(request.getParameter("txtPswd"));
+                    dto.getEntidad().setTelefono(request.getParameter("txtTelefono"));
+                    dao.create(dto);
+                    System.out.println("Creado->"+dto.toString());
+                    request.setAttribute("mensaje", "Auditor creado exitosamente");
+                }else{
+                    System.out.println("No Creado (Existente)->"+dto.toString());
+                    request.setAttribute("mensaje", "El correo ingresado ya existe");
+                }
+                
+                
                 getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
         } catch (IOException | ServletException ex) {
