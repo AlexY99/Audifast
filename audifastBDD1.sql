@@ -67,7 +67,6 @@ create table producto(
 
 create table espacio_retroalimentacion(
 	idAuditoria int(10) primary key,
-    url_informe nvarchar(50),
     url_plan nvarchar(50),
     foreign key(idAuditoria) references auditoria(id)
 		on delete cascade on update cascade
@@ -180,14 +179,3 @@ insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','El pe
 
 insert into proceso(idPlantilla,descripcion)values(2,"Higiene de instalaciones");
 insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','El personal usa equipo de protección en las instalaciones',5);
-
-select * from auditor;
-select * from plantilla_auditor;
-select * from proceso;
-select * from requisito;
-
-select * from auditor_auxiliar;
-
-select * from proceso_acta;
-
-select auditoria0_.id as id1_2_, auditoria0_.correo_auditor_lider as correo_a2_2_, auditoria0_.fecha_registro as fecha_re3_2_, auditoria0_.rfc_organizacion as rfc_orga4_2_ from Auditoria auditoria0_ where auditoria0_.correo_auditor_lider='xtarevolution@yahoo.com.mx' order by auditoria0_.fecha_registro
