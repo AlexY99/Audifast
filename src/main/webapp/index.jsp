@@ -59,6 +59,5 @@
             alertify.alert('Credenciales incorrectas','<div class="text-center">${mensaje}</div>');
         </script>  
     </c:if>
-
 </body>
 </html>

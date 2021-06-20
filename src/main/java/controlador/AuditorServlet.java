@@ -3,7 +3,6 @@ import modelo.dao.AuditorDAO;
 import modelo.dto.AuditorDTO;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -121,34 +120,42 @@ public class AuditorServlet extends HttpServlet {
             request.setCharacterEncoding("utf-8");
             AuditorDAO dao = new AuditorDAO();
             AuditorDTO dto = new AuditorDTO();
+            String correo = request.getParameter("txtCorreo");
+            String pswd = request.getParameter("txtPswd");
+            String confpswd = request.getParameter("txtConfPswd");
+            
             //Si existe el parámetro new se crea, sino se actualiza
             if(request.getParameter("update")!=null&&!request.getParameter("update").isEmpty()){
-                dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
+                dto.getEntidad().setCorreo(correo);
                 dto.getEntidad().setNombre(request.getParameter("txtNombre"));
-                dto.getEntidad().setPswd(request.getParameter("txtPswd"));
+                dto.getEntidad().setPswd(pswd);
                 dto.getEntidad().setTelefono(request.getParameter("txtTelefono"));
                 dao.update(dto);
                 request.setAttribute("mensaje", "Auditor actualizado exitosamente");
                 getServletContext().getRequestDispatcher("/AuditorServlet?accion=Inicio").forward(request, response);
             }else{
-                dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
-                dto = dao.read(dto);
-                if(dto.getEntidad() == null){
-                    dto = new AuditorDTO();
+                if(pswd.equals(confpswd)){
                     dto.getEntidad().setCorreo(request.getParameter("txtCorreo"));
-                    dto.getEntidad().setNombre(request.getParameter("txtNombre"));
-                    dto.getEntidad().setPswd(request.getParameter("txtPswd"));
-                    dto.getEntidad().setTelefono(request.getParameter("txtTelefono"));
-                    dao.create(dto);
-                    System.out.println("Creado->"+dto.toString());
-                    request.setAttribute("mensaje", "Auditor creado exitosamente");
+                    dto = dao.read(dto);
+                    if(dto.getEntidad() == null){
+                        dto = new AuditorDTO();
+                        dto.getEntidad().setCorreo(correo);
+                        dto.getEntidad().setNombre(request.getParameter("txtNombre"));
+                        dto.getEntidad().setPswd(pswd);
+                        dto.getEntidad().setTelefono(request.getParameter("txtTelefono"));
+                        dao.create(dto);
+                        System.out.println("Creado->"+dto.toString());
+                        request.setAttribute("mensaje", "Auditor creado exitosamente");
+                        getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                    }else{
+                        System.out.println("No Creado (Existente)->"+dto.toString());
+                        request.setAttribute("mensaje", "El correo ingresado ya existe");
+                        getServletContext().getRequestDispatcher("/registro.jsp").forward(request, response);
+                    }
                 }else{
-                    System.out.println("No Creado (Existente)->"+dto.toString());
-                    request.setAttribute("mensaje", "El correo ingresado ya existe");
+                    request.setAttribute("mensaje", "Las contraseñas no coinciden");
+                    getServletContext().getRequestDispatcher("/registro.jsp").forward(request, response);
                 }
-                
-                
-                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
         } catch (IOException | ServletException ex) {
             Logger.getLogger(AuditorServlet.class.getName()).log(Level.SEVERE, null, ex);
