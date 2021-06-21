@@ -44,10 +44,10 @@
             <div class="col-lg-1 col-md-1 col-sm-1"></div>
             <div class="col-lg-4 col-md-10 col-sm-10" style="margin-top: 40px">
                 <div class="card">
-                    <form onsubmit="event.preventDefault()" class="box">
+                    <form  class="box" method="POST" action="RetroalimentacionServlet?accion=Retroalimentacion">
                         <h2 class="text-white"style="margin-top: 30px">Acceda a una Auditoría</h2>
                         <p class="text-muted"> Introduzca su correo y clave de acceso</p> <input type="text" name="correo" placeholder="Correo"> 
-                        <input type="password" name="clave" placeholder="Clave de acceso"> <input type="submit" name="" value="Acceder" href="#">
+                        <input type="password" name="clave" placeholder="Clave de acceso"> <input type="submit" name="" value="Acceder">
                     </form>
                 </div>
             </div>

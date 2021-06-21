@@ -42,5 +42,6 @@
         <mapping class="modelo.entidades.Requisito" />
         <mapping class="modelo.entidades.ProcesoActa" />
         <mapping class="modelo.entidades.RequisitoActa" />
+        <mapping class="modelo.entidades.Clave_Acceso" />
     </session-factory>
 </hibernate-configuration>

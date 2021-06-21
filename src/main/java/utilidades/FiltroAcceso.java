@@ -31,13 +31,20 @@ public class FiltroAcceso implements Filter{
         res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
         res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         res.setDateHeader("Expires", 0);
-
         if(correoAuditor.isEmpty()){ // Si el tipo es nulo
             // Si no es el index, el formulario de registro o un recurso js o css redirecciona al index
             if(!url.endsWith("/") && !url.contains("index") && !url.contains("AudiFastWS") && !url.contains("registro") && !url.endsWith(".js") && !url.endsWith(".css") && !url.endsWith(".jpg") && !url.endsWith(".png") && !url.endsWith(".jar") && !url.endsWith(".war")){
                 if(url.contains("AuditorServlet")){
                     String queryString = req.getQueryString();
                     if(queryString.contains("Login") || queryString.contains("Almacenar"))
+                        chain.doFilter(request, response);
+                    else{
+                        System.out.println("Denegado<-"+url);
+                        res.sendRedirect(req.getServletContext().getContextPath()+"/");
+                    }
+                }else if(url.contains("RetroalimentacionServlet")){
+                    String queryString = req.getQueryString();
+                    if(queryString.contains("Retroalimentacion"))
                         chain.doFilter(request, response);
                     else{
                         System.out.println("Denegado<-"+url);

@@ -194,7 +194,8 @@ public class AuditorServlet extends HttpServlet {
             //Si el correo contraseña son validos
             if (correo.equalsIgnoreCase(msj)) {
                 HttpSession session = request.getSession();
-                session.setAttribute("CorreoAuditor", msj);       
+                session.setAttribute("CorreoAuditor", msj);
+                session.setAttribute("Invitado", false);
                 response.sendRedirect("AuditorServlet?accion=Inicio");
             } else {
                 request.setAttribute("mensaje",msj);
@@ -210,7 +211,8 @@ public class AuditorServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession(true);
             session.removeAttribute("CorreoAuditor");
-            if (session.getAttribute("CorreoAuditor") == null) {
+            session.removeAttribute("Invitado");
+            if (session.getAttribute("CorreoAuditor") == null && session.getAttribute("Invitado") == null) {
                 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
                 session.invalidate();
                 response.setHeader("Pragma", "no-cache");

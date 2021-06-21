@@ -99,15 +99,7 @@
                             <c:when test="${completa}">
                                 <div class="row">
                                     <div class="col-6">
-                                        <form target="_blank" method="POST" action="AuditoriaServlet?accion=Reporte" id="form-ReportePDF">
-                                            <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
-                                            <button class='btn btn-primary' type='submit' form='form-ReportePDF'>
-                                                Reporte de Auditoria
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div class="col-6">
-                                        <form method="POST" action="AuditoriaServlet?accion=Retroalimentacion" id="form-Retroalimentacion">
+                                        <form method="POST" action="RetroalimentacionServlet?accion=Retroalimentacion" id="form-Retroalimentacion">
                                             <input type="hidden" name="txtIdAuditoria" value='${auditoria.entidad.id}' />
                                             <button class='btn btn-primary' type='submit' form='form-Retroalimentacion'>
                                                 Espacio de Retroalimentaci&oacute;n
