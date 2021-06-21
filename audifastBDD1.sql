@@ -58,17 +58,10 @@ create table contacto_auditoria(
 
 create table producto(
 	clave nvarchar(30),
-    idAuditoria int(10),
+    idAuditoria int(10) not null,
     descripcion nvarchar(100),
     primary key(clave,idAuditoria),
     foreign key(idAuditoria) references Auditoria(id)
-		on delete cascade on update cascade
-);
-
-create table espacio_retroalimentacion(
-	idAuditoria int(10) primary key,
-    url_plan nvarchar(50),
-    foreign key(idAuditoria) references auditoria(id)
 		on delete cascade on update cascade
 );
 
@@ -78,7 +71,7 @@ create table mensajes_retroalimentacion(
     mensaje nvarchar(100),
     correo_remitente nvarchar(50),
     fecha timestamp default current_timestamp,
-    foreign key(idAuditoria) references espacio_retroalimentacion(idAuditoria)
+    foreign key(idAuditoria) references Auditoria(id)
 		on delete cascade on update cascade
 );
 
@@ -86,7 +79,8 @@ create table clave_acceso(
 	correo nvarchar(50) not null,
     clave nvarchar(100) primary key,
     idAuditoria int(10) not null,
-	foreign key(idAuditoria) references espacio_retroalimentacion(idAuditoria)
+    url_plan nvarchar(100),
+	foreign key(idAuditoria) references Auditoria(id)
 		on delete cascade on update cascade
 );
 
@@ -179,3 +173,14 @@ insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','El pe
 
 insert into proceso(idPlantilla,descripcion)values(2,"Higiene de instalaciones");
 insert into requisito(clave_norma,descripcion,idproceso)values('ISO:9000','El personal usa equipo de protección en las instalaciones',5);
+
+select * from auditor;
+select * from plantilla_auditor;
+select * from proceso;
+select * from requisito;
+
+select * from auditor_auxiliar;
+
+select * from proceso_acta;
+
+select auditoria0_.id as id1_2_, auditoria0_.correo_auditor_lider as correo_a2_2_, auditoria0_.fecha_registro as fecha_re3_2_, auditoria0_.rfc_organizacion as rfc_orga4_2_ from Auditoria auditoria0_ where auditoria0_.correo_auditor_lider='xtarevolution@yahoo.com.mx' order by auditoria0_.fecha_registro
