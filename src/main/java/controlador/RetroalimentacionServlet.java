@@ -91,7 +91,7 @@ public class RetroalimentacionServlet extends HttpServlet {
         String correo = "";
         String clave = "";
         int idAuditoria = 0;
-        if (session.getAttribute("CorreoAuditor") != null) {
+        if (session.getAttribute("CorreoAuditor") != null && request.getParameter("txtIdAuditoria") != null ) {
             correo = (String) session.getAttribute("CorreoAuditor");
             request.setAttribute("CorreoAuditor", correo);
             request.setAttribute("Invitado", false);
@@ -118,7 +118,7 @@ public class RetroalimentacionServlet extends HttpServlet {
             dtoC.getEntidad().setClave(clave);
             dtoC = daoC.read(dtoC);
             if (dtoC.getEntidad() == null) {
-                request.setAttribute("mensaje", "Clave de Acceso o Correo Inconrrecto");
+                request.setAttribute("mensaje", "Clave de Acceso o Correo Incorrecto");
                 RequestDispatcher vista = request.getRequestDispatcher("index.jsp");
                 try {
                     getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
@@ -126,7 +126,7 @@ public class RetroalimentacionServlet extends HttpServlet {
                     Logger.getLogger(RetroalimentacionServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }else if(!dtoC.getEntidad().getCorreo().equals(correo)) {
-                request.setAttribute("mensaje", "Clave de Acceso o Correo Inconrrecto");
+                request.setAttribute("mensaje", "Clave de Acceso o Correo Incorrecto");
                 RequestDispatcher vista = request.getRequestDispatcher("index.jsp");
                 try {
                     getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);

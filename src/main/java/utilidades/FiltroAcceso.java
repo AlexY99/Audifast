@@ -35,7 +35,7 @@ public class FiltroAcceso implements Filter{
         res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
         res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
         res.setDateHeader("Expires", 0);
-        if(correoAuditor.isEmpty() || esInvitado == false){ // Si no ha inicuiado sesion o es invitado
+        if(correoAuditor.isEmpty() || esInvitado ==  true){ // Si no ha inicuiado sesion o es invitado
             // Si no es el index, el formulario de registro o un recurso js o css redirecciona al index
             if(!url.endsWith("/") && !url.contains("index") && !url.contains("AudiFastWS") && !url.contains("registro") && !url.endsWith(".js") && !url.endsWith(".css") && !url.endsWith(".jpg") && !url.endsWith(".png") && !url.endsWith(".jar") && !url.endsWith(".war")){
                 if(url.contains("AuditorServlet")){
