@@ -63,6 +63,7 @@
         </nav>
 
 
+        <%--
         <br/>
         <div class="d-flex justify-content-center">
             <h2 class="encabezado">Plantillas Predefinidas</h2>
@@ -82,7 +83,7 @@
                 </div>
             </div>
         </div>
-
+        --%>
         <br/>
         <div class="d-flex justify-content-center">
             <h2 class="encabezado">Mis plantillas</h2>
