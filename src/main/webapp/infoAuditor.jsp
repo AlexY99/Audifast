@@ -33,13 +33,13 @@
                             <a class="nav-link" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="AuditorServlet?accion=Inicio">P&aacute;gina Principal</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="EmpresaServlet?accion=listaEmpresas">Empresas Registradas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="NormaServlet?accion=listaNormas">Normas Registradas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="AuditorServlet?accion=Plantillas">Mis plantillas</a>
                         </li>
                         <li class="nav-item">
                             <form id="form-infoAuditor"action="AuditorServlet?accion=InfoAuditor" method="POST">
