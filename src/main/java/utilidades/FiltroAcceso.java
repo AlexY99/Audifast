@@ -54,7 +54,16 @@ public class FiltroAcceso implements Filter{
                         System.out.println("Denegado<-"+url);
                         res.sendRedirect(req.getServletContext().getContextPath()+"/");
                     }
-                }else{
+                }else if(url.contains("AuditoriaServlet")){
+                    String queryString = req.getQueryString();
+                    if(queryString.contains("Reporte"))
+                        chain.doFilter(request, response);
+                    else{
+                        System.out.println("Denegado<-"+url);
+                        res.sendRedirect(req.getServletContext().getContextPath()+"/");
+                    }
+                }
+                else{
                     System.out.println("Denegado<-"+url);
                     res.sendRedirect(req.getServletContext().getContextPath()+"/");
                 }               
