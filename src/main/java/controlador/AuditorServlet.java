@@ -236,6 +236,9 @@ public class AuditorServlet extends HttpServlet {
             AuditorDAO dao = new AuditorDAO();
             dto.getEntidad().setCorreo(correoConsultado);
             dto = dao.read(dto);
+            if(dto.getEntidad()==null){
+                request.setAttribute("mensaje","No se encontró un auditor registrado con el correo ingresado");
+            }
             request.setAttribute("auditor",dto);
             request.setAttribute("propioPerfil",propioPerfil);
             RequestDispatcher vista = request.getRequestDispatcher("infoAuditor.jsp");
