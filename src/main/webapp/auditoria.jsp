@@ -241,7 +241,7 @@
             <br/>
 
             <div id="productos" class="apartado">
-                <h3 id="encabezadoProductos" class="encabezadoApartado">Productos de Auditados</h3>
+                <h3 id="encabezadoProductos" class="encabezadoApartado">Productos Auditados</h3>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
