@@ -4,4 +4,4 @@
 
 
 # Audifast
-Plataforma de seguimiento de auditorias de gestión de calidad.
+Plataforma de Apoyo para la Evaluación de Sistemas de Calidad
