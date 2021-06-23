@@ -5,3 +5,5 @@
 
 # Audifast
 Plataforma de Apoyo para la Evaluación de Sistemas de Calidad
+
+La rama main contiene la base de datos del proyecto.
