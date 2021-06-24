@@ -1,1 +1,1 @@
-web: java -cp target/classes/:target/dependency/* com.ipn.AudiFast
+web: java -jar target/AudiFast-1.0.war
